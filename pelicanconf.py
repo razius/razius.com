@@ -43,7 +43,9 @@ PAGE_DIR = 'pages'
 ARTICLE_DIR = 'articles'
 STATIC_PATHS = ['images', 'files']
 EXTRA_PATH_METADATA = {
-    'robots.txt': {'path': 'robots.txt'},
+    'files/sitemap.xml': {'path': 'sitemap.xml'},
+    'files/robots.txt': {'path': 'robots.txt'},
+    'images/favicon.ico': {'path': 'favicon.ico'},
 }
 
 # URL settings
@@ -51,13 +53,13 @@ ARTICLE_URL = ('articles/{slug}.html')
 ARTICLE_SAVE_AS = ('articles/{slug}.html')
 PAGE_URL = ('pages/{slug}.html')
 PAGE_SAVE_AS = ('pages/{slug}.html')
-# PAGINATION_PATTERNS = (
-#     (1, '{base_name}/', '{base_name}/index.html'),
-#     (2, '{base_name}/page/{number}/', '{base_name}/page/{number}/index.html'),
-# )
+PAGINATION_PATTERNS = (
+    (1, '{base_name}/', '{base_name}/index.html'),
+    (2, '{base_name}/page/{number}/', '{base_name}/page/{number}/index.html'),
+)
 AUTHOR_SAVE_AS = False
-PAGE_LANG_SAVE_AS = False
-
+PAGE_LANG_SAVE_AS = Fals
+e
 # Feed.
 FEED_DOMAIN = SITEURL
 # FEED_ALL_RSS = 'feeds/all.rss.xml'

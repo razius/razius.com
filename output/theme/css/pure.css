@@ -6,7 +6,7 @@
 
 a {
     text-decoration: none;
-    color: rgb(142, 142, 214);
+    color: #62AFD1;
 }
 a:hover,
 a:focus {
@@ -28,6 +28,7 @@ a:focus {
 pre {
     padding: 15px 15px 15px 15px;
     font-size: 90%;
+    margin: 0;
     /*box-shadow: 2px 2px 2px #888;*/
 }
 
@@ -86,7 +87,7 @@ pre {
     width: 65%;
     padding: 0 0px;
     float: right;
-    margin-bottom: 35px;
+    margin-bottom: 35px;a
 }
     hr {
         border: 1px solid #f2f2f0;
@@ -110,14 +111,35 @@ pre {
     text-align: left;
     width: 767px;
     max-width: 100%;
+    margin-left: 15px;
+}
+
+.site-info {
+    overflow: auto;
 }
 
 .header p {
-    padding: 15px 0;
+    padding-top: 15px;
 }
 
 .header p.pages {
     padding: 0;
+}
+
+.pages-menu span {
+    vertical-align:middle;
+    padding-right: 10px;
+    text-align: center;
+    line-height: 18px
+}
+
+.pages-menu span.separator {
+    color: #F9F9F9;
+}
+
+h1.brand-main {
+    display: inline;
+    padding-bottom: 5px;
 }
 
 .brand-main a {
@@ -142,7 +164,7 @@ pre {
 
 .links a {
     font-size: 15px;
-    padding-left: 15px;
+    /*padding: 0 10px;*/
     font-family: sans-serif;
     letter-spacing: 2px;
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
@@ -180,6 +202,10 @@ pre {
     border-radius: 50px;
     float: right;
     margin-left: 1em;
+}
+.avatar {
+    float: left;
+    border-radius: 50px;
 }
 .post-meta {
     color: #999;
@@ -267,10 +293,13 @@ pre {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.social {
+    padding-right: 15px;
+}
+
 .social img {
     width: 48px;
     height: auto;
-    margin-left: 15px;
 }
 
 /* LAYOUT CSS */
