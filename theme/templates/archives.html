@@ -1,0 +1,32 @@
+{% extends 'index.html' %}
+{% block title %}all posts // {{ super() }}{% endblock title %}
+{% block pagetitle %}all posts{% endblock pagetitle %}
+
+
+{% block content %}
+<div class="pure-g-r" id="layout">
+    {% include 'sidebar.html' %}
+    <div class="pure-u-3-4">
+        <div class="content">
+            <h1 class="content-subhead">All posts</h1>
+            {% for article in dates %}
+                <div class="pure-u-1 arhive-item">
+                    <div class="pure-u-1-6">
+                        <h5 class="arhive-date">{{ article.date|strftime('%Y') }}</h5>
+                        <h4 class="arhive-date">{{ article.date|strftime('%d %B') }}</h4>
+                    </div>
+                    <div class="pure-u-1-8">
+                        <a href="{{ SITEURL }}/{{ article.author.url }}" title="See posts by {{ article.author }}">
+                            <img class="arhive-avatar" alt="{{ article.author }}" src="{{ article.author_gravatar }}" height="52" width="52">
+                        </a>
+                    </div>
+                    <div class="pure-u-1-2">
+                        <a href="{{ article.url }}">{{ article.title }}</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="pure-g-r" id="layout">
+    {% include 'sidebar.html' %}
+    <div class="pure-u-3-4">
+        <div class="content">
+            <!-- A wrapper for all the blog posts -->
+            <div class="posts">
+                <h1 class="content-subhead">
+                    {% block pagetitle %}
+                        {% if not articles_page.has_previous() %}
+                            Latest posts
+                        {% else %}
+                            Posts
+                        {% endif %}
+                    {% endblock pagetitle %}
+                    {% if articles_page.has_previous() %}
+                        &ndash; Page&nbsp;{{ articles_page.number }}
+                    {% endif %}
+                </h1>
+                {% for article in articles_page.object_list %}
+                    {% include 'post.html' %}
+                {% endfor %}
+                {% include 'pagination.html' %}
+                {% include 'footer.html' %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

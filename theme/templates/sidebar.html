@@ -1,0 +1,24 @@
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('{{ COVER_IMG_URL }}')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <h1 class="brand-main"><a href="/">{{ SITENAME }}</a></h1>
+                    <p class="tagline">{{ TAGLINE }}</p>
+                <p>
+                    <span class="links pages"><a href="{{ SITEURL }}/">Home</a></span>
+                    {% for page in PAGES %}
+                        <span class="links pages{% if page == page %} active{% endif %}"><a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a></span>&mdot;
+                    {% endfor %}
+                </p>
+                {% for title, link in MENUITEMS %}
+                    <p class="links"><a href="{{ SITEURL }}/{{ link }}">{{ title }}</a></p>
+                {% endfor %}
+                {% for title, link in SOCIAL %}
+                    <a target="_blank" class="social {{ title }}" href="{{ link }}"><img src="{{ SITEURL }}/images/social/{{ title|lower }}.png" title="{{ title }}"></a>
+                {% endfor %}
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>
