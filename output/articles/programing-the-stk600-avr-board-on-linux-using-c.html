@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
+
+        <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+
+        <title>Programing the STK600 AVR board on Linux using C // Silviu Tantos (razius) // Toying with the idea of becoming a useful member of society.</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="/theme/css/pure.css">
+    <link rel="stylesheet" href="/theme/css/pygments/monokai.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/theme/js/jquery.fitvids.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1>
+                    <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
+                <p>
+                    <span class="links pages"><a href="/">Home</a></span>
+                        <span class="links pages active"><a href="/pages/about.html">About</a></span>
+                        <span class="links pages active"><a href="/pages/contact.html">Contact</a></span>
+                        <span class="links pages active"><a href="/pages/cv.html"><span class="caps">CV</span></a></span>
+                </p>
+                    <a target="_blank" class="social Github" href="http://github.com/razius"><img src="/images/social/github.png" title="Github"></a>
+                    <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="/images/social/last.fm.png" title="Last.fm"></a>
+                    <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="/images/social/twitter.png" title="Twitter"></a>
+                    <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="/images/social/rss.png" title="RSS"></a>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-3-4">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>Programing the <span class="caps">STK600</span> <span class="caps">AVR</span> board on Linux using&nbsp;C</h1>
+                        <p class="post-meta">
+                            meta = { 'category': <a href="/category/tech.html">tech</a>, 'date': 27-09-2012 }
+                            <div class="meta-tags">
+                                tags = [
+                                        <a class="post-category" href="/tag/avr.html">avr</a><span class="comma">,</span>
+                                        <a class="post-category" href="/tag/debian.html">debian</a><span class="comma">,</span>
+                                        <a class="post-category" href="/tag/linux.html">linux</a><span class="comma">,</span>
+                                        <a class="post-category" href="/tag/ubuntu.html">ubuntu</a><span class="comma">,</span>
+                                ]
+                            </div>
+                        </p>
+                </header>
+            </section>
+            <div class="section" id="setting-up-the-developing-enviroment">
+<h2>Setting up the developing&nbsp;enviroment</h2>
+<p>Note: I&#8217;m assuming you have a .deb based distribution and a <span class="caps">AVR</span> <span class="caps">STK600</span>
+board with a ATmega2560 microcontroller that you are programming using a
+usb&nbsp;cable.</p>
+<div class="section" id="installing-the-software">
+<h3>Installing the&nbsp;software</h3>
+<p>We need to install the following programs and their&nbsp;dependencies:</p>
+<dl class="docutils">
+<dt>gcc-avr - The <span class="caps">GNU</span> C compiler (cross compiler for&nbsp;avr)</dt>
+<dd>gdb-avr - The <span class="caps">GNU</span> Debugger for avr
+avr-libc - Standard C library for Atmel <span class="caps">AVR</span> development
+avrdude - Tool to download the compiled code and data to the Atmel&nbsp;<span class="caps">AVR</span></dd>
+</dl>
+<div class="system-message">
+<p class="system-message-title">System Message: <span class="caps">WARNING</span>/2 (<tt class="docutils">/mnt/content/articles/tech/programing-the-stk600-avr-board-on-linux-using-c.rst</tt>, line&nbsp;23)</p>
+Definition list ends without a blank line; unexpected unindent.</div>
+<p>microcontroller</p>
+<p>Install them by running the following&nbsp;command:</p>
+<pre class="literal-block">
+$ sudo apt-get install avrdude avrdude-doc gcc-avr binutils-avr avr-libc simulavr gdb-avr
+</pre>
+</div>
+<div class="section" id="setting-up-the-permissions">
+<h3>Setting up the&nbsp;permissions</h3>
+<p>In order to download the firmware on the device as a regular user we
+need to setup some udev rules for device permissions otherwise we get
+the following&nbsp;errors:</p>
+<pre class="literal-block">
+avrdude: usb_open(): cannot read serial number...
+avrdude: usb_open(): cannot read product name...
+avrdude: usbdev_open(): error setting configuration 1...
+avrdude: usbdev_open(): did not find any USB device...
+</pre>
+<p>Create a new file under /etc/udev/rules.d/ named 41-atmega.rules with
+the following&nbsp;content:</p>
+<pre class="literal-block">
+SUBSYSTEM==&quot;usb&quot;, ATTR{idVendor}==&quot;03eb&quot;, ATTR{idProduct}==&quot;product_id&quot;, OWNER=&quot;my_username&quot;, GROUP=&quot;my_group&quot;, MODE=&quot;0666&quot;
+</pre>
+<p>Where you need to replace product_id, my_username and my_group with
+your own&nbsp;values.</p>
+<p><strong>my_username</strong> is the username that you login to the system, you can
+find it by running the following&nbsp;command:</p>
+<pre class="literal-block">
+$ id -gn
+</pre>
+<p><strong>my_group</strong> is the primary group of your username, you can find it by
+running the following&nbsp;command:</p>
+<pre class="literal-block">
+$ id -un
+</pre>
+<p><strong>product_id</strong> is the <span class="caps">USB</span> Product <span class="caps">ID</span> assigned by the manufacturer, you
+can find it by running the following&nbsp;command:</p>
+<pre class="literal-block">
+$ lsusb |grep Atmel | awk '{ print $6 }' | awk 'BEGIN { FS = &quot;:&quot; } ; { print $2 }'
+</pre>
+<p>Reload udev to apply our&nbsp;rules:</p>
+<pre class="literal-block">
+$ sudo /etc/init.d/udev reload
+</pre>
+<p>Finally, be sure to disconnect and reconnect the <span class="caps">AVR</span> board for the new
+rule to be&nbsp;applied.</p>
+</div>
+</div>
+<div class="section" id="creating-a-new-project">
+<h2>Creating a new&nbsp;project</h2>
+<p>Create a new file named <strong>test.c</strong> with the following&nbsp;content:</p>
+<pre class="literal-block">
+/* Sample C program to turn on all leds on the AVR */
+
+#include
+
+int main(void) {
+        DDRA = 0xFF;
+    PORTA = ~0xFF;
+        return 0;
+}
+</pre>
+<p>Create a new file named <a class="reference external" href="http://en.wikipedia.org/wiki/Make_(software)#Makefiles">Makefile</a> with the following&nbsp;content:</p>
+<pre class="literal-block">
+CC=`which avr-gcc`
+CFLAGS=-g -Os -Wall -mcall-prologues -std=c99 -mmcu=atmega2560
+OBJ2HEX=`which avr-objcopy`
+AVRD=`which avrdude`
+TARGET=test # Modify this to match your C filename without the .c extension (it's test.c in this case)
+
+program : $(TARGET).hex
+                $(AVRD) -p atmega2560 -c stk600 -P usb -v -v -U flash:w:$(TARGET).hex
+%.obj : %.o
+        $(CC) $(CFLAGS) $&lt; -o $&#64;
+
+%.hex : %.obj
+        $(OBJ2HEX) -R .eeprom -O ihex $&lt; $&#64;
+
+clean :
+                rm -f *.hex *.obj *.o
+</pre>
+<p>Now all you have to do is run <strong>make</strong> in the project folder to build
+the binary and upload it to the <span class="caps">AVR</span>&nbsp;Board:</p>
+<pre class="literal-block">
+$ make
+</pre>
+</div>
+
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_identifier = "articles/programing-the-stk600-avr-board-on-linux-using-c.html";
+                        (function() {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://razius.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+                </div>
+<footer class="footer">
+
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>

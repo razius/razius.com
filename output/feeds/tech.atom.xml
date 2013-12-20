@@ -1,0 +1,841 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Silviu Tantos (razius)</title><link href="/" rel="alternate"></link><link href="/feeds/tech.atom.xml" rel="self"></link><id>/</id><updated>2013-11-17T20:58:00+01:00</updated><entry><title>Building a messaging framework for Django</title><link href="/articles/building-a-messaging-framework-for-django.html" rel="alternate"></link><updated>2013-11-17T20:58:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-11-17:articles/building-a-messaging-framework-for-django.html</id><summary type="html">&lt;p&gt;As you might have noticed, one of the key usability features that we
+were missing on Iconfinder was the ability to display so called &amp;quot;flash
+messages.&amp;quot; Flash messages are one-time notification messages shown to
+the user after processing a form or handling other types of user input,
+so the user knows if things went as expected. For example, changing your
+password without being told &amp;quot;your password was updated&amp;quot; can be a little
+confusing, so it was long overdue that we did something about something
+that&amp;nbsp;obvious.&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Note: This is a cross-post of `an article`_ that I originally wrote on
+my company&amp;#8217;s blog a while&amp;nbsp;back.&lt;/em&gt;&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="messages-cropped" src="/wp-content/uploads/2013/11/messages-cropped.png" /&gt;
+&lt;p class="caption"&gt;messages-cropped&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="context-is-king"&gt;
+&lt;h2&gt;Context is&amp;nbsp;king&lt;/h2&gt;
+&lt;p&gt;Most popular web frameworks already feature an easy drop-in way of
+showing these flash messages. Iconfinder is a heavy Django shop, and of
+course Django comes with its own &lt;a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/contrib/messages/"&gt;messaging framework&lt;/a&gt; built in for
+just this purpose. But, like most other drop-in solutions, it rarely
+fits the bill of a larger&amp;nbsp;site.&lt;/p&gt;
+&lt;p&gt;The built in messaging framework has a problem in that it&amp;#8217;s not
+contextually bound - in other words, it&amp;#8217;s not associated with any one
+form or page. This means, that messages from a specific form could under
+odd circumstances be shown in the completely wrong place, which is
+arguably more confusing than not being shown any message at all.
+Furthermore, this also means that we can&amp;#8217;t create &amp;quot;out of band&amp;quot; messages
+to be shown from asynchronous jobs, such as when we&amp;#8217;re processing icon
+data, as that would just show up somewhere where the user might not
+expect it. What was left for us to do then, was to roll our own solution
+that would make it possible for us to do all the things we&amp;nbsp;wanted.&lt;/p&gt;
+&lt;p&gt;Now, &amp;quot;contextual&amp;quot; is a pretty ambiguous term (which is why academics
+love using it) so we of course had to pick something more &amp;quot;tangible.&amp;quot;
+Django sites basically contain a bunch of views, which have the
+responsibility of displaying a specific kind of page, so as a starting
+place, we decided to bind messages to a specific view. As each user is
+also identified by a session, it made sense to start out with these two
+things defining the&amp;nbsp;context.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="transient-messages-in-redis"&gt;
+&lt;h2&gt;Transient messages in&amp;nbsp;Redis&lt;/h2&gt;
+&lt;p&gt;Given the contextual nature of the messages, it is very likely that a
+user might have more than just one message waiting for him - especially
+if he or she is doing a lot of stuff at once. Therefore, the standard
+solution of using cookies to store the messages made no sense, as it
+would mean that a lot of pointless data was sent over the wire all the
+time. So, we have to store the data somewhere. Our primary PostgreSQL
+database is the first option, that comes to mind, but given that
+messages are shown once, that would mean that we&amp;#8217;d be inserting and
+deleting a lot of data - something a relational database is usually not
+made for. Luckily, there are options out there that are basically made
+for this kind of workload, like for example our favorite key-value
+store, &lt;a class="reference external" href="http://redis.io/"&gt;Redis&lt;/a&gt;. Redis is essentially in-memory, but we do snapshots
+every minute and run a master/slave pair to make sure we don&amp;#8217;t loose too
+much data in case of failure, but the loss of a couple of messages won&amp;#8217;t
+be the end of the world, which makes it the perfect tool for the&amp;nbsp;job.&lt;/p&gt;
+&lt;p&gt;The beauty of Redis is, that we can get away with a simple key
+structure: the base key is the application name, followed by the session
+key and finally by a view identifier. This makes insertion and retrieval
+of values very easy. The keys are also set to expire after a default
+period of inactivity, just to make sure we don&amp;#8217;t have any orphaned
+messages lying around a week after you&amp;#8217;ve changed your&amp;nbsp;password.&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;messages:user-session-key:view-identifier&lt;/span&gt;&lt;/tt&gt;&lt;/p&gt;
+&lt;p&gt;When a new message needs to be shown, we simply serialize it along with
+a bit of meta data and store it in a &lt;a class="reference external" href="http://redis.io/topics/data-types"&gt;sorted set&lt;/a&gt; with the message&amp;#8217;s
+timestamp as a score. This way the messages can be easily sorted by time
+or be purged using a garbage collection scheme if we run out of&amp;nbsp;space.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-exposed-api"&gt;
+&lt;h2&gt;The exposed&amp;nbsp;&lt;span class="caps"&gt;API&lt;/span&gt;&lt;/h2&gt;
+&lt;p&gt;One of the keys to keeping a large code base maintainable is to expose
+functionality through a stable, consistent &lt;span class="caps"&gt;API&lt;/span&gt;. The contextual messaging
+system adheres to this principle by exposing to simle methods: one to
+add a message and the other one to retrieve all the messages for a
+session in a view. If you&amp;#8217;re a Pythonista, the following should look
+familiar to&amp;nbsp;you:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;messaging.models&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;Message&lt;/span&gt;
+
+&lt;span class="n"&gt;Message&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;session_key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;current-users-session-key&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;This *is* the message you are looking for.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;title&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Hello&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Message&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;&lt;span class="caps"&gt;INFO&lt;/span&gt;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;autoclose&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="bp"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;my_view&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="n"&gt;messages&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Message&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;session_key&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;current-users-session-key&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                       &lt;span class="n"&gt;view&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;my_view&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;div class="section" id="a-perfect-case-for-a-mixin"&gt;
+&lt;h2&gt;A perfect case for a&amp;nbsp;mixin&lt;/h2&gt;
+&lt;p&gt;Django provides &lt;a class="reference external" href="https://docs.djangoproject.com/en/dev/topics/class-based-views/"&gt;class based views&lt;/a&gt; which makes it easy to structure
+views and expose common functionality by harnessing inheritance and
+mixins. Because in most of the cases we would need to add and retrieve
+messages for the current view, to make it even easier we created a mixin
+that would provide some abstracted functionality to our view classes.
+The retrieval of messages for the current view is handled by the mixin
+so messages are ready to be consumed in the templates without having to
+call &lt;tt class="docutils literal"&gt;Message.get()&lt;/tt&gt; in each&amp;nbsp;view.&lt;/p&gt;
+&lt;p&gt;Adding a message is also a lot easier as we can figure out the view name
+and session from the&amp;nbsp;view:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;DashboardView&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;MessageViewMixin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;TemplateView&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;form_valid&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;form&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="bp"&gt;self&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;add_message&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;text&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;Your settings have been changed successfully.&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                         &lt;span class="n"&gt;status&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Message&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;&lt;span class="caps"&gt;SUCCESS&lt;/span&gt;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Doesn&amp;#8217;t get much easier than that,&amp;nbsp;huh?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="don-t-be-afraid-to-write-code"&gt;
+&lt;h2&gt;Don&amp;#8217;t be afraid to write&amp;nbsp;code&lt;/h2&gt;
+&lt;p&gt;If there is a functionality built into the framework that you need but
+it doesn&amp;#8217;t fit you use case, don&amp;#8217;t be afraid to write your own solution.
+In most cases you only need a minimum viable product that fits your
+needs really well rather than a full fledged library that can send a
+rocket to the&amp;nbsp;moon.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="django"></category><category term="iconfinder"></category><category term="messaging"></category><category term="redis"></category></entry><entry><title>Launching services after Vagrant mount</title><link href="/articles/launching-services-after-vagrant-mount.html" rel="alternate"></link><updated>2013-11-10T14:40:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-11-10:articles/launching-services-after-vagrant-mount.html</id><summary type="html">&lt;p&gt;I recently had to set up a Vagrant project where all the configuration
+files for services like nginx, supervisor, mysql where symlinks pointing
+to files residing on the &lt;a class="reference external" href="http://docs.vagrantup.com/v2/synced-folders/index.html"&gt;Vagrant synced folder&lt;/a&gt;. This turned out to be
+a bit of a problem, when the Vagrant box boots, one of the last things
+it does is mount the synced folder, so those services would fail to
+start because of missing configuration&amp;nbsp;files.&lt;/p&gt;
+&lt;p&gt;To fix the problem you need to ensure that all services are started
+after Vagrant had the chance to mount the synced /vagrant/ folder and to
+do this there are a couple of ways depending on the type of init script
+that the service&amp;nbsp;has.&lt;/p&gt;
+&lt;div class="section" id="upstart"&gt;
+&lt;h2&gt;Upstart&lt;/h2&gt;
+&lt;p&gt;There is an &lt;a class="reference external" href="http://upstart.ubuntu.com/cookbook/#event"&gt;upstart event&lt;/a&gt; that Vagrant emits each time it mounts a
+synced folder that is called &lt;em&gt;vagrant-mounted&lt;/em&gt; so we can modify the
+upstart configuration file for services that depend on the Vagrant
+synced folder to listen and start after the &lt;em&gt;vagrant-mounted&lt;/em&gt; &lt;a class="reference external" href="https://github.com/mitchellh/vagrant/blob/7897de3fbdc4c61a281954ec2df1c23bfe22f4d4/plugins/guests/ubuntu/cap/mount_nfs.rb#L13"&gt;event is
+emitted&lt;/a&gt;.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# nginx&lt;/span&gt;
+description &lt;span class="s2"&gt;&amp;quot;nginx http daemon&amp;quot;&lt;/span&gt;
+author &lt;span class="s2"&gt;&amp;quot;Silviu Tantos &amp;quot;&lt;/span&gt;
+
+&lt;span class="c"&gt;# Listen and start after the vagrant-mounted event&lt;/span&gt;
+start on vagrant-mounted
+stop on runlevel &lt;span class="o"&gt;[&lt;/span&gt;!2345&lt;span class="o"&gt;]&lt;/span&gt;
+
+env &lt;span class="nv"&gt;&lt;span class="caps"&gt;DAEMON&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/usr/sbin/nginx
+env &lt;span class="nv"&gt;&lt;span class="caps"&gt;PID&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/var/run/nginx.pid
+
+expect fork
+respawn
+respawn limit 10 5
+
+pre-start script
+        &lt;span class="nv"&gt;$&lt;span class="caps"&gt;DAEMON&lt;/span&gt;&lt;/span&gt; -t
+        &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt; -ne 0 &lt;span class="o"&gt;]&lt;/span&gt;
+                &lt;span class="k"&gt;then &lt;/span&gt;&lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="nv"&gt;$?&lt;/span&gt;
+        &lt;span class="k"&gt;fi&lt;/span&gt;
+end script
+
+&lt;span class="nb"&gt;exec&lt;/span&gt; &lt;span class="nv"&gt;$&lt;span class="caps"&gt;DAEMON&lt;/span&gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;div class="section" id="system-v"&gt;
+&lt;h2&gt;System-V&lt;/h2&gt;
+&lt;p&gt;If you are not running Ubuntu as the guest &lt;span class="caps"&gt;OS&lt;/span&gt; or you don&amp;#8217;t want to
+convert your init script to upstart, there&amp;#8217;s still hope, albeit a bit
+more complicated. Underneath Vagrant uses VirtualBox&amp;#8217;s shared folder for
+it&amp;#8217;s synced folder so we can hook-up to udev events and trigger a script
+execution after the VirtualBox mount event has fired, this of course
+will also works for VirtualBox&amp;#8217;s shared folder not just for Vagrant&amp;#8217;s
+synced&amp;nbsp;folders.&lt;/p&gt;
+&lt;div class="section" id="finding-out-the-udev-event"&gt;
+&lt;h3&gt;Finding out the udev&amp;nbsp;event&lt;/h3&gt;
+&lt;p&gt;This step is not needed as I already wrote the udev rule, it&amp;#8217;s just to
+show how I came up with it. If you&amp;#8217;re not interested in it just skip to
+writing the udev&amp;nbsp;rule.&lt;/p&gt;
+&lt;p&gt;Fire up a terminal and listen to udev&amp;nbsp;events:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;root@vagrant:~# udevadm monitor --property --kernel
+monitor will print the received events &lt;span class="k"&gt;for&lt;/span&gt;:
+&lt;span class="caps"&gt;KERNEL&lt;/span&gt; - the kernel uevent
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Fire up another terminal and trigger a&amp;nbsp;mount:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;root@vagrant:~# mount -t vboxsf -o &lt;span class="nv"&gt;uid&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;id -u vagrant&lt;span class="sb"&gt;`&lt;/span&gt;,gid&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="sb"&gt;`&lt;/span&gt;id -g vagrant&lt;span class="sb"&gt;`&lt;/span&gt; /vagrant /vagrant
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Now we should see the event in the first terminal&amp;nbsp;window:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;root@vagrant:~# udevadm monitor --property --kernel
+monitor will print the received events &lt;span class="k"&gt;for&lt;/span&gt;:
+&lt;span class="caps"&gt;KERNEL&lt;/span&gt; - the kernel uevent
+
+&lt;span class="caps"&gt;KERNEL&lt;/span&gt;&lt;span class="o"&gt;[&lt;/span&gt;4234.545610&lt;span class="o"&gt;]&lt;/span&gt; add      /devices/virtual/bdi/vboxsf-13 &lt;span class="o"&gt;(&lt;/span&gt;bdi&lt;span class="o"&gt;)&lt;/span&gt;
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;ACTION&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;add
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;DEVPATH&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;/devices/virtual/bdi/vboxsf-13
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;SEQNUM&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;1407
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;SUBSYSTEM&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;bdi
+&lt;span class="nv"&gt;UDEV_LOG&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;3
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;div class="section" id="writing-the-udev-rule"&gt;
+&lt;h3&gt;Writing the udev&amp;nbsp;rule&lt;/h3&gt;
+&lt;p&gt;We can see that the subsystem is &lt;em&gt;bdi&lt;/em&gt; and the action is &lt;em&gt;add&lt;/em&gt; so we can
+write a &lt;a class="reference external" href="http://hackaday.com/2009/09/18/how-to-write-udev-rules/"&gt;udev rule&lt;/a&gt; for the event. I use
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;/etc/udev/rules.d/50-vagrant-mount.rules&lt;/span&gt;&lt;/tt&gt; as the file name and&amp;nbsp;path.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="c"&gt;# Start on mount&lt;/span&gt;
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;SUBSYSTEM&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;bdi&amp;quot;&lt;/span&gt;,&lt;span class="caps"&gt;ACTION&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;add&amp;quot;&lt;/span&gt;,&lt;span class="caps"&gt;RUN&lt;/span&gt;+&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr/bin/screen -m -d bash -c &amp;#39;sleep 5; /etc/init.d/nginx start&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="c"&gt;# Stop on unmount&lt;/span&gt;
+&lt;span class="nv"&gt;&lt;span class="caps"&gt;SUBSYSTEM&lt;/span&gt;&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;bdi&amp;quot;&lt;/span&gt;,&lt;span class="caps"&gt;ACTION&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;remove&amp;quot;&lt;/span&gt;,&lt;span class="caps"&gt;RUN&lt;/span&gt;+&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/usr/bin/screen -m -d bash -c &amp;#39;sleep 5; /etc/init.d/nginx stop&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;This will run each time a VirtualBox shared folder is mounted. It spawns
+a screen session (of course you need to have the &lt;a class="reference external" href="https://wiki.archlinux.org/index.php/GNU_Screen"&gt;screen&lt;/a&gt; package
+installed) to prevent the command from being killed by systemd when
+parent udev exits, sleeps for 5 seconds to make sure Vagrant had the
+chance to mount the synced folder and exits successfully and finally
+start the&amp;nbsp;service.&lt;/p&gt;
+&lt;p&gt;Don&amp;#8217;t forget to type in the full paths otherwise udev won&amp;#8217;t be able to
+find the command. For more information see the &lt;a class="reference external" href="http://www.freedesktop.org/software/systemd/man/udev.html#RUN%7Btype%7D"&gt;udev manual&lt;/a&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="init"></category><category term="upstart"></category><category term="vagrant"></category><category term="virtualbox"></category></entry><entry><title>Getting the IP address of a specific interface in puppet using facter</title><link href="/articles/getting-the-ip-address-of-a-specific-interface-in-puppet-using-facter.html" rel="alternate"></link><updated>2013-10-06T22:13:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-10-06:articles/getting-the-ip-address-of-a-specific-interface-in-puppet-using-facter.html</id><summary type="html">&lt;p&gt;One of the problems that I find annoying in puppet is that you can&amp;#8217;t
+easily obtain the &lt;span class="caps"&gt;IP&lt;/span&gt; address of a specific network&amp;nbsp;interface.&lt;/p&gt;
+&lt;p&gt;Let&amp;#8217;s say that you want to define a class or type to which you wish to
+pass a interface name and use it&amp;#8217;s &lt;span class="caps"&gt;IP&lt;/span&gt; address as a&amp;nbsp;variable.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8
+9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;dns&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vg"&gt;$interface&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="vg"&gt;$address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; &lt;span class="n"&gt;insert&lt;/span&gt; &lt;span class="n"&gt;magic&lt;/span&gt; &lt;span class="n"&gt;here&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+
+    &lt;span class="vg"&gt;$message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;So you want to know the &lt;span class="caps"&gt;IP&lt;/span&gt; address for ${interface} huh?&amp;quot;&lt;/span&gt;
+    &lt;span class="vg"&gt;$message&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Well, it&amp;#39;s ${address}&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;notify&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;  &lt;span class="s2"&gt;&amp;quot;${message}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;dns&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;interface&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;eth0&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;We could use facters $::ipaddress, but what happens if the network
+interface is not our main network interface? What if we want to use more
+than one network interface? There&amp;#8217;s $::ipaddress_eth0, but how do we
+construct or reference a variable in a dynamic way (construct a variable
+based on another variable)&amp;nbsp;?&lt;/p&gt;
+&lt;p&gt;Luckily there&amp;#8217;s a nifty trick involving inline templates and&amp;nbsp;lookupvar:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8
+9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="n"&gt;dns&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="vg"&gt;$interface&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="vg"&gt;$address&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;inline_template&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;lt;%= scope.lookupvar(&amp;#39;::ipaddress_${interface}&amp;#39;) -%&amp;gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="vg"&gt;$message&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;So you want to know the &lt;span class="caps"&gt;IP&lt;/span&gt; address for ${interface} huh?&amp;quot;&lt;/span&gt;
+    &lt;span class="vg"&gt;$message&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Well, it&amp;#39;s ${address}&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;notify&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;  &lt;span class="s2"&gt;&amp;quot;${message}&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;dns&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;interface&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;eth0&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="facter"></category><category term="puppet"></category></entry><entry><title>Vagrant and SSH agent forwarding</title><link href="/articles/vagrant-and-ssh-agent-forwarding.html" rel="alternate"></link><updated>2013-09-13T08:29:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-09-13:articles/vagrant-and-ssh-agent-forwarding.html</id><summary type="html">&lt;p&gt;I haven&amp;#8217;t even started yet and I can already hear you muttering over
+there, &amp;quot;What the hell is this Vagrant thing and why should I care?&amp;quot;.
+Well, &lt;a class="reference external" href="http://www.vagrantup.com/"&gt;Vagrant&lt;/a&gt; is a wrapper around &lt;a class="reference external" href="https://www.virtualbox.org/"&gt;VirtualBox&lt;/a&gt;, the virtualization
+software, that can create homogeneous development environments
+automatically without any effort from the developer. This means that we
+have a consistent development environment across out team with the same
+&lt;span class="caps"&gt;OS&lt;/span&gt; version, same package versions, same database, same settings. No more
+&amp;quot;But it worked on &lt;span class="caps"&gt;MY&lt;/span&gt; machine&amp;quot;&amp;nbsp;excuses.&lt;/p&gt;
+&lt;p&gt;Lets say that inside this virtual machine you need to use your &lt;span class="caps"&gt;SSH&lt;/span&gt; key,
+maybe the key for your &lt;a class="reference external" href="https://github.com/"&gt;Github&lt;/a&gt; account to access your private or
+public git repositories or maybe the key to connect to a remote server.
+That can be a problem, you don&amp;#8217;t want to distribute your &lt;span class="caps"&gt;SSH&lt;/span&gt; keys with
+the Vagrant box. Each &lt;span class="caps"&gt;SSH&lt;/span&gt; key should be tied to an individual developer
+account so to prevent &lt;span class="caps"&gt;SSH&lt;/span&gt; key sharing you would need to either
+distribute each &lt;span class="caps"&gt;SSH&lt;/span&gt; key with a new Vagrant box or copy it during
+provisioning. That&amp;#8217;s not really homogeneous, you will end up with a
+Vagrant box for each developer or an inconvenient way of providing the
+&lt;span class="caps"&gt;SSH&lt;/span&gt; key depending on the developer&amp;#8217;s&amp;nbsp;&lt;span class="caps"&gt;OS&lt;/span&gt;.&lt;/p&gt;
+&lt;p&gt;Enter &lt;a class="reference external" href="https://help.github.com/articles/using-ssh-agent-forwarding"&gt;&lt;span class="caps"&gt;SSH&lt;/span&gt; agent forwarding&lt;/a&gt;. With &lt;span class="caps"&gt;SSH&lt;/span&gt; agent forwarding we can use the
+&lt;span class="caps"&gt;SSH&lt;/span&gt; key from our local machine inside the Vagrant&amp;nbsp;box.&lt;/p&gt;
+&lt;p&gt;To enable agent forwarding for all ssh connections inside your Vagrant
+box you need to set the following in your Vagrant file inside the config
+section (Vagrant.configure(VAGRANTFILE_API_VERSION) do&amp;nbsp;|config|):&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;
+    config.ssh.private_key_path &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;~/.ssh/id_rsa&amp;quot;&lt;/span&gt;
+    config.ssh.forward_agent &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nb"&gt;true&lt;/span&gt;
+&lt;span class="o"&gt;[&lt;/span&gt;...&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Due to a Vagrant bug &lt;span class="caps"&gt;SSH&lt;/span&gt; Agent Forwarding not available during
+provisioning (&lt;a class="reference external" href="https://github.com/mitchellh/vagrant/issues/1303"&gt;see issue&lt;/a&gt;), to work around that we need to create a
+file in /etc/sudoers.d/ with the contents Defaults env_keep +=
+&amp;quot;SSH_AUTH_SOCK&amp;quot; so that the /etc/sudoers file keeps the
+&amp;quot;SSH_AUTH_SOCK&amp;quot; environment&amp;nbsp;variable.&lt;/p&gt;
+&lt;p&gt;In your Vagrant&amp;nbsp;file:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;vm&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;provision&lt;/span&gt; &lt;span class="ss"&gt;:shell&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+    &lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inline&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;touch $1 &amp;amp;&amp;amp; chmod 0440 $1 &amp;amp;&amp;amp; echo $2 &amp;gt; $1&amp;quot;&lt;/span&gt;
+    &lt;span class="n"&gt;shell&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;args&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="sx"&gt;%q{/etc/sudoers.d/root_ssh_agent &amp;quot;Defaults env_keep += \&amp;quot;SSH_AUTH_SOCK\&amp;quot;&amp;quot;}&lt;/span&gt;
+&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;or in the shell script that you&amp;#8217;re using for&amp;nbsp;provisioning:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;SSH_FIX_FILE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;/etc/sudoers.d/root_ssh_agent&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt; ! -f  &lt;span class="nv"&gt;$SSH_FIX_FILE&lt;/span&gt; &lt;span class="o"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;span class="k"&gt;    &lt;/span&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Defaults env_keep += \&amp;quot;SSH_AUTH_SOCK\&amp;quot;&amp;quot;&lt;/span&gt; &amp;gt; &lt;span class="nv"&gt;$SSH_FIX_FILE&lt;/span&gt;
+    chmod 0440 &lt;span class="nv"&gt;$SSH_FIX_FILE&lt;/span&gt;
+&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="provisioning"></category><category term="ssh"></category><category term="vagrant"></category></entry><entry><title>Generating password hashes for puppet</title><link href="/articles/generating-password-hashes-for-puppet.html" rel="alternate"></link><updated>2013-07-08T10:25:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-07-08:articles/generating-password-hashes-for-puppet.html</id><summary type="html">&lt;p&gt;Puppet expects the user’s password to be encrypted in the format the
+local system expects, for most modern Unix-like systems (Linux, *&lt;span class="caps"&gt;BSD&lt;/span&gt;,
+Solaris, etc.) this format is a salted &lt;span class="caps"&gt;SHA1&lt;/span&gt; password&amp;nbsp;hash.&lt;/p&gt;
+&lt;p&gt;To generate a password hash to use with puppet manifest files you can
+use the mkpasswd utility (it&amp;#8217;s available in the whois&amp;nbsp;package):&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="nv"&gt;$ &lt;/span&gt;mkpasswd -m sha-512
+Password:
+&lt;span class="nv"&gt;$6$qfPDlAej83p$cj2nc1NjbKjhL42Mo&lt;/span&gt;/3Uia4NqD4dIB3ouVeI/tSG92UqH5cMKOA/ihjmxAuRtKHzGED0EHmdM0iNxa/&lt;span class="caps"&gt;662NW&lt;/span&gt;//
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;You can then use the password hash in a puppet manifest&amp;nbsp;file:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="k"&gt;ensure&lt;/span&gt;           &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;present&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;password&lt;/span&gt;         &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;$6$qfPDlAej83p$cj2nc1NjbKjhL42Mo/3Uia4NqD4dIB3ouVeI/tSG92UqH5cMKOA/ihjmxAuRtKHzGED0EHmdM0iNxa/&lt;span class="caps"&gt;662NW&lt;/span&gt;//&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Don&amp;#8217;t forget to put the password in quotes so that puppet does not
+interpret it as a variable if it contains the dollar sign&amp;nbsp;($).&lt;/p&gt;
+&lt;p&gt;If you want the passwords to be stored in plain text in the puppet
+manifest you can use puppet&amp;#8217;s sha1 function to generate the hashed
+version of the&amp;nbsp;password:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;user&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;root&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+  &lt;span class="k"&gt;ensure&lt;/span&gt;           &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;present&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="n"&gt;password&lt;/span&gt;         &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;sha1&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;password&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;dl class="docutils"&gt;
+&lt;dt&gt;References:&lt;/dt&gt;
+&lt;dd&gt;&lt;ul class="first last simple"&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://docs.puppetlabs.com/references/latest/type.html#user"&gt;Puppet type&amp;nbsp;user&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="reference external" href="http://docs.puppetlabs.com/references/latest/function.html#sha1"&gt;Puppet sha1&amp;nbsp;function&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/dd&gt;
+&lt;/dl&gt;
+</summary><category term="password"></category><category term="puppet"></category><category term="shadow"></category></entry><entry><title>Testing print stylesheets using Google Chrome</title><link href="/articles/testing-print-stylesheets-using-google-chome.html" rel="alternate"></link><updated>2013-05-14T21:46:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-05-14:articles/testing-print-stylesheets-using-google-chome.html</id><summary type="html">&lt;p&gt;Testing &lt;span class="caps"&gt;CSS&lt;/span&gt; print media queries is really difficult but &lt;a class="reference external" href="https://plus.google.com/+AddyOsmani/posts/MgpioU84JPe"&gt;a new
+featured&lt;/a&gt; was introduced in Google Chrome in December that allows you
+to apply different &lt;span class="caps"&gt;CSS&lt;/span&gt; media types like handheld, print, screen and so&amp;nbsp;on.&lt;/p&gt;
+&lt;p&gt;1. &lt;a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/shortcuts#opening-devtools"&gt;Open Developer Tools&lt;/a&gt; in Google Chrome by clicking the menu icon at
+the top-right of your browser window, then select Tools → Developer&amp;nbsp;tools.&lt;/p&gt;
+&lt;p&gt;2. Open up the Overrides menu in the Developer Tools by clicking the
+gear in the bottom right&amp;nbsp;corner:&lt;/p&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/testing-print-stylesheets-using-google-chome.rst&lt;/tt&gt;, line&amp;nbsp;17)&lt;/p&gt;
+Unexpected indentation.&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;a href="#id1"&gt;&lt;span class="problematic" id="id2"&gt;`|dev-tools-settings|`_&lt;/span&gt;&lt;/a&gt;&lt;/blockquote&gt;
+&lt;p&gt;3. Enable &amp;quot;Emulate &lt;span class="caps"&gt;CSS&lt;/span&gt; media&amp;quot; and select the &amp;quot;print&amp;quot; media type option
+from the drop-down&amp;nbsp;box:&lt;/p&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/testing-print-stylesheets-using-google-chome.rst&lt;/tt&gt;, line&amp;nbsp;21)&lt;/p&gt;
+Unexpected indentation.&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;a href="#id3"&gt;&lt;span class="problematic" id="id4"&gt;`|emulate-css-print|`_&lt;/span&gt;&lt;/a&gt;&lt;/blockquote&gt;
+&lt;p&gt;You can find more information and nifty tricks in the &lt;a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/mobile-emulation"&gt;official
+documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;div class="system-messages section"&gt;
+&lt;h2&gt;Docutils System&amp;nbsp;Messages&lt;/h2&gt;
+&lt;div class="system-message" id="id1"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/testing-print-stylesheets-using-google-chome.rst&lt;/tt&gt;, line 17); &lt;em&gt;&lt;a href="#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+Unknown target name: &amp;quot;|dev-tools-settings|&amp;quot;.&lt;/div&gt;
+&lt;div class="system-message" id="id3"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/testing-print-stylesheets-using-google-chome.rst&lt;/tt&gt;, line 21); &lt;em&gt;&lt;a href="#id4"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+Unknown target name: &amp;quot;|emulate-css-print|&amp;quot;.&lt;/div&gt;
+&lt;/div&gt;
+</summary></entry><entry><title>Programing the STK600 AVR board on Linux using C</title><link href="/articles/programing-the-stk600-avr-board-on-linux-using-c.html" rel="alternate"></link><updated>2012-09-27T10:51:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2012-09-27:articles/programing-the-stk600-avr-board-on-linux-using-c.html</id><summary type="html">&lt;div class="section" id="setting-up-the-developing-enviroment"&gt;
+&lt;h2&gt;Setting up the developing&amp;nbsp;enviroment&lt;/h2&gt;
+&lt;p&gt;Note: I&amp;#8217;m assuming you have a .deb based distribution and a &lt;span class="caps"&gt;AVR&lt;/span&gt; &lt;span class="caps"&gt;STK600&lt;/span&gt;
+board with a ATmega2560 microcontroller that you are programming using a
+usb&amp;nbsp;cable.&lt;/p&gt;
+&lt;div class="section" id="installing-the-software"&gt;
+&lt;h3&gt;Installing the&amp;nbsp;software&lt;/h3&gt;
+&lt;p&gt;We need to install the following programs and their&amp;nbsp;dependencies:&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;gcc-avr - The &lt;span class="caps"&gt;GNU&lt;/span&gt; C compiler (cross compiler for&amp;nbsp;avr)&lt;/dt&gt;
+&lt;dd&gt;gdb-avr - The &lt;span class="caps"&gt;GNU&lt;/span&gt; Debugger for avr
+avr-libc - Standard C library for Atmel &lt;span class="caps"&gt;AVR&lt;/span&gt; development
+avrdude - Tool to download the compiled code and data to the Atmel&amp;nbsp;&lt;span class="caps"&gt;AVR&lt;/span&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/programing-the-stk600-avr-board-on-linux-using-c.rst&lt;/tt&gt;, line&amp;nbsp;23)&lt;/p&gt;
+Definition list ends without a blank line; unexpected unindent.&lt;/div&gt;
+&lt;p&gt;microcontroller&lt;/p&gt;
+&lt;p&gt;Install them by running the following&amp;nbsp;command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo apt-get install avrdude avrdude-doc gcc-avr binutils-avr avr-libc simulavr gdb-avr
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="setting-up-the-permissions"&gt;
+&lt;h3&gt;Setting up the&amp;nbsp;permissions&lt;/h3&gt;
+&lt;p&gt;In order to download the firmware on the device as a regular user we
+need to setup some udev rules for device permissions otherwise we get
+the following&amp;nbsp;errors:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+avrdude: usb_open(): cannot read serial number...
+avrdude: usb_open(): cannot read product name...
+avrdude: usbdev_open(): error setting configuration 1...
+avrdude: usbdev_open(): did not find any USB device...
+&lt;/pre&gt;
+&lt;p&gt;Create a new file under /etc/udev/rules.d/ named 41-atmega.rules with
+the following&amp;nbsp;content:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+SUBSYSTEM==&amp;quot;usb&amp;quot;, ATTR{idVendor}==&amp;quot;03eb&amp;quot;, ATTR{idProduct}==&amp;quot;product_id&amp;quot;, OWNER=&amp;quot;my_username&amp;quot;, GROUP=&amp;quot;my_group&amp;quot;, MODE=&amp;quot;0666&amp;quot;
+&lt;/pre&gt;
+&lt;p&gt;Where you need to replace product_id, my_username and my_group with
+your own&amp;nbsp;values.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;my_username&lt;/strong&gt; is the username that you login to the system, you can
+find it by running the following&amp;nbsp;command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ id -gn
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;my_group&lt;/strong&gt; is the primary group of your username, you can find it by
+running the following&amp;nbsp;command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ id -un
+&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;product_id&lt;/strong&gt; is the &lt;span class="caps"&gt;USB&lt;/span&gt; Product &lt;span class="caps"&gt;ID&lt;/span&gt; assigned by the manufacturer, you
+can find it by running the following&amp;nbsp;command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ lsusb |grep Atmel | awk '{ print $6 }' | awk 'BEGIN { FS = &amp;quot;:&amp;quot; } ; { print $2 }'
+&lt;/pre&gt;
+&lt;p&gt;Reload udev to apply our&amp;nbsp;rules:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo /etc/init.d/udev reload
+&lt;/pre&gt;
+&lt;p&gt;Finally, be sure to disconnect and reconnect the &lt;span class="caps"&gt;AVR&lt;/span&gt; board for the new
+rule to be&amp;nbsp;applied.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="creating-a-new-project"&gt;
+&lt;h2&gt;Creating a new&amp;nbsp;project&lt;/h2&gt;
+&lt;p&gt;Create a new file named &lt;strong&gt;test.c&lt;/strong&gt; with the following&amp;nbsp;content:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+/* Sample C program to turn on all leds on the AVR */
+
+#include
+
+int main(void) {
+        DDRA = 0xFF;
+    PORTA = ~0xFF;
+        return 0;
+}
+&lt;/pre&gt;
+&lt;p&gt;Create a new file named &lt;a class="reference external" href="http://en.wikipedia.org/wiki/Make_(software)#Makefiles"&gt;Makefile&lt;/a&gt; with the following&amp;nbsp;content:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+CC=`which avr-gcc`
+CFLAGS=-g -Os -Wall -mcall-prologues -std=c99 -mmcu=atmega2560
+OBJ2HEX=`which avr-objcopy`
+AVRD=`which avrdude`
+TARGET=test # Modify this to match your C filename without the .c extension (it's test.c in this case)
+
+program : $(TARGET).hex
+                $(AVRD) -p atmega2560 -c stk600 -P usb -v -v -U flash:w:$(TARGET).hex
+%.obj : %.o
+        $(CC) $(CFLAGS) $&amp;lt; -o $&amp;#64;
+
+%.hex : %.obj
+        $(OBJ2HEX) -R .eeprom -O ihex $&amp;lt; $&amp;#64;
+
+clean :
+                rm -f *.hex *.obj *.o
+&lt;/pre&gt;
+&lt;p&gt;Now all you have to do is run &lt;strong&gt;make&lt;/strong&gt; in the project folder to build
+the binary and upload it to the &lt;span class="caps"&gt;AVR&lt;/span&gt;&amp;nbsp;Board:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ make
+&lt;/pre&gt;
+&lt;/div&gt;
+</summary><category term="avr"></category><category term="debian"></category><category term="linux"></category><category term="ubuntu"></category></entry><entry><title>Usefull linux commands/tricks</title><link href="/articles/usefull-linux-commandstricks.html" rel="alternate"></link><updated>2012-05-14T23:00:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2012-05-14:articles/usefull-linux-commandstricks.html</id><summary type="html">&lt;p&gt;These are some sort of notes to myself, this list will be constantly&amp;nbsp;updated.&lt;/p&gt;
+&lt;p&gt;Sort directories by size (human readable&amp;nbsp;size):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# du --max-depth=1 -h |sort -hr
+&lt;/pre&gt;
+&lt;p&gt;Set tabsize to 4 in&amp;nbsp;vim:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+:set tabstop=4
+&lt;/pre&gt;
+&lt;p&gt;Show failed login attempts on your&amp;nbsp;machine:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# lastb -F
+&lt;/pre&gt;
+&lt;p&gt;Print the most recent login of all users and of a given&amp;nbsp;user:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# lastlog
+lastlog -u USERNAME
+&lt;/pre&gt;
+&lt;pre class="literal-block"&gt;
+$ curl -d &amp;quot;param1=value1&amp;amp;param2=value2&amp;quot; http://example.com/
+$ curl -X POST -d &amp;#64;filename http://example.com/
+&lt;/pre&gt;
+&lt;p&gt;Return current&amp;nbsp;&lt;span class="caps"&gt;SSID&lt;/span&gt;&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+iwconfig wlan0 | awk -F':' '/ ESSID/ {print $2}' | tr -d '&amp;quot;'
+&lt;/pre&gt;
+&lt;p&gt;Force&amp;nbsp;reboot:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# echo 1 &amp;gt; /proc/sys/kernel/sysrq
+# echo b &amp;gt; /proc/sysrq-trigger
+&lt;/pre&gt;
+&lt;p&gt;Force&amp;nbsp;shutdown:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# echo 1 &amp;gt; /proc/sys/kernel/sysrq
+# echo o &amp;gt; /proc/sysrq-trigger
+&lt;/pre&gt;
+</summary></entry><entry><title>How to fix GC overhead limit exceeded in Eclipse</title><link href="/articles/how-to-fix-gc-overhead-limit-exceeded-in-eclipse.html" rel="alternate"></link><updated>2012-03-27T10:13:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2012-03-27:articles/how-to-fix-gc-overhead-limit-exceeded-in-eclipse.html</id><summary type="html">&lt;p&gt;&lt;p&gt;If you&amp;#8217;re performing memory intensive operations such as building
+workspace on big projects, Eclipse will throw this error when it runs
+out of&amp;nbsp;memory:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;An internal error occurred during: &amp;quot;Building workspace&amp;quot;. &lt;span class="caps"&gt;GC&lt;/span&gt; overhead
+limit&amp;nbsp;exceeded&lt;/p&gt;
+&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;In order to fix it, you need to increase the memory allocation for
+Eclipse. To do this, open &lt;strong&gt;eclipse.ini&lt;/strong&gt; and increase the &lt;strong&gt;Xms&lt;/strong&gt;
+(heap&amp;#8217;s start memory) and &lt;strong&gt;Xmx&lt;/strong&gt; (heap&amp;#8217;s maximum memory) values to a
+value that you think is reasonable with your system and projects, for&amp;nbsp;example:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;table class="docutils option-list" frame="void" rules="none"&gt;
+&lt;col class="option" /&gt;
+&lt;col class="description" /&gt;
+&lt;tbody valign="top"&gt;
+&lt;tr&gt;&lt;td class="option-group"&gt;
+&lt;kbd&gt;&lt;span class="option"&gt;-X&lt;var&gt;ms512m&lt;/var&gt;&lt;/span&gt;&lt;/kbd&gt;&lt;/td&gt;
+&lt;td&gt;-Xmx1024m&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/blockquote&gt;
+</summary><category term="eclipse"></category><category term="java"></category><category term="linux"></category></entry><entry><title>Backup and restore installed packages on Debian/Ubuntu</title><link href="/articles/backup-and-restore-installed-packages-on-debian-ubuntu.html" rel="alternate"></link><updated>2012-03-05T10:24:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2012-03-05:articles/backup-and-restore-installed-packages-on-debian-ubuntu.html</id><summary type="html">&lt;p&gt;If you want to reinstall a server or a desktop and want to install the
+same packages after reinstalling the operating system you can easily do
+that with dpkg. First we need to backup the list of packages to a file
+and after reinstalling the operating system&amp;nbsp;we&lt;/p&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/backup-and-restore-installed-packages-on-debian-ubuntu.rst&lt;/tt&gt;, line&amp;nbsp;11)&lt;/p&gt;
+Unexpected indentation.&lt;/div&gt;
+&lt;blockquote&gt;
+In this example will also backup the /etc/apt/sources.list file and the&lt;/blockquote&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/backup-and-restore-installed-packages-on-debian-ubuntu.rst&lt;/tt&gt;, line&amp;nbsp;12)&lt;/p&gt;
+Block quote ends without a blank line; unexpected unindent.&lt;/div&gt;
+&lt;p&gt;/etc/apt/sources.list.d directory as they contain the list of
+repositories from which you installed&amp;nbsp;packages.&lt;/p&gt;
+&lt;div class="section" id="backuping-up-the-list-of-installed-package-and-the-repository-list-into-a-tar-archive"&gt;
+&lt;h2&gt;Backuping up the list of installed package and the repository list into a tar&amp;nbsp;archive&lt;/h2&gt;
+&lt;pre class="literal-block"&gt;
+# mkdir ~/packages; cp -R /etc/apt/sources.list /etc/apt/sources.list.d/ ~/packages/; dpkg --get-selections &amp;gt; ~/packages/package.list; tar cPvzf ~/packages-`date +%Y-%m-%d`.tar.gz ~/packages/; rm -rf ~/packages/
+&lt;/pre&gt;
+&lt;p&gt;Now you should have a packages-&lt;span class="caps"&gt;DATE&lt;/span&gt;.tar.gz archive under your root
+user&amp;#8217;s home folder (/root/) containing the list of packages and&amp;nbsp;repositories.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="restore-the-list-of-installed-package-and-the-repository-list-from-the-tar-archive"&gt;
+&lt;h2&gt;Restore the list of installed package and the repository list from the tar&amp;nbsp;archive:&lt;/h2&gt;
+&lt;p&gt;After reinstalling upload the packages-&lt;span class="caps"&gt;DATE&lt;/span&gt;.tar.gz archive to the root&amp;#8217;s
+user&amp;#8217;s home directory (/root/) and run the following&amp;nbsp;command:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# mkdir ~/packages; tar xPvzf ~/packages-*.tar.gz; cp ~/packages/sources.list /etc/apt/sources.list; cp ~/packages/sources.list.d/* /etc/apt/sources.list.d/;apt-get update; dpkg --set-selections &amp;lt; ~/packages/package.list; apt-get install --yes dselect; dselect update; apt-get dselect-upgrade
+&lt;/pre&gt;
+&lt;p&gt;This will install all of the packages which you had at the time of the&amp;nbsp;backup.&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="debian"></category><category term="dpkg"></category><category term="linux"></category></entry><entry><title>Lock screen when closing laptop lid in Ubuntu 11.10</title><link href="/articles/lock-screen-when-closing-laptop-lid-in-ubuntu-11-10.html" rel="alternate"></link><updated>2012-02-13T13:03:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2012-02-13:articles/lock-screen-when-closing-laptop-lid-in-ubuntu-11-10.html</id><summary type="html">&lt;p&gt;&lt;strong&gt;Update: This has been fixed in Ubuntu 12.04 Precise&amp;nbsp;Pangolin.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;An useful thing to do is to have lock the screen when you close the
+laptop lid so you don&amp;#8217;t have to wait for the timeout but in Ubuntu 11.10
+this feature was&amp;nbsp;disabled.&lt;/p&gt;
+&lt;p&gt;&lt;p&gt;To have your screen locked when you close your lid under Ubuntu 11.10
+you need to edit /etc/acpi/lid.sh and just after the&amp;nbsp;line&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+. /usr/share/acpi-support/screenblank
+&lt;/pre&gt;
+&lt;p&gt;&lt;p&gt;add the following&amp;nbsp;line:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+su $user -c '/usr/bin/gnome-screensaver-command -l'
+&lt;/pre&gt;
+&lt;p&gt;.&lt;/p&gt;
+&lt;p&gt;It should look something&amp;nbsp;like:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+[...]
+    for x in /tmp/.X11-unix/*; do
+        displaynum=`echo $x | sed s#/tmp/.X11-unix/X##`
+        getXuser;
+        if [ x&amp;quot;$XAUTHORITY&amp;quot; != x&amp;quot;&amp;quot; ]; then
+            export DISPLAY=&amp;quot;:$displaynum&amp;quot;
+            . /usr/share/acpi-support/screenblank
+            su $user -c '/usr/bin/gnome-screensaver-command -l'
+        fi
+    done
+[...]
+&lt;/pre&gt;
+</summary><category term="ubuntu"></category></entry><entry><title>Password protecting folders with nginx</title><link href="/articles/password-protecting-folders-with-nginx.html" rel="alternate"></link><updated>2012-02-13T12:20:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2012-02-13:articles/password-protecting-folders-with-nginx.html</id><summary type="html">&lt;dl class="docutils"&gt;
+&lt;dt&gt;If you need to password protect a folder using nginx here&amp;#8217;s&amp;nbsp;how.&lt;/dt&gt;
+&lt;dd&gt;In this example we&amp;#8217;re gonna password protect the /admin&amp;nbsp;folder.&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/password-protecting-folders-with-nginx.rst&lt;/tt&gt;, line&amp;nbsp;9)&lt;/p&gt;
+Definition list ends without a blank line; unexpected unindent.&lt;/div&gt;
+&lt;p&gt;Accessing the admin directory will prompt the user with a basic
+authentication dialog, and will be challenged against the created
+password&amp;nbsp;file.&lt;/p&gt;
+&lt;p&gt;Edit your site&amp;#8217;s configuration file and add the following lines inside
+the server-block&amp;nbsp;configuration:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+location /admin {
+   auth_basic            &amp;quot;Restricted&amp;quot;;
+   auth_basic_user_file  /etc/nginx/htpasswd;
+}
+&lt;/pre&gt;
+&lt;p&gt;Next we need to create a password file , the safest place to store a
+password file is outside of the web-accessible location so we&amp;#8217;re gonna
+place it in&amp;nbsp;/etc/nginx.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# cd /etc/nginx/
+# wget http://trac.edgewall.org/export/10975/trunk/contrib/htpasswd.py
+# chmod 755 htpasswd.py
+# ./htpasswd.py -c -b htpasswd USERNAME PASSWORD
+&lt;/pre&gt;
+&lt;p&gt;Don&amp;#8217;t forget to reload nginx so that the configuration changes take&amp;nbsp;effect:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+# /etc/init.d/nginx reload
+&lt;/pre&gt;
+</summary><category term="nginx"></category></entry><entry><title>Installing and adding an external Tomcat server in Netbeans</title><link href="/articles/installing-and-adding-an-external-tomcat-server-in-netbeans.html" rel="alternate"></link><updated>2012-01-28T05:18:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2012-01-28:articles/installing-and-adding-an-external-tomcat-server-in-netbeans.html</id><summary type="html">&lt;p&gt;Netbeans no longer comes with Tomcat bundled so if you want to deploy
+your application to an Tomcat server you need to manually register an
+external&amp;nbsp;server.&lt;/p&gt;
+&lt;div class="section" id="pre-requisites"&gt;
+&lt;h2&gt;Pre-requisites:&lt;/h2&gt;
+&lt;p&gt;I&amp;#8217;m assuming you are using at least Ubuntu Linux 11.10 and you already
+have installed the the latest Netbeans 7.1 with the Java Web
+Applications plugin&amp;nbsp;installed.&lt;/p&gt;
+&lt;p&gt;I also assume that you want to install and configure Tomcat from the
+repository, if you don&amp;#8217;t care an easier method would be to just download
+&lt;a class="reference external" href="http://ftp.download-by.net/apache/tomcat/tomcat-7/v7.0.47/bin/apache-tomcat-7.0.47.tar.gz"&gt;apache-tomcat.zip&lt;/a&gt; from the Tomcat website, extract the archive to a
+folder under your home directory and just skip to step 4 of this
+tutorial where Under Server Location you would browse to where you
+extracted the archive and under Username and Password you would put the
+username and password you would have put in&amp;nbsp;tomcat-users.xml.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="install-tomcat"&gt;
+&lt;h2&gt;1. Install&amp;nbsp;Tomcat&lt;/h2&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo apt-get install tomcat7 tomcat7-common tomcat7-admin tomcat7-user
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="add-an-administrative-user-to-tomcat"&gt;
+&lt;h2&gt;2. Add an administrative user to&amp;nbsp;Tomcat&lt;/h2&gt;
+&lt;p&gt;Tomcat does have any users defined that could be used for administrative
+purposes so we need to open tomcat-users.xml in a text editor and add a
+user with the proper roles assigned to&amp;nbsp;it.&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo gedit /etc/tomcat7/tomcat-users.xml
+&lt;/pre&gt;
+&lt;p&gt;Replace its content with the following and make sure that you replace
+&lt;span class="caps"&gt;USERNAME&lt;/span&gt; and &lt;span class="caps"&gt;PASSWORD&lt;/span&gt; with the values you&amp;nbsp;want:&lt;/p&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/installing-and-adding-an-external-tomcat-server-in-netbeans.rst&lt;/tt&gt;, line&amp;nbsp;55)&lt;/p&gt;
+Literal block expected; none found.&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="some-fixes"&gt;
+&lt;h2&gt;3. Some&amp;nbsp;&amp;quot;fixes&amp;quot;&lt;/h2&gt;
+&lt;p&gt;Unfortunately it seams that Netbeans doesn&amp;#8217;t correctly detect the the
+Tomcat installation directory so we need to make some temporary changes
+till we add the server otherwise will get an error saying &lt;em&gt;The specified
+Server Location (Catalina Home) folder is not&amp;nbsp;valid.&lt;/em&gt;&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ cd /usr/share/tomcat7/lib
+$ mv catalina.jar catalina.jar.bk
+$ wget http://www.razius.com/files/catalina.jar
+&lt;/pre&gt;
+&lt;p&gt;We need to make sure that the configuration files can be read from the
+installation directory otherwise will get an error saying
+&lt;em&gt;The&amp;nbsp;&amp;lt;CATALINA_HOME&amp;gt;/conf/server.xml&amp;nbsp;can&amp;#8217;t&amp;nbsp;be&amp;nbsp;read.&lt;/em&gt;&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo ln -s /etc/tomcat7/ /usr/share/tomcat7/conf
+&lt;/pre&gt;
+&lt;p&gt;We need to chown the Tomcat installation and configuration directory so
+we don&amp;#8217;t have any permission problems. Replace &lt;span class="caps"&gt;USERNAME&lt;/span&gt; with your Ubuntu&amp;nbsp;username:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo chown -R USERNAME:USERNAME /etc/tomcat7/
+$ sudo chown -R USERNAME:USERNAME /usr/share/tomcat7/
+&lt;/pre&gt;
+&lt;p&gt;Disable the upstart Tomcat service (Netbeans start&amp;#8217;s it up for us&amp;nbsp;automatically):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ sudo update-rc.d tomcat7 disable 0123456
+&lt;/pre&gt;
+&lt;div class="section" id="adding-the-server-in-netbeans"&gt;
+&lt;h3&gt;4. Adding the server in&amp;nbsp;Netbeans&lt;/h3&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;img alt="image0" src="http://razius.com/wp-content/uploads/2012/01/netbeans-add-server.png" /&gt;&lt;/dt&gt;
+&lt;dd&gt;Now that you have Tomcat installed and configured we can open&amp;nbsp;up&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/installing-and-adding-an-external-tomcat-server-in-netbeans.rst&lt;/tt&gt;, line&amp;nbsp;98)&lt;/p&gt;
+Definition list ends without a blank line; unexpected unindent.&lt;/div&gt;
+&lt;p&gt;Netbeans and under the Services tab right click on the Servers node and
+click on Add&amp;nbsp;server.&lt;/p&gt;
+&lt;p&gt;In the current list select Apache Tomcat and click&amp;nbsp;Next.&lt;/p&gt;
+&lt;dl class="docutils"&gt;
+&lt;dt&gt;&lt;a href="#id1"&gt;&lt;span class="problematic" id="id2"&gt;`|image1|`_&lt;/span&gt;&lt;/a&gt;&lt;/dt&gt;
+&lt;dd&gt;Under Server Location enter your Tomcat installation directory ,&amp;nbsp;by&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/installing-and-adding-an-external-tomcat-server-in-netbeans.rst&lt;/tt&gt;, line&amp;nbsp;105)&lt;/p&gt;
+Definition list ends without a blank line; unexpected unindent.&lt;/div&gt;
+&lt;p&gt;default this should be&amp;nbsp;/usr/share/tomcat7&lt;/p&gt;
+&lt;p&gt;Next under Username and Password put in the username and password that
+we added in the tomcat-users.xml&amp;nbsp;file.&lt;/p&gt;
+&lt;p&gt;Click Finish. You should now be able to see Tomcat as an added server
+under the Servers&amp;nbsp;Node.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="revert-changes"&gt;
+&lt;h2&gt;5. Revert&amp;nbsp;changes&lt;/h2&gt;
+&lt;p&gt;If we are installing from the repository we need to revert some changes
+done in step&amp;nbsp;3:&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+$ cd /usr/share/tomcat7/lib
+$ rm catalina.jar
+$ mv catalina.jar.bk catalina.jar
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="system-messages section"&gt;
+&lt;h2&gt;Docutils System&amp;nbsp;Messages&lt;/h2&gt;
+&lt;div class="system-message" id="id1"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/installing-and-adding-an-external-tomcat-server-in-netbeans.rst&lt;/tt&gt;, line 103); &lt;em&gt;&lt;a href="#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+Unknown target name: &amp;quot;|image1|&amp;quot;.&lt;/div&gt;
+&lt;/div&gt;
+</summary><category term="linux"></category><category term="netbeans"></category><category term="tomcat"></category></entry><entry><title>Wordpress reset password without email</title><link href="/articles/wordpress-reset-password-without-email.html" rel="alternate"></link><updated>2011-09-13T14:45:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2011-09-13:articles/wordpress-reset-password-without-email.html</id><summary type="html">&lt;p&gt;If you&amp;#8217;re like me and you forgot your wordpress password and don&amp;#8217;t have
+email setup on your system there are alternative ways to set a new
+password rather then sending and&amp;nbsp;email.&lt;/p&gt;
+&lt;p&gt;Pick a particular method depending on what type of access you have to
+your&amp;nbsp;website/hosting.&lt;/p&gt;
+&lt;div class="section" id="through-mysql"&gt;
+&lt;h2&gt;Through&amp;nbsp;MySQL:&lt;/h2&gt;
+&lt;p&gt;The easiest ways is through the MySQL command line but you need ssh
+access to your&amp;nbsp;server.&lt;/p&gt;
+&lt;ol class="arabic simple"&gt;
+&lt;li&gt;Connect to&amp;nbsp;MySQL:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre class="literal-block"&gt;
+# mysql -u root -p
+&lt;/pre&gt;
+&lt;p&gt;2. Select the wordpress database (replace &lt;span class="caps"&gt;DATABASE&lt;/span&gt; with the wordpress
+database, if you don&amp;#8217;t know it you can find it in wp-config.php under&amp;nbsp;DB_NAME):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+mysql&amp;gt; use DATABASE;
+&lt;/pre&gt;
+&lt;p&gt;3. Update the password running the folowing query (replace &lt;span class="caps"&gt;NEWPASSWORD&lt;/span&gt;
+with your new password and &lt;span class="caps"&gt;USERNAME&lt;/span&gt; with the username you wish to change
+the password&amp;nbsp;for):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+mysql&amp;gt; UPDATE wp_users SET user_pass = MD5('NEWPASSWORD') WHERE user_login = 'USERNAME';
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;div class="section" id="through-ftp-file-edit"&gt;
+&lt;h2&gt;Through ftp/file&amp;nbsp;edit&lt;/h2&gt;
+&lt;p&gt;If you don&amp;#8217;t have MySQL access you can also reset it by editing your
+theme&amp;#8217;s functions.php&amp;nbsp;file.&lt;/p&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/wordpress-reset-password-without-email.rst&lt;/tt&gt;, line&amp;nbsp;46)&lt;/p&gt;
+Unexpected indentation.&lt;/div&gt;
+&lt;blockquote&gt;
+Edit the file and insert after the first &amp;lt;?php the folowing(replace&lt;/blockquote&gt;
+&lt;div class="system-message"&gt;
+&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/tech/wordpress-reset-password-without-email.rst&lt;/tt&gt;, line&amp;nbsp;47)&lt;/p&gt;
+Block quote ends without a blank line; unexpected unindent.&lt;/div&gt;
+&lt;p&gt;&lt;span class="caps"&gt;NEWPASSWORD&lt;/span&gt; with your new&amp;nbsp;password):&lt;/p&gt;
+&lt;pre class="literal-block"&gt;
+wp_set_password('NEWPASSWORD',1);
+&lt;/pre&gt;
+&lt;p&gt;After you changed your password make sure you delete the line from
+functions.php otherwise it will reset your password on every page&amp;nbsp;load.&lt;/p&gt;
+&lt;/div&gt;
+</summary></entry></feed>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
+
+        <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+
+        <title>How to fix GC overhead limit exceeded in Eclipse // Silviu Tantos (razius) // Toying with the idea of becoming a useful member of society.</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="/theme/css/pure.css">
+    <link rel="stylesheet" href="/theme/css/pygments/monokai.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/theme/js/jquery.fitvids.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1>
+                    <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
+                <p>
+                    <span class="links pages"><a href="/">Home</a></span>
+                        <span class="links pages active"><a href="/pages/about.html">About</a></span>
+                        <span class="links pages active"><a href="/pages/contact.html">Contact</a></span>
+                        <span class="links pages active"><a href="/pages/cv.html"><span class="caps">CV</span></a></span>
+                </p>
+                    <a target="_blank" class="social Github" href="http://github.com/razius"><img src="/images/social/github.png" title="Github"></a>
+                    <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="/images/social/last.fm.png" title="Last.fm"></a>
+                    <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="/images/social/twitter.png" title="Twitter"></a>
+                    <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="/images/social/rss.png" title="RSS"></a>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-3-4">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>How to fix <span class="caps">GC</span> overhead limit exceeded in&nbsp;Eclipse</h1>
+                        <p class="post-meta">
+                            meta = { 'category': <a href="/category/tech.html">tech</a>, 'date': 27-03-2012 }
+                            <div class="meta-tags">
+                                tags = [
+                                        <a class="post-category" href="/tag/eclipse.html">eclipse</a><span class="comma">,</span>
+                                        <a class="post-category" href="/tag/java.html">java</a><span class="comma">,</span>
+                                        <a class="post-category" href="/tag/linux.html">linux</a><span class="comma">,</span>
+                                ]
+                            </div>
+                        </p>
+                </header>
+            </section>
+            <p><p>If you&#8217;re performing memory intensive operations such as building
+workspace on big projects, Eclipse will throw this error when it runs
+out of&nbsp;memory:</p>
+<blockquote>
+<p>An internal error occurred during: &quot;Building workspace&quot;. <span class="caps">GC</span> overhead
+limit&nbsp;exceeded</p>
+</p></blockquote>
+<p>In order to fix it, you need to increase the memory allocation for
+Eclipse. To do this, open <strong>eclipse.ini</strong> and increase the <strong>Xms</strong>
+(heap&#8217;s start memory) and <strong>Xmx</strong> (heap&#8217;s maximum memory) values to a
+value that you think is reasonable with your system and projects, for&nbsp;example:</p>
+<blockquote>
+<table class="docutils option-list" frame="void" rules="none">
+<col class="option" />
+<col class="description" />
+<tbody valign="top">
+<tr><td class="option-group">
+<kbd><span class="option">-X<var>ms512m</var></span></kbd></td>
+<td>-Xmx1024m</td></tr>
+</tbody>
+</table>
+</blockquote>
+
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_identifier = "articles/how-to-fix-gc-overhead-limit-exceeded-in-eclipse.html";
+                        (function() {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://razius.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+                </div>
+<footer class="footer">
+
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>

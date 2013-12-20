@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
+
+        <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+
+        <title>Usefull linux commands/tricks // Silviu Tantos (razius) // Toying with the idea of becoming a useful member of society.</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="/theme/css/pure.css">
+    <link rel="stylesheet" href="/theme/css/pygments/monokai.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="/theme/js/jquery.fitvids.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1>
+                    <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
+                <p>
+                    <span class="links pages"><a href="/">Home</a></span>
+                        <span class="links pages active"><a href="/pages/about.html">About</a></span>
+                        <span class="links pages active"><a href="/pages/contact.html">Contact</a></span>
+                        <span class="links pages active"><a href="/pages/cv.html"><span class="caps">CV</span></a></span>
+                </p>
+                    <a target="_blank" class="social Github" href="http://github.com/razius"><img src="/images/social/github.png" title="Github"></a>
+                    <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="/images/social/last.fm.png" title="Last.fm"></a>
+                    <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="/images/social/twitter.png" title="Twitter"></a>
+                    <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="/images/social/rss.png" title="RSS"></a>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-3-4">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>Usefull linux&nbsp;commands/tricks</h1>
+                        <p class="post-meta">
+                            meta = { 'category': <a href="/category/tech.html">tech</a>, 'date': 14-05-2012 }
+                            <div class="meta-tags">
+                                tags = [
+                                ]
+                            </div>
+                        </p>
+                </header>
+            </section>
+            <p>These are some sort of notes to myself, this list will be constantly&nbsp;updated.</p>
+<p>Sort directories by size (human readable&nbsp;size):</p>
+<pre class="literal-block">
+# du --max-depth=1 -h |sort -hr
+</pre>
+<p>Set tabsize to 4 in&nbsp;vim:</p>
+<pre class="literal-block">
+:set tabstop=4
+</pre>
+<p>Show failed login attempts on your&nbsp;machine:</p>
+<pre class="literal-block">
+# lastb -F
+</pre>
+<p>Print the most recent login of all users and of a given&nbsp;user:</p>
+<pre class="literal-block">
+# lastlog
+lastlog -u USERNAME
+</pre>
+<pre class="literal-block">
+$ curl -d &quot;param1=value1&amp;param2=value2&quot; http://example.com/
+$ curl -X POST -d &#64;filename http://example.com/
+</pre>
+<p>Return current&nbsp;<span class="caps">SSID</span></p>
+<pre class="literal-block">
+iwconfig wlan0 | awk -F':' '/ ESSID/ {print $2}' | tr -d '&quot;'
+</pre>
+<p>Force&nbsp;reboot:</p>
+<pre class="literal-block">
+# echo 1 &gt; /proc/sys/kernel/sysrq
+# echo b &gt; /proc/sysrq-trigger
+</pre>
+<p>Force&nbsp;shutdown:</p>
+<pre class="literal-block">
+# echo 1 &gt; /proc/sys/kernel/sysrq
+# echo o &gt; /proc/sysrq-trigger
+</pre>
+
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_identifier = "articles/usefull-linux-commandstricks.html";
+                        (function() {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://razius.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+                </div>
+<footer class="footer">
+
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>
