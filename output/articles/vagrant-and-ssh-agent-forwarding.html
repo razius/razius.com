@@ -6,15 +6,16 @@
     <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
 
         <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+        <link rel="alternate" href="/feeds/all.rss.xml" type="application/rss+xml" title="Silviu Tantos (razius) Full RSS Feed"/>
 
-        <title>Vagrant and SSH agent forwarding // Silviu Tantos (razius) // Toying with the idea of becoming a useful member of society.</title>
+        <title>Vagrant and SSH agent forwarding</title>
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="/theme/css/pure.css">
-    <link rel="stylesheet" href="/theme/css/pygments/monokai.css">
+    <link rel="stylesheet" href="../theme/css/pure.css">
+    <link rel="stylesheet" href="../theme/css/pygments/monokai.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/theme/js/jquery.fitvids.js"></script>
+    <script src="../theme/js/jquery.fitvids.js"></script>
     <script>
         $(document).ready(function(){
             $(".content").fitVids();
@@ -29,24 +30,28 @@
         <div class="cover-body">
             <header class="header">
                 <hgroup>
-                    <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
-                    <div class="site-info">
-                        <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
-                        <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                    <div class="site">
+                        <div class="author-image">
+                            <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
+                        </div>
+                        <div class="site-info">
+                            <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
+                            <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                        </div>
                     </div>
                     <div class="pages-menu">
                         <p>
-                            <span class="links pages"><a href="/">Home</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/about.html">About</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/contact.html">Contact</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/cv.html"><span class="caps">CV</span></a></span>
+                            <span class="links pages"><a href="../">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/about.html">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/contact.html">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/cv.html"><span class="caps">CV</span></a></span>
                         </p>
                     </div>
-                    <p>
-                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="/images/social/github.png" title="Github"></a>
-                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="/images/social/last.fm.png" title="Last.fm"></a>
-                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="/images/social/twitter.png" title="Twitter"></a>
-                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="/images/social/rss.png" title="RSS"></a>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="../images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="../images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="../images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="../images/social/rss.png" title="RSS"></a>
                     </p>
                 </hgroup>
             </header>
@@ -58,40 +63,24 @@
                 <header class="post-header">
                     <h1>Vagrant and <span class="caps">SSH</span> agent&nbsp;forwarding</h1>
                         <p class="post-meta">
-                            meta = { 'category': <a href="/category/tech.html">tech</a>, 'date': 13-09-2013 }
+                            meta = { 'category': <a href="../category/tech.html">tech</a>, 'date': 13-09-2013 }
                             <div class="meta-tags">
                                 tags = [
-                                        <a class="post-category" href="/tag/provisioning.html">provisioning</a><span class="comma">,</span>
-                                        <a class="post-category" href="/tag/ssh.html">ssh</a><span class="comma">,</span>
-                                        <a class="post-category" href="/tag/vagrant.html">vagrant</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/provisioning.html">provisioning</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/ssh.html">ssh</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/vagrant.html">vagrant</a><span class="comma">,</span>
                                 ]
                             </div>
                         </p>
                 </header>
             </section>
-            <p>I haven&#8217;t even started yet and I can already hear you muttering over
-there, &quot;What the hell is this Vagrant thing and why should I care?&quot;.
-Well, <a class="reference external" href="http://www.vagrantup.com/">Vagrant</a> is a wrapper around <a class="reference external" href="https://www.virtualbox.org/">VirtualBox</a>, the virtualization
-software, that can create homogeneous development environments
-automatically without any effort from the developer. This means that we
-have a consistent development environment across out team with the same
-<span class="caps">OS</span> version, same package versions, same database, same settings. No more
-&quot;But it worked on <span class="caps">MY</span> machine&quot;&nbsp;excuses.</p>
-<p>Lets say that inside this virtual machine you need to use your <span class="caps">SSH</span> key,
-maybe the key for your <a class="reference external" href="https://github.com/">Github</a> account to access your private or
-public git repositories or maybe the key to connect to a remote server.
-That can be a problem, you don&#8217;t want to distribute your <span class="caps">SSH</span> keys with
-the Vagrant box. Each <span class="caps">SSH</span> key should be tied to an individual developer
-account so to prevent <span class="caps">SSH</span> key sharing you would need to either
-distribute each <span class="caps">SSH</span> key with a new Vagrant box or copy it during
-provisioning. That&#8217;s not really homogeneous, you will end up with a
-Vagrant box for each developer or an inconvenient way of providing the
-<span class="caps">SSH</span> key depending on the developer&#8217;s&nbsp;<span class="caps">OS</span>.</p>
-<p>Enter <a class="reference external" href="https://help.github.com/articles/using-ssh-agent-forwarding"><span class="caps">SSH</span> agent forwarding</a>. With <span class="caps">SSH</span> agent forwarding we can use the
-<span class="caps">SSH</span> key from our local machine inside the Vagrant&nbsp;box.</p>
-<p>To enable agent forwarding for all ssh connections inside your Vagrant
-box you need to set the following in your Vagrant file inside the config
-section (Vagrant.configure(VAGRANTFILE_API_VERSION) do&nbsp;|config|):</p>
+            <p>I haven&#8217;t even started yet and I can already hear you muttering over there, &quot;What the hell is this Vagrant thing and why should I care?&quot;. Well, <a class="reference external" href="http://www.vagrantup.com/">Vagrant</a> is a wrapper around <a class="reference external" href="https://www.virtualbox.org/">VirtualBox</a>, the virtualization
+software, that can create homogeneous development environments automatically without any effort from the developer. This means that we have a consistent development environment across out team with the same <span class="caps">OS</span> version, same package versions, same database, same settings. No more <em>But it worked on <span class="caps">MY</span> machine</em>&nbsp;excuses.</p>
+<p>Lets say that inside this virtual machine you need to use your <span class="caps">SSH</span> key, maybe the key for your <a class="reference external" href="https://github.com/">Github</a> account to access your private or public git repositories or maybe the key to connect to a remote server.
+That can be a problem, you don&#8217;t want to distribute your <span class="caps">SSH</span> keys with the Vagrant box. Each <span class="caps">SSH</span> key should be tied to an individual developer
+account so to prevent <span class="caps">SSH</span> key sharing you would need to either distribute each <span class="caps">SSH</span> key with a new Vagrant box or copy it during provisioning. That&#8217;s not really homogeneous, you will end up with a Vagrant box for each developer or an inconvenient way of providing the <span class="caps">SSH</span> key depending on the developer&#8217;s&nbsp;<span class="caps">OS</span>.</p>
+<p>Enter <a class="reference external" href="https://help.github.com/articles/using-ssh-agent-forwarding"><span class="caps">SSH</span> agent forwarding</a>. With <span class="caps">SSH</span> agent forwarding we can use the <span class="caps">SSH</span> key from our local machine inside the Vagrant&nbsp;box.</p>
+<p>To enable agent forwarding for all ssh connections inside your Vagrant box you need to set the following in your Vagrant file inside the config section (Vagrant.configure(VAGRANTFILE_API_VERSION) do&nbsp;|config|):</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -100,12 +89,10 @@ section (Vagrant.configure(VAGRANTFILE_API_VERSION) do&nbsp;|config|):</p>
     config.ssh.forward_agent <span class="o">=</span> <span class="nb">true</span>
 <span class="o">[</span>...<span class="o">]</span>
 </pre></div>
-</td></tr></table><p>Due to a Vagrant bug <span class="caps">SSH</span> Agent Forwarding not available during
-provisioning (<a class="reference external" href="https://github.com/mitchellh/vagrant/issues/1303">see issue</a>), to work around that we need to create a
-file in /etc/sudoers.d/ with the contents Defaults env_keep +=
-&quot;SSH_AUTH_SOCK&quot; so that the /etc/sudoers file keeps the
-&quot;SSH_AUTH_SOCK&quot; environment&nbsp;variable.</p>
-<p>In your Vagrant&nbsp;file:</p>
+</td></tr></table><p>Due to a Vagrant bug <span class="caps">SSH</span> Agent Forwarding not available during provisioning (<a class="reference external" href="https://github.com/mitchellh/vagrant/issues/1303">see issue</a>), to work around that we need to create a file in <tt class="docutils literal">/etc/sudoers.d/</tt> with the following&nbsp;contents:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre>Defaults env_keep +<span class="o">=</span> <span class="s2">&quot;SSH_AUTH_SOCK&quot;</span>
+</pre></div>
+</td></tr></table><p>To create it automatically during provisioning we can add the following to our Vagrant&nbsp;file:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -145,7 +132,7 @@ file in /etc/sudoers.d/ with the contents Defaults env_keep +=
                     <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
                 </div>
 <footer class="footer">
-    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
 </footer>        </div>
     </div>
 </div>

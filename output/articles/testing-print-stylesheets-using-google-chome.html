@@ -6,15 +6,16 @@
     <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
 
         <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+        <link rel="alternate" href="/feeds/all.rss.xml" type="application/rss+xml" title="Silviu Tantos (razius) Full RSS Feed"/>
 
-        <title>Testing print stylesheets using Google Chrome // Silviu Tantos (razius) // Toying with the idea of becoming a useful member of society.</title>
+        <title>Testing print stylesheets using Google Chrome</title>
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="/theme/css/pure.css">
-    <link rel="stylesheet" href="/theme/css/pygments/monokai.css">
+    <link rel="stylesheet" href="../theme/css/pure.css">
+    <link rel="stylesheet" href="../theme/css/pygments/monokai.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/theme/js/jquery.fitvids.js"></script>
+    <script src="../theme/js/jquery.fitvids.js"></script>
     <script>
         $(document).ready(function(){
             $(".content").fitVids();
@@ -29,24 +30,28 @@
         <div class="cover-body">
             <header class="header">
                 <hgroup>
-                    <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
-                    <div class="site-info">
-                        <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
-                        <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                    <div class="site">
+                        <div class="author-image">
+                            <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
+                        </div>
+                        <div class="site-info">
+                            <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
+                            <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                        </div>
                     </div>
                     <div class="pages-menu">
                         <p>
-                            <span class="links pages"><a href="/">Home</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/about.html">About</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/contact.html">Contact</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/cv.html"><span class="caps">CV</span></a></span>
+                            <span class="links pages"><a href="../">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/about.html">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/contact.html">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/cv.html"><span class="caps">CV</span></a></span>
                         </p>
                     </div>
-                    <p>
-                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="/images/social/github.png" title="Github"></a>
-                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="/images/social/last.fm.png" title="Last.fm"></a>
-                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="/images/social/twitter.png" title="Twitter"></a>
-                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="/images/social/rss.png" title="RSS"></a>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="../images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="../images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="../images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="../images/social/rss.png" title="RSS"></a>
                     </p>
                 </hgroup>
             </header>
@@ -58,7 +63,7 @@
                 <header class="post-header">
                     <h1>Testing print stylesheets using Google&nbsp;Chrome</h1>
                         <p class="post-meta">
-                            meta = { 'category': <a href="/category/tech.html">tech</a>, 'date': 14-05-2013 }
+                            meta = { 'category': <a href="../category/tech.html">tech</a>, 'date': 14-05-2013 }
                             <div class="meta-tags">
                                 tags = [
                                 ]
@@ -66,36 +71,21 @@
                         </p>
                 </header>
             </section>
-            <p>Testing <span class="caps">CSS</span> print media queries is really difficult but <a class="reference external" href="https://plus.google.com/+AddyOsmani/posts/MgpioU84JPe">a new
-featured</a> was introduced in Google Chrome in December that allows you
-to apply different <span class="caps">CSS</span> media types like handheld, print, screen and so&nbsp;on.</p>
-<p>1. <a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/shortcuts#opening-devtools">Open Developer Tools</a> in Google Chrome by clicking the menu icon at
-the top-right of your browser window, then select Tools → Developer&nbsp;tools.</p>
-<p>2. Open up the Overrides menu in the Developer Tools by clicking the
-gear in the bottom right&nbsp;corner:</p>
-<div class="system-message">
-<p class="system-message-title">System Message: <span class="caps">ERROR</span>/3 (<tt class="docutils">/mnt/content/articles/tech/testing-print-stylesheets-using-google-chome.rst</tt>, line&nbsp;17)</p>
-Unexpected indentation.</div>
-<blockquote>
-<a href="#id1"><span class="problematic" id="id2">`|dev-tools-settings|`_</span></a></blockquote>
-<p>3. Enable &quot;Emulate <span class="caps">CSS</span> media&quot; and select the &quot;print&quot; media type option
-from the drop-down&nbsp;box:</p>
-<div class="system-message">
-<p class="system-message-title">System Message: <span class="caps">ERROR</span>/3 (<tt class="docutils">/mnt/content/articles/tech/testing-print-stylesheets-using-google-chome.rst</tt>, line&nbsp;21)</p>
-Unexpected indentation.</div>
-<blockquote>
-<a href="#id3"><span class="problematic" id="id4">`|emulate-css-print|`_</span></a></blockquote>
-<p>You can find more information and nifty tricks in the <a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/mobile-emulation">official
-documentation</a>.</p>
-<div class="system-messages section">
-<h2>Docutils System&nbsp;Messages</h2>
-<div class="system-message" id="id1">
-<p class="system-message-title">System Message: <span class="caps">ERROR</span>/3 (<tt class="docutils">/mnt/content/articles/tech/testing-print-stylesheets-using-google-chome.rst</tt>, line 17); <em><a href="#id2">backlink</a></em></p>
-Unknown target name: &quot;|dev-tools-settings|&quot;.</div>
-<div class="system-message" id="id3">
-<p class="system-message-title">System Message: <span class="caps">ERROR</span>/3 (<tt class="docutils">/mnt/content/articles/tech/testing-print-stylesheets-using-google-chome.rst</tt>, line 21); <em><a href="#id4">backlink</a></em></p>
-Unknown target name: &quot;|emulate-css-print|&quot;.</div>
+            <p>Testing <span class="caps">CSS</span> print media queries is really difficult but <a class="reference external" href="https://plus.google.com/+AddyOsmani/posts/MgpioU84JPe">a new featured</a> was introduced in Google Chrome in December that allows you to apply different <span class="caps">CSS</span> media types like handheld, print, screen and so&nbsp;on.</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/shortcuts#opening-devtools">Open Developer Tools</a> in Google Chrome by clicking the menu icon at the top-right of your browser window, then select Tools → Developer&nbsp;tools.</li>
+<li>Open up the Overrides menu in the Developer Tools by clicking the gear in the bottom right&nbsp;corner:</li>
+</ol>
+<div class="figure align-center">
+<img alt="" src="../images/articles/dev-tools-settings.png" />
 </div>
+<ol class="arabic simple" start="3">
+<li>Enable &quot;Emulate <span class="caps">CSS</span> media&quot; and select the &quot;print&quot; media type option from the drop-down&nbsp;box:</li>
+</ol>
+<div class="figure align-center">
+<img alt="" src="../images/articles/emulate-css-print.png" />
+</div>
+<p>You can find more information and nifty tricks in the <a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/mobile-emulation">official documentation</a>.</p>
 
             <div class="hr"></div>
             <a href="#" class="go-top">Go Top</a>
@@ -114,7 +104,7 @@ Unknown target name: &quot;|emulate-css-print|&quot;.</div>
                     <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
                 </div>
 <footer class="footer">
-    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
 </footer>        </div>
     </div>
 </div>

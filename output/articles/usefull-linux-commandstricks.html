@@ -6,15 +6,16 @@
     <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
 
         <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+        <link rel="alternate" href="/feeds/all.rss.xml" type="application/rss+xml" title="Silviu Tantos (razius) Full RSS Feed"/>
 
-        <title>Usefull linux commands/tricks // Silviu Tantos (razius) // Toying with the idea of becoming a useful member of society.</title>
+        <title>Usefull linux commands/tricks</title>
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="/theme/css/pure.css">
-    <link rel="stylesheet" href="/theme/css/pygments/monokai.css">
+    <link rel="stylesheet" href="../theme/css/pure.css">
+    <link rel="stylesheet" href="../theme/css/pygments/monokai.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/theme/js/jquery.fitvids.js"></script>
+    <script src="../theme/js/jquery.fitvids.js"></script>
     <script>
         $(document).ready(function(){
             $(".content").fitVids();
@@ -29,24 +30,28 @@
         <div class="cover-body">
             <header class="header">
                 <hgroup>
-                    <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
-                    <div class="site-info">
-                        <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
-                        <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                    <div class="site">
+                        <div class="author-image">
+                            <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
+                        </div>
+                        <div class="site-info">
+                            <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
+                            <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                        </div>
                     </div>
                     <div class="pages-menu">
                         <p>
-                            <span class="links pages"><a href="/">Home</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/about.html">About</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/contact.html">Contact</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/cv.html"><span class="caps">CV</span></a></span>
+                            <span class="links pages"><a href="../">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/about.html">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/contact.html">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/cv.html"><span class="caps">CV</span></a></span>
                         </p>
                     </div>
-                    <p>
-                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="/images/social/github.png" title="Github"></a>
-                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="/images/social/last.fm.png" title="Last.fm"></a>
-                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="/images/social/twitter.png" title="Twitter"></a>
-                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="/images/social/rss.png" title="RSS"></a>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="../images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="../images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="../images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="../images/social/rss.png" title="RSS"></a>
                     </p>
                 </hgroup>
             </header>
@@ -58,7 +63,7 @@
                 <header class="post-header">
                     <h1>Usefull linux&nbsp;commands/tricks</h1>
                         <p class="post-meta">
-                            meta = { 'category': <a href="/category/tech.html">tech</a>, 'date': 14-05-2012 }
+                            meta = { 'category': <a href="../category/tech.html">tech</a>, 'date': 14-05-2012 }
                             <div class="meta-tags">
                                 tags = [
                                 ]
@@ -68,41 +73,37 @@
             </section>
             <p>These are some sort of notes to myself, this list will be constantly&nbsp;updated.</p>
 <p>Sort directories by size (human readable&nbsp;size):</p>
-<pre class="literal-block">
-# du --max-depth=1 -h |sort -hr
-</pre>
-<p>Set tabsize to 4 in&nbsp;vim:</p>
-<pre class="literal-block">
-:set tabstop=4
-</pre>
-<p>Show failed login attempts on your&nbsp;machine:</p>
-<pre class="literal-block">
-# lastb -F
-</pre>
-<p>Print the most recent login of all users and of a given&nbsp;user:</p>
-<pre class="literal-block">
-# lastlog
-lastlog -u USERNAME
-</pre>
-<pre class="literal-block">
-$ curl -d &quot;param1=value1&amp;param2=value2&quot; http://example.com/
-$ curl -X POST -d &#64;filename http://example.com/
-</pre>
-<p>Return current&nbsp;<span class="caps">SSID</span></p>
-<pre class="literal-block">
-iwconfig wlan0 | awk -F':' '/ ESSID/ {print $2}' | tr -d '&quot;'
-</pre>
-<p>Force&nbsp;reboot:</p>
-<pre class="literal-block">
-# echo 1 &gt; /proc/sys/kernel/sysrq
-# echo b &gt; /proc/sysrq-trigger
-</pre>
-<p>Force&nbsp;shutdown:</p>
-<pre class="literal-block">
-# echo 1 &gt; /proc/sys/kernel/sysrq
-# echo o &gt; /proc/sysrq-trigger
-</pre>
-
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">#</span> du --max-depth<span class="o">=</span>1 -h |sort -hr
+</pre></div>
+</td></tr></table><p>Set tabsize to 4 in&nbsp;vim:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="p">:</span><span class="k">set</span> <span class="nb">tabstop</span><span class="p">=</span><span class="m">4</span>
+</pre></div>
+</td></tr></table><p>Show failed login attempts on your&nbsp;machine:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">#</span> lastb -F
+</pre></div>
+</td></tr></table><p>Print the most recent login of all users and of a given&nbsp;user:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">#</span> lastlog
+<span class="go">lastlog -u <span class="caps">USERNAME</span></span>
+</pre></div>
+</td></tr></table><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> curl -d <span class="s2">&quot;param1=value1&amp;param2=value2&quot;</span> http://example.com/
+<span class="gp">$</span> curl -X <span class="caps">POST</span> -d @filename http://example.com/
+</pre></div>
+</td></tr></table><p>Return current&nbsp;<span class="caps">SSID</span></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="go">iwconfig wlan0 | awk -F&#39;:&#39; &#39;/ <span class="caps">ESSID</span>/ {print $2}&#39; | tr -d &#39;&quot;&#39;</span>
+</pre></div>
+</td></tr></table><p>Force a&nbsp;reboot:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">#</span> <span class="nb">echo </span>1 &gt; /proc/sys/kernel/sysrq
+<span class="gp">#</span> <span class="nb">echo </span>b &gt; /proc/sysrq-trigger
+</pre></div>
+</td></tr></table><p>Force a&nbsp;shutdown:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">#</span> <span class="nb">echo </span>1 &gt; /proc/sys/kernel/sysrq
+<span class="gp">#</span> <span class="nb">echo </span>o &gt; /proc/sysrq-trigger
+</pre></div>
+</td></tr></table>
             <div class="hr"></div>
             <a href="#" class="go-top">Go Top</a>
                 <div class="comments">
@@ -120,7 +121,7 @@ iwconfig wlan0 | awk -F':' '/ ESSID/ {print $2}' | tr -d '&quot;'
                     <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
                 </div>
 <footer class="footer">
-    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
 </footer>        </div>
     </div>
 </div>

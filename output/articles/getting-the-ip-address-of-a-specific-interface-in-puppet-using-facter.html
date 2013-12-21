@@ -6,15 +6,16 @@
     <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
 
         <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+        <link rel="alternate" href="/feeds/all.rss.xml" type="application/rss+xml" title="Silviu Tantos (razius) Full RSS Feed"/>
 
-        <title>Getting the IP address of a specific interface in puppet using facter // Silviu Tantos (razius) // Toying with the idea of becoming a useful member of society.</title>
+        <title>Getting the IP address of a specific interface in puppet using facter</title>
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="/theme/css/pure.css">
-    <link rel="stylesheet" href="/theme/css/pygments/monokai.css">
+    <link rel="stylesheet" href="../theme/css/pure.css">
+    <link rel="stylesheet" href="../theme/css/pygments/monokai.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/theme/js/jquery.fitvids.js"></script>
+    <script src="../theme/js/jquery.fitvids.js"></script>
     <script>
         $(document).ready(function(){
             $(".content").fitVids();
@@ -29,24 +30,28 @@
         <div class="cover-body">
             <header class="header">
                 <hgroup>
-                    <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
-                    <div class="site-info">
-                        <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
-                        <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                    <div class="site">
+                        <div class="author-image">
+                            <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
+                        </div>
+                        <div class="site-info">
+                            <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
+                            <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                        </div>
                     </div>
                     <div class="pages-menu">
                         <p>
-                            <span class="links pages"><a href="/">Home</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/about.html">About</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/contact.html">Contact</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/cv.html"><span class="caps">CV</span></a></span>
+                            <span class="links pages"><a href="../">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/about.html">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/contact.html">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/cv.html"><span class="caps">CV</span></a></span>
                         </p>
                     </div>
-                    <p>
-                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="/images/social/github.png" title="Github"></a>
-                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="/images/social/last.fm.png" title="Last.fm"></a>
-                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="/images/social/twitter.png" title="Twitter"></a>
-                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="/images/social/rss.png" title="RSS"></a>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="../images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="../images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="../images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="../images/social/rss.png" title="RSS"></a>
                     </p>
                 </hgroup>
             </header>
@@ -58,20 +63,18 @@
                 <header class="post-header">
                     <h1>Getting the <span class="caps">IP</span> address of a specific interface in puppet using&nbsp;facter</h1>
                         <p class="post-meta">
-                            meta = { 'category': <a href="/category/tech.html">tech</a>, 'date': 06-10-2013 }
+                            meta = { 'category': <a href="../category/tech.html">tech</a>, 'date': 06-10-2013 }
                             <div class="meta-tags">
                                 tags = [
-                                        <a class="post-category" href="/tag/facter.html">facter</a><span class="comma">,</span>
-                                        <a class="post-category" href="/tag/puppet.html">puppet</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/facter.html">facter</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/puppet.html">puppet</a><span class="comma">,</span>
                                 ]
                             </div>
                         </p>
                 </header>
             </section>
-            <p>One of the problems that I find annoying in puppet is that you can&#8217;t
-easily obtain the <span class="caps">IP</span> address of a specific network&nbsp;interface.</p>
-<p>Let&#8217;s say that you want to define a class or type to which you wish to
-pass a interface name and use it&#8217;s <span class="caps">IP</span> address as a&nbsp;variable.</p>
+            <p>One of the problems that I find annoying in puppet is that you can&#8217;t easily obtain the <span class="caps">IP</span> address of a specific network&nbsp;interface.</p>
+<p>Let&#8217;s say that you want to define a class or type to which you wish to pass a interface name and use it&#8217;s <span class="caps">IP</span> address as a&nbsp;variable.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -90,11 +93,7 @@ pass a interface name and use it&#8217;s <span class="caps">IP</span> address as
 
 <span class="k">class</span> <span class="p">{</span> <span class="s1">&#39;dns&#39;</span><span class="p">:</span> <span class="n">interface</span> <span class="o">=&gt;</span> <span class="s1">&#39;eth0&#39;</span> <span class="p">}</span>
 </pre></div>
-</td></tr></table><p>We could use facters $::ipaddress, but what happens if the network
-interface is not our main network interface? What if we want to use more
-than one network interface? There&#8217;s $::ipaddress_eth0, but how do we
-construct or reference a variable in a dynamic way (construct a variable
-based on another variable)&nbsp;?</p>
+</td></tr></table><p>We could use facters <tt class="docutils literal"><span class="pre">$::ipaddress</span></tt>, but what happens if the network interface is not our main network interface? What if we want to use more than one network interface? There&#8217;s <tt class="docutils literal"><span class="pre">$::ipaddress_eth0</span></tt>, but how do we construct or reference a variable in a dynamic way (construct a variable based on another variable)&nbsp;?</p>
 <p>Luckily there&#8217;s a nifty trick involving inline templates and&nbsp;lookupvar:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -132,7 +131,7 @@ based on another variable)&nbsp;?</p>
                     <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
                 </div>
 <footer class="footer">
-    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
 </footer>        </div>
     </div>
 </div>

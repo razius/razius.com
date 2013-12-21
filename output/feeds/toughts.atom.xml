@@ -1,28 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Silviu Tantos (razius)</title><link href="/" rel="alternate"></link><link href="/feeds/toughts.atom.xml" rel="self"></link><id>/</id><updated>2013-10-14T19:14:00+02:00</updated><entry><title>Move fast and break things</title><link href="/articles/move-fast-and-break-things.html" rel="alternate"></link><updated>2013-10-14T19:14:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-10-14:articles/move-fast-and-break-things.html</id><summary type="html">&lt;p&gt;&lt;em&gt;Move fast and break things&lt;/em&gt; is one of the &lt;a class="reference external" href="http://www.youtube.com/watch?v=LPSbtqGiol4"&gt;founding mantras&lt;/a&gt; of
-Facebook and I think it defines a company culture that can apply to
-almost any technology startup. It is a culture who&amp;#8217;s principles embody,
-promote and encourage communication, constant and fast iterations, tight
-feedback loop between the implementation and the design, short
-code-to-deployment cycles, experimentation and&amp;nbsp;efficiency.&lt;/p&gt;
-&lt;p&gt;These are also just a few of the reasons why I chose to be a part of the
-&lt;a class="reference external" href="https://www.iconfinder.com/"&gt;Iconfinder&lt;/a&gt; team and to do my internship at a startup company instead
-of a traditional one. I have the perfect environment for rapid
-professional growth, I can acquire new skills and sharpen my old ones at
-a much faster pace, I feel challenged everyday and I have the pleasure
-of working with the newest&amp;nbsp;technologies.&lt;/p&gt;
-&lt;p&gt;In this &lt;em&gt;move fast and break things&lt;/em&gt; culture the &lt;em&gt;break things&lt;/em&gt;, as I&amp;#8217;ve
-come to find out, is not optional. To continue to improve you have to
-make mistakes from which you have to learn and my recent blunder is one
-of those mistakes. During the development of the new comment section a
-&lt;a class="reference external" href="http://blog.iconfinder.com/cookie-hijacking/"&gt;serious bug&lt;/a&gt; slipped through making it possible for attackers to
-hijack cookies from users. The bug was discovered and fixed under 2
-hours and didn&amp;#8217;t have any major repercussions apart from the
-inconvenience of clearing the session storage and having all users log
-in&amp;nbsp;again.&lt;/p&gt;
-&lt;p&gt;I&amp;#8217;ve learned a lot this month, some lessons where learned the hard way,
-from mistakes, but it&amp;#8217;s been a fun ride so far and I can&amp;#8217;t wait to see
-what the future will&amp;nbsp;bring.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Silviu Tantos (razius)</title><link href="/" rel="alternate"></link><link href="/feeds/toughts.atom.xml" rel="self"></link><id>/</id><updated>2013-10-14T19:14:00+02:00</updated><entry><title>Move fast and break things</title><link href="/articles/move-fast-and-break-things.html" rel="alternate"></link><updated>2013-10-14T19:14:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-10-14:articles/move-fast-and-break-things.html</id><summary type="html">&lt;p&gt;&lt;em&gt;Move fast and break things&lt;/em&gt; is one of the &lt;a class="reference external" href="http://www.youtube.com/watch?v=LPSbtqGiol4"&gt;founding mantras&lt;/a&gt; of Facebook and I think it defines a company culture that can apply to almost any technology startup. It is a culture who&amp;#8217;s principles embody, promote and encourage communication, constant and fast iterations, tight feedback loop between the implementation and the design, short code-to-deployment cycles, experimentation and&amp;nbsp;efficiency.&lt;/p&gt;
+&lt;p&gt;These are also just a few of the reasons why I chose to be a part of the &lt;a class="reference external" href="https://www.iconfinder.com/"&gt;Iconfinder&lt;/a&gt; team and to do my internship at a startup company instead
+of a traditional one. I have the perfect environment for rapid professional growth, I can acquire new skills and sharpen my old ones at a much faster pace, I feel challenged everyday and I have the pleasure of working with the newest&amp;nbsp;technologies.&lt;/p&gt;
+&lt;p&gt;In this &lt;em&gt;move fast and break things&lt;/em&gt; culture the &lt;em&gt;break things&lt;/em&gt;, as I&amp;#8217;ve come to find out, is not optional. To continue to improve you have to make mistakes from which you have to learn and my recent blunder is one of those mistakes. During the development of the new comment section a &lt;a class="reference external" href="http://blog.iconfinder.com/cookie-hijacking/"&gt;serious bug&lt;/a&gt; slipped through making it possible for attackers to hijack cookies from users. The bug was discovered and fixed under 2 hours and didn&amp;#8217;t have any major repercussions apart from the inconvenience of clearing the session storage and having all users log in&amp;nbsp;again.&lt;/p&gt;
+&lt;p&gt;I&amp;#8217;ve learned a lot this month, some lessons where learned the hard way, from mistakes, but it&amp;#8217;s been a fun ride so far and I can&amp;#8217;t wait to see what the future will&amp;nbsp;bring.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Some geeky&amp;nbsp;statistics:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;Git commits:&amp;nbsp;101&lt;/li&gt;
@@ -85,99 +66,42 @@ philosophizing on universe&amp;#8217;s strange idea of humor. I am without a pla
 to stay, without a way to contact somebody, without knowing anybody or
 anyplace and without a way to at least get back to Horsens. Everything I
 have on me are a couple of beer&amp;nbsp;caps.&lt;/p&gt;
-</summary><category term="copenhagen"></category><category term="personal"></category></entry><entry><title>About stuff</title><link href="/articles/about-stuff.html" rel="alternate"></link><updated>2013-07-31T19:53:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-07-31:articles/about-stuff.html</id><summary type="html">&lt;p&gt;I moved to Denmark, from my home country Romania, exactly two years ago
-to the day with just a small suitcase and a backpack. In them I had a
-hand-full of clothes, a few personal belongings and my&amp;nbsp;laptop.&lt;/p&gt;
-&lt;p&gt;[caption id=&amp;quot;attachment_550&amp;quot; align=&amp;quot;alignleft&amp;quot; width=&amp;quot;300&amp;quot;]&lt;a href="#id7"&gt;&lt;span class="problematic" id="id8"&gt;`|My stuff
-when moving to Denmark.|`_&lt;/span&gt;&lt;/a&gt;My luggage when moving to Denmark.[/caption]
-During the past couple of years things started to accumulate, I started
-buying new things, some out of necessity others because I wanted&amp;nbsp;them.&lt;/p&gt;
-&lt;p&gt;But fortunately because as a student I had limited space and resources I
-was forced in a certain mindset, making me think twice before buying
-something. For example when I needed something, I tried to buy the
-cheapest thing that would serve it&amp;#8217;s purpose, I bought a computer chair
-and a table for 5$, a bed for 50$ and a lamp for 2$. Being cheap, when
-moving out instead of taking them with me I could just leave them
-behind,less thing to move, less hassle and effort spent on moving them&amp;nbsp;out.&lt;/p&gt;
-&lt;p&gt;Being accepted for an internship in Copenhagen and facing the
-possibility of living in a hostel for an undetermined period of time
-made me decide to see how much I could slim down my list of possessions
-again. My objective was simple, everything that I own should fit in my
-backpack and my travel bag (or less if&amp;nbsp;possible).&lt;/p&gt;
-&lt;dl class="docutils"&gt;
-&lt;dt&gt;What did I end up&amp;nbsp;with?&lt;/dt&gt;
-&lt;dd&gt;[caption id=&amp;quot;attachment_637&amp;quot;&amp;nbsp;align=&amp;quot;alignright&amp;quot;&lt;/dd&gt;
-&lt;/dl&gt;
-&lt;div class="system-message"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line&amp;nbsp;33)&lt;/p&gt;
-Definition list ends without a blank line; unexpected unindent.&lt;/div&gt;
-&lt;p&gt;width=&amp;quot;300&amp;quot;]&lt;a href="#id9"&gt;&lt;span class="problematic" id="id10"&gt;`|Everything I currently own|`_&lt;/span&gt;&lt;/a&gt; Everything I currently&amp;nbsp;own[/caption]&lt;/p&gt;
+</summary><category term="copenhagen"></category><category term="personal"></category></entry><entry><title>About stuff</title><link href="/articles/about-stuff.html" rel="alternate"></link><updated>2013-07-31T19:53:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2013-07-31:articles/about-stuff.html</id><summary type="html">&lt;p&gt;I moved to Denmark, from my home country Romania, exactly two years ago to the day with just a small suitcase and a backpack. In them I had a hand-full of clothes, a few personal belongings and my&amp;nbsp;laptop.&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="My luggage when moving to Denmark" src="/images/articles/moving-to-denmark.jpg" /&gt;
+&lt;p class="caption"&gt;My luggage when moving to Horsens,&amp;nbsp;Denmark&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;During the past couple of years things started to accumulate, I started buying new things, some out of necessity others because I wanted&amp;nbsp;them.&lt;/p&gt;
+&lt;p&gt;But fortunately because as a student I had limited space and resources I was forced in a certain mindset, making me think twice before buying something. For example when I needed something, I tried to buy the cheapest thing that would serve it&amp;#8217;s purpose, I bought a computer chair and a table for 5$, a bed for 50$ and a lamp for 2$. Being cheap, when moving out instead of taking them with me I could just leave them behind,less thing to move, less hassle and effort spent on moving them&amp;nbsp;out.&lt;/p&gt;
+&lt;p&gt;Being accepted for an internship in Copenhagen and facing the possibility of living in a hostel for an undetermined period of time made me decide to see how much I could slim down my list of possessions again. My objective was simple, everything that I own should fit in my backpack and my travel bag (or less if&amp;nbsp;possible).&lt;/p&gt;
+&lt;p&gt;What did I end up&amp;nbsp;with?&lt;/p&gt;
+&lt;div class="figure"&gt;
+&lt;img alt="My luggage when moving to Denmark" src="/images/articles/moving-to-copenhagen.jpg" /&gt;
+&lt;p class="caption"&gt;Everything I currently&amp;nbsp;own&lt;/p&gt;
+&lt;/div&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;&lt;strong&gt;Clothes&lt;/strong&gt;, nothing spectacular&amp;nbsp;here.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Two pairs of shoes&lt;/strong&gt;, I&amp;#8217;ve always owned no more than 2-3 pair,
-never felt like I needed&amp;nbsp;more.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Two pairs of shoes&lt;/strong&gt;, I&amp;#8217;ve always owned no more than 2-3 pair, never felt like I needed&amp;nbsp;more.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Thinkpad T500&lt;/strong&gt; laptop +&amp;nbsp;mouse.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Kindle&lt;/strong&gt; which I find incredibly useful, it allows me to carry tons
-of books around with little physical space requirements. I would love
-to own physical books, but it feels like they would be too much of a
-hassle right&amp;nbsp;now.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kindle&lt;/strong&gt; which I find incredibly useful, it allows me to carry tons of books around with little physical space requirements. I would love to own physical books, but it feels like they would be too much of a hassle right&amp;nbsp;now.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;External hard-drive&lt;/strong&gt; to back-up the data from my&amp;nbsp;laptop.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;&lt;span class="caps"&gt;HTC&lt;/span&gt; One S phone&lt;/strong&gt;, it also acts as my camera, alarm clock and
-whatever other uses I can think&amp;nbsp;of.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;iPod Touch&lt;/strong&gt;, I bought it to develop and test a iOS application.
-I&amp;#8217;m considering selling it and buying a proper &lt;span class="caps"&gt;MP3&lt;/span&gt;&amp;nbsp;player.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Longboard&lt;/strong&gt;, I&amp;#8217;ve bought this one last year and I consider it
-incredibly&amp;nbsp;fun.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;&lt;span class="caps"&gt;HTC&lt;/span&gt; One S phone&lt;/strong&gt;, it also acts as my camera, alarm clock and whatever other uses I can think&amp;nbsp;of.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;iPod Touch&lt;/strong&gt;, I bought it to develop and test a iOS application. I&amp;#8217;m considering selling it and buying a proper &lt;span class="caps"&gt;MP3&lt;/span&gt;&amp;nbsp;player.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Longboard&lt;/strong&gt;, I&amp;#8217;ve bought this one last year and I consider it incredibly&amp;nbsp;fun.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Ogio backpack&lt;/strong&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Not shown in the&amp;nbsp;picture:&lt;/p&gt;
 &lt;ul class="simple"&gt;
 &lt;li&gt;Charger and a docking station for the&amp;nbsp;laptop&lt;/li&gt;
-&lt;li&gt;A pair of headphones,a usb cable for my phone/iPod/Kindle and one for
-my external&amp;nbsp;hard-drive&lt;/li&gt;
-&lt;li&gt;A computer that I keep back home in Romania which is acting as an
-off-site back-up server for my files, every night the content of my
-laptop is saved on to it. In this way if anything happens to my
-laptop or the data on it, I would still have what&amp;#8217;s most important,
-my files and&amp;nbsp;data&lt;/li&gt;
+&lt;li&gt;A pair of headphones,a usb cable for my phone/iPod/Kindle and one for my external&amp;nbsp;hard-drive&lt;/li&gt;
+&lt;li&gt;A computer that I keep back home in Romania which is acting as an off-site back-up server for my files, every night the content of my laptop is saved on to it. In this way if anything happens to my laptop or the data on it, I would still have what&amp;#8217;s most important, my files and&amp;nbsp;data&lt;/li&gt;
 &lt;li&gt;A shoe box filled with personal&amp;nbsp;memories.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;Now I&amp;#8217;m gonna leave you with a great comedy sketch by George Carlin and
-an &lt;a class="reference external" href="http://storyofstuff.org/"&gt;awesome website&lt;/a&gt; on the&amp;nbsp;subject.&lt;/p&gt;
-&lt;!-- |My stuff when moving to --&gt;
-&lt;div class="system-message"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line&amp;nbsp;72)&lt;/p&gt;
-malformed substitution definition.&lt;/div&gt;
-&lt;div class="system-message"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;WARNING&lt;/span&gt;/2 (&lt;tt class="docutils"&gt;/mnt/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line&amp;nbsp;73)&lt;/p&gt;
-Explicit markup ends without a blank line; unexpected unindent.&lt;/div&gt;
-&lt;p&gt;Denmark.| image:: &lt;a class="reference external" href="http://razius.com/wp-content/uploads/2013/07/moving-to-denmark-300x179.jpg"&gt;http://razius.com/wp-content/uploads/2013/07/moving-to-denmark-300x179.jpg&lt;/a&gt;
-.. &lt;a href="#id1"&gt;&lt;span class="problematic" id="id2"&gt;|Everything I currently
-own|&lt;/span&gt;&lt;/a&gt; image:: &lt;a class="reference external" href="http://razius.com/wp-content/uploads/2013/07/DSC08599-300x225.jpg"&gt;http://razius.com/wp-content/uploads/2013/07/&lt;span class="caps"&gt;DSC08599&lt;/span&gt;-300x225.jpg&lt;/a&gt;
-.. &lt;a href="#id3"&gt;&lt;span class="problematic" id="id4"&gt;|image2|&lt;/span&gt;&lt;/a&gt; image:: &lt;a class="reference external" href="http://razius.com/wp-content/uploads/2013/07/moving-to-denmark-300x179.jpg"&gt;http://razius.com/wp-content/uploads/2013/07/moving-to-denmark-300x179.jpg&lt;/a&gt;
-.. &lt;a href="#id5"&gt;&lt;span class="problematic" id="id6"&gt;|image3|&lt;/span&gt;&lt;/a&gt; image:: &lt;a class="reference external" href="http://razius.com/wp-content/uploads/2013/07/DSC08599-300x225.jpg"&gt;http://razius.com/wp-content/uploads/2013/07/&lt;span class="caps"&gt;DSC08599&lt;/span&gt;-300x225.jpg&lt;/a&gt;&lt;/p&gt;
-&lt;div class="system-messages section"&gt;
-&lt;h2&gt;Docutils System&amp;nbsp;Messages&lt;/h2&gt;
-&lt;div class="system-message" id="id1"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line 73); &lt;em&gt;&lt;a href="#id2"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Undefined substitution referenced: &amp;quot;Everything I currently own&amp;quot;.&lt;/div&gt;
-&lt;div class="system-message" id="id3"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line 73); &lt;em&gt;&lt;a href="#id4"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Undefined substitution referenced: &amp;quot;image2&amp;quot;.&lt;/div&gt;
-&lt;div class="system-message" id="id5"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line 73); &lt;em&gt;&lt;a href="#id6"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Undefined substitution referenced: &amp;quot;image3&amp;quot;.&lt;/div&gt;
-&lt;div class="system-message" id="id7"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line 11); &lt;em&gt;&lt;a href="#id8"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Unknown target name: &amp;quot;|my stuff when moving to denmark.|&amp;quot;.&lt;/div&gt;
-&lt;div class="system-message" id="id9"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/mnt/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line 33); &lt;em&gt;&lt;a href="#id10"&gt;backlink&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-Unknown target name: &amp;quot;|everything i currently own|&amp;quot;.&lt;/div&gt;
-&lt;/div&gt;
-</summary><category term="personal"></category><category term="stuff"></category></entry><entry><title>Hello world!</title><link href="/articles/hello-world.html" rel="alternate"></link><updated>2011-08-15T09:52:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2011-08-15:articles/hello-world.html</id><summary type="html">&lt;p&gt;After much slacking around and ignoring this blog I decided to give it another spin and bring it back to&amp;nbsp;life.&lt;/p&gt;
+&lt;p&gt;Now I&amp;#8217;m gonna leave you with a great comedy sketch by George Carlin and an &lt;a class="reference external" href="http://storyofstuff.org/"&gt;awesome website&lt;/a&gt; on the&amp;nbsp;subject.&lt;/p&gt;
+&lt;div class="youtube" align="left"&gt;&lt;iframe width="420" height="315" src="https://www.youtube.com/embed/MvgN5gCuLac" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</summary><category term="personal"></category><category term="stuff"></category></entry><entry><title>Hello world!</title><link href="/articles/hello-world.html" rel="alternate"></link><updated>2011-08-15T09:52:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:,2011-08-15:articles/hello-world.html</id><summary type="html">&lt;p&gt;After much slacking around and ignoring this blog I decided to give it another spin and bring it back to&amp;nbsp;life.&lt;/p&gt;
 &lt;p&gt;It will be mostly technical articles about Linux, system administration and network&amp;nbsp;administration.&lt;/p&gt;
 &lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;root@crappy:/# &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello, World!&amp;#39;&lt;/span&gt;
 Hello, World!
 &lt;/pre&gt;&lt;/div&gt;
-&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary></entry></feed>
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</summary><category term="random"></category></entry></feed>

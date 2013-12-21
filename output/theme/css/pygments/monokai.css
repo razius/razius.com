@@ -1,7 +1,8 @@
 .codehilite .hll { background-color: #49483e }
-.codehilitetable td { padding: 0; }
+.codehilitetable { width: 100% }
+.codehilitetable td { padding: 0; white-space: nowrap }
 .codehilitetable  { background: #272822; color: #f8f8f2; }
-.linenos  { color: #666; border-right: solid 1px #444 }
+.linenos  { color: #666; border-right: solid 1px #444; width: 15px;  }
 .codehilite .c { color: #75715e } /* Comment */
 .codehilite .err { color: #960050; background-color: #1e0010 } /* Error */
 .codehilite .k { color: #66d9ef } /* Keyword */

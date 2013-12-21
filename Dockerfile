@@ -7,8 +7,8 @@ ENV DEBIAN_FRONTEND noninteractive
 WORKDIR /mnt/
 
 RUN apt-get update
-RUN apt-get install -y software-properties-common python-dev python-pip asciidoc
-RUN pip install pelican Markdown fabric typogrify
+RUN apt-get install -y software-properties-common python-dev python-pip python-docutils asciidoc
+RUN pip install pelican pelican_youtube Markdown fabric typogrify
 RUN make regenerate &
 
 CMD make serve

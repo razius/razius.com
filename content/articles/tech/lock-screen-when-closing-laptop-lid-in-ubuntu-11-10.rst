@@ -4,38 +4,27 @@ Lock screen when closing laptop lid in Ubuntu 11.10
 :tags: ubuntu
 :slug: lock-screen-when-closing-laptop-lid-in-ubuntu-11-10
 
-**Update: This has been fixed in Ubuntu 12.04 Precise Pangolin.**
 
-An useful thing to do is to have lock the screen when you close the
-laptop lid so you don't have to wait for the timeout but in Ubuntu 11.10
-this feature was disabled.
+An useful thing to do is to have lock the screen when you close the laptop lid so you don't have to wait for the timeout but in Ubuntu 11.10 this feature was disabled.
 
-.. raw:: html
+*Note: This bug has been fixed in Ubuntu 12.04 Precise Pangolin.*
 
-   <p>
+To have your screen locked when you close your lid under Ubuntu 11.10 you need to edit ``/etc/acpi/lid.sh`` and just after the line
 
-To have your screen locked when you close your lid under Ubuntu 11.10
-you need to edit /etc/acpi/lid.sh and just after the line
-
-::
+.. code-block:: bash
 
     . /usr/share/acpi-support/screenblank
 
-.. raw:: html
-
-   <p>
-
 add the following line:
 
-::
+.. code-block:: console
 
     su $user -c '/usr/bin/gnome-screensaver-command -l'
 
-.
 
-It should look something like:
+So the result should look something like:
 
-::
+.. code-block:: bash
 
     [...]
         for x in /tmp/.X11-unix/*; do

@@ -4,33 +4,14 @@ Move fast and break things
 :tags: iconfinder, internship, personal
 :slug: move-fast-and-break-things
 
-*Move fast and break things* is one of the `founding mantras`_ of
-Facebook and I think it defines a company culture that can apply to
-almost any technology startup. It is a culture who's principles embody,
-promote and encourage communication, constant and fast iterations, tight
-feedback loop between the implementation and the design, short
-code-to-deployment cycles, experimentation and efficiency.
+*Move fast and break things* is one of the `founding mantras`_ of Facebook and I think it defines a company culture that can apply to almost any technology startup. It is a culture who's principles embody, promote and encourage communication, constant and fast iterations, tight feedback loop between the implementation and the design, short code-to-deployment cycles, experimentation and efficiency.
 
-These are also just a few of the reasons why I chose to be a part of the
-`Iconfinder`_ team and to do my internship at a startup company instead
-of a traditional one. I have the perfect environment for rapid
-professional growth, I can acquire new skills and sharpen my old ones at
-a much faster pace, I feel challenged everyday and I have the pleasure
-of working with the newest technologies.
+These are also just a few of the reasons why I chose to be a part of the `Iconfinder`_ team and to do my internship at a startup company instead
+of a traditional one. I have the perfect environment for rapid professional growth, I can acquire new skills and sharpen my old ones at a much faster pace, I feel challenged everyday and I have the pleasure of working with the newest technologies.
 
-In this *move fast and break things* culture the *break things*, as I've
-come to find out, is not optional. To continue to improve you have to
-make mistakes from which you have to learn and my recent blunder is one
-of those mistakes. During the development of the new comment section a
-`serious bug`_ slipped through making it possible for attackers to
-hijack cookies from users. The bug was discovered and fixed under 2
-hours and didn't have any major repercussions apart from the
-inconvenience of clearing the session storage and having all users log
-in again.
+In this *move fast and break things* culture the *break things*, as I've come to find out, is not optional. To continue to improve you have to make mistakes from which you have to learn and my recent blunder is one of those mistakes. During the development of the new comment section a `serious bug`_ slipped through making it possible for attackers to hijack cookies from users. The bug was discovered and fixed under 2 hours and didn't have any major repercussions apart from the inconvenience of clearing the session storage and having all users log in again.
 
-I've learned a lot this month, some lessons where learned the hard way,
-from mistakes, but it's been a fun ride so far and I can't wait to see
-what the future will bring.
+I've learned a lot this month, some lessons where learned the hard way, from mistakes, but it's been a fun ride so far and I can't wait to see what the future will bring.
 
 **Some geeky statistics:**
 

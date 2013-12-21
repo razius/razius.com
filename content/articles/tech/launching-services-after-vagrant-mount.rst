@@ -4,26 +4,15 @@ Launching services after Vagrant mount
 :tags: init, upstart, vagrant, virtualbox
 :slug: launching-services-after-vagrant-mount
 
-I recently had to set up a Vagrant project where all the configuration
-files for services like nginx, supervisor, mysql where symlinks pointing
-to files residing on the `Vagrant synced folder`_. This turned out to be
-a bit of a problem, when the Vagrant box boots, one of the last things
-it does is mount the synced folder, so those services would fail to
-start because of missing configuration files.
+I recently had to set up a Vagrant project where all the configuration files for services like nginx, supervisor, mysql where symlinks pointing to files residing on the `Vagrant synced folder`_. This turned out to be
+a bit of a problem, when the Vagrant box boots, one of the last things it does is mount the synced folder, so those services would fail to start because of missing configuration files.
 
-To fix the problem you need to ensure that all services are started
-after Vagrant had the chance to mount the synced /vagrant/ folder and to
-do this there are a couple of ways depending on the type of init script
-that the service has.
+To fix the problem you need to ensure that all services are started after Vagrant had the chance to mount the synced /vagrant/ folder and to do this there are a couple of ways depending on the type of init script that the service has.
 
 Upstart
-~~~~~~~
+-------
 
-There is an `upstart event`_ that Vagrant emits each time it mounts a
-synced folder that is called *vagrant-mounted* so we can modify the
-upstart configuration file for services that depend on the Vagrant
-synced folder to listen and start after the *vagrant-mounted* `event is
-emitted`_.
+There is an `upstart event`_ that Vagrant emits each time it mounts a synced folder that is called *vagrant-mounted* so we can modify the upstart configuration file for services that depend on the Vagrant synced folder to listen and start after the *vagrant-mounted* `event is emitted`_.
 
 .. code-block:: bash
 
@@ -52,22 +41,14 @@ emitted`_.
     exec $DAEMON
 
 System-V
-~~~~~~~~
+--------
 
-If you are not running Ubuntu as the guest OS or you don't want to
-convert your init script to upstart, there's still hope, albeit a bit
-more complicated. Underneath Vagrant uses VirtualBox's shared folder for
-it's synced folder so we can hook-up to udev events and trigger a script
-execution after the VirtualBox mount event has fired, this of course
-will also works for VirtualBox's shared folder not just for Vagrant's
-synced folders.
+If you are not running Ubuntu as the guest OS or you don't want to convert your init script to upstart, there's still hope, albeit a bit more complicated. Underneath Vagrant uses VirtualBox's shared folder for it's synced folder so we can hook-up to udev events and trigger a script execution after the VirtualBox mount event has fired, this of course will also works for VirtualBox's shared folder not just for Vagrant's synced folders.
 
 Finding out the udev event
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This step is not needed as I already wrote the udev rule, it's just to
-show how I came up with it. If you're not interested in it just skip to
-writing the udev rule.
+This step is not needed as I already wrote the udev rule, it's just to show how I came up with it. If you're not interested in it just skip to writing the udev rule.
 
 Fire up a terminal and listen to udev events:
 
@@ -99,11 +80,9 @@ Now we should see the event in the first terminal window:
     UDEV_LOG=3
 
 Writing the udev rule
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
-We can see that the subsystem is *bdi* and the action is *add* so we can
-write a `udev rule`_ for the event. I use
-``/etc/udev/rules.d/50-vagrant-mount.rules`` as the file name and path.
+We can see that the subsystem is *bdi* and the action is *add* so we can write a `udev rule`_ for the event. I use ``/etc/udev/rules.d/50-vagrant-mount.rules`` as the file name and path.
 
 .. code-block:: bash
 
@@ -112,15 +91,9 @@ write a `udev rule`_ for the event. I use
     # Stop on unmount
     SUBSYSTEM=="bdi",ACTION=="remove",RUN+="/usr/bin/screen -m -d bash -c 'sleep 5; /etc/init.d/nginx stop'"
 
-This will run each time a VirtualBox shared folder is mounted. It spawns
-a screen session (of course you need to have the `screen`_ package
-installed) to prevent the command from being killed by systemd when
-parent udev exits, sleeps for 5 seconds to make sure Vagrant had the
-chance to mount the synced folder and exits successfully and finally
-start the service.
+This will run each time a VirtualBox shared folder is mounted. It spawns a screen session (of course you need to have the `screen`_ package installed) to prevent the command from being killed by systemd when parent udev exits, sleeps for 5 seconds to make sure Vagrant had the chance to mount the synced folder and exits successfully and finally start the service.
 
-Don't forget to type in the full paths otherwise udev won't be able to
-find the command. For more information see the `udev manual`_.
+Don't forget to type in the full paths otherwise udev won't be able to find the command. For more information consult the `udev manual`_.
 
 .. _Vagrant synced folder: http://docs.vagrantup.com/v2/synced-folders/index.html
 .. _upstart event: http://upstart.ubuntu.com/cookbook/#event

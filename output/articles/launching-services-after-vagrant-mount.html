@@ -6,15 +6,16 @@
     <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
 
         <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+        <link rel="alternate" href="/feeds/all.rss.xml" type="application/rss+xml" title="Silviu Tantos (razius) Full RSS Feed"/>
 
-        <title>Launching services after Vagrant mount // Silviu Tantos (razius) // Toying with the idea of becoming a useful member of society.</title>
+        <title>Launching services after Vagrant mount</title>
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="/theme/css/pure.css">
-    <link rel="stylesheet" href="/theme/css/pygments/monokai.css">
+    <link rel="stylesheet" href="../theme/css/pure.css">
+    <link rel="stylesheet" href="../theme/css/pygments/monokai.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="/theme/js/jquery.fitvids.js"></script>
+    <script src="../theme/js/jquery.fitvids.js"></script>
     <script>
         $(document).ready(function(){
             $(".content").fitVids();
@@ -29,24 +30,28 @@
         <div class="cover-body">
             <header class="header">
                 <hgroup>
-                    <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
-                    <div class="site-info">
-                        <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
-                        <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                    <div class="site">
+                        <div class="author-image">
+                            <img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72">
+                        </div>
+                        <div class="site-info">
+                            <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1><br />
+                            <span class="tagline">Toying with the idea of becoming a useful member of society.</span>
+                        </div>
                     </div>
                     <div class="pages-menu">
                         <p>
-                            <span class="links pages"><a href="/">Home</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/about.html">About</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/contact.html">Contact</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="/pages/cv.html"><span class="caps">CV</span></a></span>
+                            <span class="links pages"><a href="../">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/about.html">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/contact.html">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../pages/cv.html"><span class="caps">CV</span></a></span>
                         </p>
                     </div>
-                    <p>
-                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="/images/social/github.png" title="Github"></a>
-                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="/images/social/last.fm.png" title="Last.fm"></a>
-                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="/images/social/twitter.png" title="Twitter"></a>
-                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="/images/social/rss.png" title="RSS"></a>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="../images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="../images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="../images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="../images/social/rss.png" title="RSS"></a>
                     </p>
                 </hgroup>
             </header>
@@ -58,35 +63,24 @@
                 <header class="post-header">
                     <h1>Launching services after Vagrant&nbsp;mount</h1>
                         <p class="post-meta">
-                            meta = { 'category': <a href="/category/tech.html">tech</a>, 'date': 10-11-2013 }
+                            meta = { 'category': <a href="../category/tech.html">tech</a>, 'date': 10-11-2013 }
                             <div class="meta-tags">
                                 tags = [
-                                        <a class="post-category" href="/tag/init.html">init</a><span class="comma">,</span>
-                                        <a class="post-category" href="/tag/upstart.html">upstart</a><span class="comma">,</span>
-                                        <a class="post-category" href="/tag/vagrant.html">vagrant</a><span class="comma">,</span>
-                                        <a class="post-category" href="/tag/virtualbox.html">virtualbox</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/init.html">init</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/upstart.html">upstart</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/vagrant.html">vagrant</a><span class="comma">,</span>
+                                        <a class="post-category" href="../tag/virtualbox.html">virtualbox</a><span class="comma">,</span>
                                 ]
                             </div>
                         </p>
                 </header>
             </section>
-            <p>I recently had to set up a Vagrant project where all the configuration
-files for services like nginx, supervisor, mysql where symlinks pointing
-to files residing on the <a class="reference external" href="http://docs.vagrantup.com/v2/synced-folders/index.html">Vagrant synced folder</a>. This turned out to be
-a bit of a problem, when the Vagrant box boots, one of the last things
-it does is mount the synced folder, so those services would fail to
-start because of missing configuration&nbsp;files.</p>
-<p>To fix the problem you need to ensure that all services are started
-after Vagrant had the chance to mount the synced /vagrant/ folder and to
-do this there are a couple of ways depending on the type of init script
-that the service&nbsp;has.</p>
+            <p>I recently had to set up a Vagrant project where all the configuration files for services like nginx, supervisor, mysql where symlinks pointing to files residing on the <a class="reference external" href="http://docs.vagrantup.com/v2/synced-folders/index.html">Vagrant synced folder</a>. This turned out to be
+a bit of a problem, when the Vagrant box boots, one of the last things it does is mount the synced folder, so those services would fail to start because of missing configuration&nbsp;files.</p>
+<p>To fix the problem you need to ensure that all services are started after Vagrant had the chance to mount the synced /vagrant/ folder and to do this there are a couple of ways depending on the type of init script that the service&nbsp;has.</p>
 <div class="section" id="upstart">
 <h2>Upstart</h2>
-<p>There is an <a class="reference external" href="http://upstart.ubuntu.com/cookbook/#event">upstart event</a> that Vagrant emits each time it mounts a
-synced folder that is called <em>vagrant-mounted</em> so we can modify the
-upstart configuration file for services that depend on the Vagrant
-synced folder to listen and start after the <em>vagrant-mounted</em> <a class="reference external" href="https://github.com/mitchellh/vagrant/blob/7897de3fbdc4c61a281954ec2df1c23bfe22f4d4/plugins/guests/ubuntu/cap/mount_nfs.rb#L13">event is
-emitted</a>.</p>
+<p>There is an <a class="reference external" href="http://upstart.ubuntu.com/cookbook/#event">upstart event</a> that Vagrant emits each time it mounts a synced folder that is called <em>vagrant-mounted</em> so we can modify the upstart configuration file for services that depend on the Vagrant synced folder to listen and start after the <em>vagrant-mounted</em> <a class="reference external" href="https://github.com/mitchellh/vagrant/blob/7897de3fbdc4c61a281954ec2df1c23bfe22f4d4/plugins/guests/ubuntu/cap/mount_nfs.rb#L13">event is emitted</a>.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -136,18 +130,10 @@ end script
 </td></tr></table></div>
 <div class="section" id="system-v">
 <h2>System-V</h2>
-<p>If you are not running Ubuntu as the guest <span class="caps">OS</span> or you don&#8217;t want to
-convert your init script to upstart, there&#8217;s still hope, albeit a bit
-more complicated. Underneath Vagrant uses VirtualBox&#8217;s shared folder for
-it&#8217;s synced folder so we can hook-up to udev events and trigger a script
-execution after the VirtualBox mount event has fired, this of course
-will also works for VirtualBox&#8217;s shared folder not just for Vagrant&#8217;s
-synced&nbsp;folders.</p>
+<p>If you are not running Ubuntu as the guest <span class="caps">OS</span> or you don&#8217;t want to convert your init script to upstart, there&#8217;s still hope, albeit a bit more complicated. Underneath Vagrant uses VirtualBox&#8217;s shared folder for it&#8217;s synced folder so we can hook-up to udev events and trigger a script execution after the VirtualBox mount event has fired, this of course will also works for VirtualBox&#8217;s shared folder not just for Vagrant&#8217;s synced&nbsp;folders.</p>
 <div class="section" id="finding-out-the-udev-event">
 <h3>Finding out the udev&nbsp;event</h3>
-<p>This step is not needed as I already wrote the udev rule, it&#8217;s just to
-show how I came up with it. If you&#8217;re not interested in it just skip to
-writing the udev&nbsp;rule.</p>
+<p>This step is not needed as I already wrote the udev rule, it&#8217;s just to show how I came up with it. If you&#8217;re not interested in it just skip to writing the udev&nbsp;rule.</p>
 <p>Fire up a terminal and listen to udev&nbsp;events:</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
@@ -182,9 +168,7 @@ monitor will print the received events <span class="k">for</span>:
 </td></tr></table></div>
 <div class="section" id="writing-the-udev-rule">
 <h3>Writing the udev&nbsp;rule</h3>
-<p>We can see that the subsystem is <em>bdi</em> and the action is <em>add</em> so we can
-write a <a class="reference external" href="http://hackaday.com/2009/09/18/how-to-write-udev-rules/">udev rule</a> for the event. I use
-<tt class="docutils literal"><span class="pre">/etc/udev/rules.d/50-vagrant-mount.rules</span></tt> as the file name and&nbsp;path.</p>
+<p>We can see that the subsystem is <em>bdi</em> and the action is <em>add</em> so we can write a <a class="reference external" href="http://hackaday.com/2009/09/18/how-to-write-udev-rules/">udev rule</a> for the event. I use <tt class="docutils literal"><span class="pre">/etc/udev/rules.d/50-vagrant-mount.rules</span></tt> as the file name and&nbsp;path.</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
@@ -193,14 +177,8 @@ write a <a class="reference external" href="http://hackaday.com/2009/09/18/how-t
 <span class="c"># Stop on unmount</span>
 <span class="nv"><span class="caps">SUBSYSTEM</span></span><span class="o">==</span><span class="s2">&quot;bdi&quot;</span>,<span class="caps">ACTION</span><span class="o">==</span><span class="s2">&quot;remove&quot;</span>,<span class="caps">RUN</span>+<span class="o">=</span><span class="s2">&quot;/usr/bin/screen -m -d bash -c &#39;sleep 5; /etc/init.d/nginx stop&#39;&quot;</span>
 </pre></div>
-</td></tr></table><p>This will run each time a VirtualBox shared folder is mounted. It spawns
-a screen session (of course you need to have the <a class="reference external" href="https://wiki.archlinux.org/index.php/GNU_Screen">screen</a> package
-installed) to prevent the command from being killed by systemd when
-parent udev exits, sleeps for 5 seconds to make sure Vagrant had the
-chance to mount the synced folder and exits successfully and finally
-start the&nbsp;service.</p>
-<p>Don&#8217;t forget to type in the full paths otherwise udev won&#8217;t be able to
-find the command. For more information see the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/udev.html#RUN%7Btype%7D">udev manual</a>.</p>
+</td></tr></table><p>This will run each time a VirtualBox shared folder is mounted. It spawns a screen session (of course you need to have the <a class="reference external" href="https://wiki.archlinux.org/index.php/GNU_Screen">screen</a> package installed) to prevent the command from being killed by systemd when parent udev exits, sleeps for 5 seconds to make sure Vagrant had the chance to mount the synced folder and exits successfully and finally start the&nbsp;service.</p>
+<p>Don&#8217;t forget to type in the full paths otherwise udev won&#8217;t be able to find the command. For more information consult the <a class="reference external" href="http://www.freedesktop.org/software/systemd/man/udev.html#RUN%7Btype%7D">udev manual</a>.</p>
 </div>
 </div>
 
@@ -221,7 +199,7 @@ find the command. For more information see the <a class="reference external" hre
                     <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
                 </div>
 <footer class="footer">
-    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
 </footer>        </div>
     </div>
 </div>

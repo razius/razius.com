@@ -4,11 +4,9 @@ Getting the IP address of a specific interface in puppet using facter
 :tags: facter, puppet
 :slug: getting-the-ip-address-of-a-specific-interface-in-puppet-using-facter
 
-One of the problems that I find annoying in puppet is that you can't
-easily obtain the IP address of a specific network interface.
+One of the problems that I find annoying in puppet is that you can't easily obtain the IP address of a specific network interface.
 
-Let's say that you want to define a class or type to which you wish to
-pass a interface name and use it's IP address as a variable.
+Let's say that you want to define a class or type to which you wish to pass a interface name and use it's IP address as a variable.
 
 .. code-block:: ruby
 
@@ -22,11 +20,7 @@ pass a interface name and use it's IP address as a variable.
 
     class { 'dns': interface => 'eth0' }
 
-We could use facters $::ipaddress, but what happens if the network
-interface is not our main network interface? What if we want to use more
-than one network interface? There's $::ipaddress\_eth0, but how do we
-construct or reference a variable in a dynamic way (construct a variable
-based on another variable) ?
+We could use facters ``$::ipaddress``, but what happens if the network interface is not our main network interface? What if we want to use more than one network interface? There's ``$::ipaddress_eth0``, but how do we construct or reference a variable in a dynamic way (construct a variable based on another variable) ?
 
 Luckily there's a nifty trick involving inline templates and lookupvar:
 

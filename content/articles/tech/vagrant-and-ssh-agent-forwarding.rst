@@ -4,32 +4,16 @@ Vagrant and SSH agent forwarding
 :tags: provisioning, ssh, vagrant
 :slug: vagrant-and-ssh-agent-forwarding
 
-I haven't even started yet and I can already hear you muttering over
-there, "What the hell is this Vagrant thing and why should I care?".
-Well, `Vagrant`_ is a wrapper around `VirtualBox`_, the virtualization
-software, that can create homogeneous development environments
-automatically without any effort from the developer. This means that we
-have a consistent development environment across out team with the same
-OS version, same package versions, same database, same settings. No more
-"But it worked on MY machine" excuses.
+I haven't even started yet and I can already hear you muttering over there, "What the hell is this Vagrant thing and why should I care?". Well, `Vagrant`_ is a wrapper around `VirtualBox`_, the virtualization
+software, that can create homogeneous development environments automatically without any effort from the developer. This means that we have a consistent development environment across out team with the same OS version, same package versions, same database, same settings. No more *But it worked on MY machine* excuses.
 
-Lets say that inside this virtual machine you need to use your SSH key,
-maybe the key for your `Github`_ account to access your private or
-public git repositories or maybe the key to connect to a remote server.
-That can be a problem, you don't want to distribute your SSH keys with
-the Vagrant box. Each SSH key should be tied to an individual developer
-account so to prevent SSH key sharing you would need to either
-distribute each SSH key with a new Vagrant box or copy it during
-provisioning. That's not really homogeneous, you will end up with a
-Vagrant box for each developer or an inconvenient way of providing the
-SSH key depending on the developer's OS.
+Lets say that inside this virtual machine you need to use your SSH key, maybe the key for your `Github`_ account to access your private or public git repositories or maybe the key to connect to a remote server.
+That can be a problem, you don't want to distribute your SSH keys with the Vagrant box. Each SSH key should be tied to an individual developer
+account so to prevent SSH key sharing you would need to either distribute each SSH key with a new Vagrant box or copy it during provisioning. That's not really homogeneous, you will end up with a Vagrant box for each developer or an inconvenient way of providing the SSH key depending on the developer's OS.
 
-Enter `SSH agent forwarding`_. With SSH agent forwarding we can use the
-SSH key from our local machine inside the Vagrant box.
+Enter `SSH agent forwarding`_. With SSH agent forwarding we can use the SSH key from our local machine inside the Vagrant box.
 
-To enable agent forwarding for all ssh connections inside your Vagrant
-box you need to set the following in your Vagrant file inside the config
-section (Vagrant.configure(VAGRANTFILE\_API\_VERSION) do \|config\|):
+To enable agent forwarding for all ssh connections inside your Vagrant box you need to set the following in your Vagrant file inside the config section (Vagrant.configure(VAGRANTFILE\_API\_VERSION) do \|config\|):
 
 .. code-block:: bash
 
@@ -38,13 +22,13 @@ section (Vagrant.configure(VAGRANTFILE\_API\_VERSION) do \|config\|):
         config.ssh.forward_agent = true
     [...]
 
-Due to a Vagrant bug SSH Agent Forwarding not available during
-provisioning (`see issue`_), to work around that we need to create a
-file in /etc/sudoers.d/ with the contents Defaults env\_keep +=
-"SSH\_AUTH\_SOCK" so that the /etc/sudoers file keeps the
-"SSH\_AUTH\_SOCK" environment variable.
+Due to a Vagrant bug SSH Agent Forwarding not available during provisioning (`see issue`_), to work around that we need to create a file in ``/etc/sudoers.d/`` with the following contents:
 
-In your Vagrant file:
+.. code-block:: bash
+
+    Defaults env_keep += "SSH_AUTH_SOCK"
+
+To create it automatically during provisioning we can add the following to our Vagrant file:
 
 .. code-block:: ruby
 

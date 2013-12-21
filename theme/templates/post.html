@@ -4,9 +4,9 @@
             {# <img class="post-avatar" alt="{{ article.author }}" src="{{ article.author_gravatar }}" height="72" width="72"> #}
         {# </a> #}
         <h3><a class="post-title" href="{{ SITEURL }}/{{ article.url }}">{{ article.title }}</a></h3>
-            <p class="post-meta">{{ article.summary }}</p>
             <p class="post-meta">
                 meta = { 'category': <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category  }}</a>, 'date': {{ article.locale_date }} }
             </p>
+            <p class="post-meta">{{ article.summary }}</p>
     </header>
 </section>

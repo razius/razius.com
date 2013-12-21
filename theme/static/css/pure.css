@@ -32,6 +32,10 @@ pre {
     /*box-shadow: 2px 2px 2px #888;*/
 }
 
+.caption {
+    color: #999;
+}
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -114,8 +118,13 @@ pre {
     margin-left: 15px;
 }
 
-.site-info {
-    overflow: auto;
+.site {
+    display: table;
+}
+
+.site > div {
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .header p {
@@ -124,6 +133,10 @@ pre {
 
 .header p.pages {
     padding: 0;
+}
+
+.pages-menu {
+    /*text-align: center;*/
 }
 
 .pages-menu span {
@@ -155,7 +168,6 @@ h1.brand-main {
 
 .tagline {
     margin-left: 15px;
-    margin-top: -15px;
     line-height: 0.8em;
     font-size: 80%;
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
@@ -204,13 +216,13 @@ h1.brand-main {
     margin-left: 1em;
 }
 .avatar {
-    float: left;
+    /*float: left;*/
     border-radius: 50px;
 }
 .post-meta {
     color: #999;
     font-size: 90%;
-    margin-top: -10px;
+    margin-top: 10px;
     font-family: monospace;
 }
 
@@ -293,6 +305,10 @@ h1.brand-main {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.social-links {
+    /*text-align: center;*/
+}
+
 .social {
     padding-right: 15px;
 }
@@ -370,3 +386,18 @@ h1.brand-main {
         background-position: 0;
     }
 }
+
+
+/* Text related mixins. */
+.align-center {
+    text-align: center;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.bold {
+    font-style: bold;
+}
+
