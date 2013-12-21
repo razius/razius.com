@@ -6,12 +6,12 @@ About stuff
 
 I moved to Denmark, from my home country Romania, exactly two years ago to the day with just a small suitcase and a backpack. In them I had a hand-full of clothes, a few personal belongings and my laptop.
 
+During the past couple of years things started to accumulate, I started buying new things, some out of necessity others because I wanted them.
+
 .. figure:: {filename}/images/articles/moving-to-denmark.jpg
     :alt: My luggage when moving to Denmark
 
     My luggage when moving to Horsens, Denmark
-
-During the past couple of years things started to accumulate, I started buying new things, some out of necessity others because I wanted them.
 
 But fortunately because as a student I had limited space and resources I was forced in a certain mindset, making me think twice before buying something. For example when I needed something, I tried to buy the cheapest thing that would serve it's purpose, I bought a computer chair and a table for 5$, a bed for 50$ and a lamp for 2$. Being cheap, when moving out instead of taking them with me I could just leave them behind,less thing to move, less hassle and effort spent on moving them out.
 

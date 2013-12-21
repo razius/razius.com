@@ -172,6 +172,7 @@ h1.brand-main {
     font-size: 80%;
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
     color: #fff;
+    margin-top: 0;
 }
 
 .links a {
