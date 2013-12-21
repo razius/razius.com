@@ -83,9 +83,9 @@ Create a new file named ``test.c`` with the following content:
     #include <avr/io.h>
 
     int main(void) {
-            DDRA = 0xFF;
+        DDRA = 0xFF;
         PORTA = ~0xFF;
-            return 0;
+        return 0;
     }
 
 Create a new file named `Makefile`_ with the following content:
