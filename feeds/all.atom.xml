@@ -350,15 +350,7 @@ have on me are a couple of beer&amp;nbsp;caps.&lt;/p&gt;
 &lt;li&gt;A shoe box filled with personal&amp;nbsp;memories.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Now I&amp;#8217;m gonna leave you with a great comedy sketch by George Carlin and an &lt;a class="reference external" href="http://storyofstuff.org/"&gt;awesome website&lt;/a&gt; on the&amp;nbsp;subject.&lt;/p&gt;
-&lt;div class="system-message"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/media/storage/workspace/projects/razius.github.io/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line&amp;nbsp;46)&lt;/p&gt;
-&lt;p&gt;Unknown directive type&amp;nbsp;&amp;quot;youtube&amp;quot;.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-.. youtube:: MvgN5gCuLac
-
-&lt;/pre&gt;
-&lt;/div&gt;
-</summary><category term="personal"></category><category term="stuff"></category></entry><entry><title>Generating password hashes for puppet</title><link href="http://razius.com/articles/generating-password-hashes-for-puppet/" rel="alternate"></link><updated>2013-07-08T10:25:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:razius.com,2013-07-08:articles/generating-password-hashes-for-puppet/</id><summary type="html">&lt;p&gt;Puppet expects the user’s password to be encrypted in the format the local system expects, for most modern Unix-like systems (Linux, *&lt;span class="caps"&gt;BSD&lt;/span&gt;, Solaris, etc.) this format is a salted &lt;span class="caps"&gt;SHA1&lt;/span&gt; password&amp;nbsp;hash.&lt;/p&gt;
+&lt;div class="youtube" align="left"&gt;&lt;iframe width="420" height="315" src="https://www.youtube.com/embed/MvgN5gCuLac" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</summary><category term="personal"></category><category term="stuff"></category></entry><entry><title>Generating password hashes for puppet</title><link href="http://razius.com/articles/generating-password-hashes-for-puppet/" rel="alternate"></link><updated>2013-07-08T10:25:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:razius.com,2013-07-08:articles/generating-password-hashes-for-puppet/</id><summary type="html">&lt;p&gt;Puppet expects the user’s password to be encrypted in the format the local system expects, for most modern Unix-like systems (Linux, *&lt;span class="caps"&gt;BSD&lt;/span&gt;, Solaris, etc.) this format is a salted &lt;span class="caps"&gt;SHA1&lt;/span&gt; password&amp;nbsp;hash.&lt;/p&gt;
 &lt;p&gt;To generate a password hash to use with puppet manifest files you can use the mkpasswd utility (it&amp;#8217;s available in the whois&amp;nbsp;package):&lt;/p&gt;
 &lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2

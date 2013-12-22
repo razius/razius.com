@@ -98,15 +98,7 @@ have on me are a couple of beer&amp;nbsp;caps.&lt;/p&gt;
 &lt;li&gt;A shoe box filled with personal&amp;nbsp;memories.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Now I&amp;#8217;m gonna leave you with a great comedy sketch by George Carlin and an &lt;a class="reference external" href="http://storyofstuff.org/"&gt;awesome website&lt;/a&gt; on the&amp;nbsp;subject.&lt;/p&gt;
-&lt;div class="system-message"&gt;
-&lt;p class="system-message-title"&gt;System Message: &lt;span class="caps"&gt;ERROR&lt;/span&gt;/3 (&lt;tt class="docutils"&gt;/media/storage/workspace/projects/razius.github.io/content/articles/toughts/about-stuff.rst&lt;/tt&gt;, line&amp;nbsp;46)&lt;/p&gt;
-&lt;p&gt;Unknown directive type&amp;nbsp;&amp;quot;youtube&amp;quot;.&lt;/p&gt;
-&lt;pre class="literal-block"&gt;
-.. youtube:: MvgN5gCuLac
-
-&lt;/pre&gt;
-&lt;/div&gt;
-</summary><category term="personal"></category><category term="stuff"></category></entry><entry><title>Hello world!</title><link href="http://razius.com/articles/hello-world/" rel="alternate"></link><updated>2011-08-15T09:52:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:razius.com,2011-08-15:articles/hello-world/</id><summary type="html">&lt;p&gt;After much slacking around and ignoring this blog I decided to give it another spin and bring it back to&amp;nbsp;life.&lt;/p&gt;
+&lt;div class="youtube" align="left"&gt;&lt;iframe width="420" height="315" src="https://www.youtube.com/embed/MvgN5gCuLac" frameborder="0"&gt;&lt;/iframe&gt;&lt;/div&gt;</summary><category term="personal"></category><category term="stuff"></category></entry><entry><title>Hello world!</title><link href="http://razius.com/articles/hello-world/" rel="alternate"></link><updated>2011-08-15T09:52:00+02:00</updated><author><name>Silviu Tantos</name></author><id>tag:razius.com,2011-08-15:articles/hello-world/</id><summary type="html">&lt;p&gt;After much slacking around and ignoring this blog I decided to give it another spin and bring it back to&amp;nbsp;life.&lt;/p&gt;
 &lt;p&gt;It will be mostly technical articles about Linux, system administration and network&amp;nbsp;administration.&lt;/p&gt;
 &lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
 2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;root@crappy:/# &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Hello, World!&amp;#39;&lt;/span&gt;
