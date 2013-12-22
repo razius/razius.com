@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
+
+        <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+
+        <title>Testing print stylesheets using Google Chrome</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pure.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pygments/monokai.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://razius.com/theme/js/jquery.fitvids.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <a href="/"><img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72"></a>
+                    <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1>
+                    <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
+                    <div class="pages-menu">
+                        <p>
+                            <span class="links pages"><a href="http://razius.com/">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/about/">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/contact/">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/cv/">CV</a></span>
+                        </p>
+                    </div>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="http://razius.com/images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="http://razius.com/images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="http://razius.com/images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="http://razius.com/images/social/rss.png" title="RSS"></a>
+                    </p>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-3-4">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>Testing print stylesheets using Google&nbsp;Chrome</h1>
+                        <p class="post-meta">
+                            meta = {'category': <a href="http://razius.com/category/tech/">tech</a>, 'date': 14-05-2013}
+                            <div class="meta-tags">
+                                tags = []
+                            </div>
+                        </p>
+                </header>
+            </section>
+            <p>Testing <span class="caps">CSS</span> print media queries is really difficult but <a class="reference external" href="https://plus.google.com/+AddyOsmani/posts/MgpioU84JPe">a new featured</a> was introduced in Google Chrome in December that allows you to apply different <span class="caps">CSS</span> media types like handheld, print, screen and so&nbsp;on.</p>
+<ol class="arabic simple">
+<li><a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/shortcuts#opening-devtools">Open Developer Tools</a> in Google Chrome by clicking the menu icon at the top-right of your browser window, then select Tools → Developer&nbsp;tools.</li>
+<li>Open up the Overrides menu in the Developer Tools by clicking the gear in the bottom right&nbsp;corner:</li>
+</ol>
+<div class="figure align-center">
+<img alt="" src="http://razius.com/images/articles/dev-tools-settings.png" />
+</div>
+<ol class="arabic simple" start="3">
+<li>Enable &quot;Emulate <span class="caps">CSS</span> media&quot; and select the &quot;print&quot; media type option from the drop-down&nbsp;box:</li>
+</ol>
+<div class="figure align-center">
+<img alt="" src="http://razius.com/images/articles/emulate-css-print.png" />
+</div>
+<p>You can find more information and nifty tricks in the <a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/mobile-emulation">official documentation</a>.</p>
+
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_identifier = "articles/testing-print-stylesheets-using-google-chome/";
+                        (function() {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://razius.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+                </div>
+<footer class="footer">
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-29024708-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+    </script>
+</body>
+</html>

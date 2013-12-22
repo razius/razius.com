@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
+
+        <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+
+        <title>Installing and adding an external Tomcat server in Netbeans</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pure.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pygments/monokai.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://razius.com/theme/js/jquery.fitvids.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <a href="/"><img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72"></a>
+                    <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1>
+                    <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
+                    <div class="pages-menu">
+                        <p>
+                            <span class="links pages"><a href="http://razius.com/">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/about/">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/contact/">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/cv/">CV</a></span>
+                        </p>
+                    </div>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="http://razius.com/images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="http://razius.com/images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="http://razius.com/images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="http://razius.com/images/social/rss.png" title="RSS"></a>
+                    </p>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-3-4">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>Installing and adding an external Tomcat server in&nbsp;Netbeans</h1>
+                        <p class="post-meta">
+                            meta = {'category': <a href="http://razius.com/category/tech/">tech</a>, 'date': 28-01-2012}
+                            <div class="meta-tags">
+                                tags = [<a class="post-category" href="http://razius.com/tag/linux/">linux</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/netbeans/">netbeans</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/tomcat/">tomcat</a><span class="comma">, </span>]
+                            </div>
+                        </p>
+                </header>
+            </section>
+            <p>Netbeans no longer comes with Tomcat bundled so if you want to deploy your application to an Tomcat server you need to manually register an external&nbsp;server.</p>
+<p class="italic">Note: This article is old no longer and this is not true anymore, Tomcat is now bundled with Netbeans so the steps in this tutorial are not needed anymore. You can download and install the bundle from <a class="reference external" href="https://netbeans.org/downloads/">the official page</a>.</p>
+<div class="section" id="pre-requisites">
+<h2>Pre-requisites:</h2>
+<p>I&#8217;m assuming you are using at least Ubuntu Linux 11.10 and you already have installed the the latest Netbeans 7.1 with the Java Web Applications plugin&nbsp;installed.</p>
+<p>I also assume that you want to install and configure Tomcat from the repository, if you don&#8217;t care an easier method would be to just download <a class="reference external" href="http://ftp.download-by.net/apache/tomcat/tomcat-7/v7.0.47/bin/apache-tomcat-7.0.47.tar.gz">apache-tomcat.zip</a> from the Tomcat website, extract the archive to a folder under your home directory and just skip to step 4 of this tutorial where Under Server Location you would browse to where you extracted the archive and under Username and Password you would put the username and password you would have put in <tt class="docutils literal"><span class="pre">tomcat-users.xml</span></tt>.</p>
+</div>
+<div class="section" id="install-tomcat">
+<h2>1. Install&nbsp;Tomcat</h2>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> sudo apt-get install tomcat7 tomcat7-common tomcat7-admin tomcat7-user
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="add-an-administrative-user-to-tomcat">
+<h2>2. Add an administrative user to&nbsp;Tomcat</h2>
+<p>Tomcat does have any users defined that could be used for administrative purposes so we need to open tomcat-users.xml in a text editor and add a user with the proper roles assigned to&nbsp;it.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> sudo gedit /etc/tomcat7/tomcat-users.xml
+</pre></div>
+</td></tr></table><p>Replace its content with the following and make sure that you replace <tt class="docutils literal"><span class="caps">USERNAME</span></tt> and <tt class="docutils literal"><span class="caps">PASSWORD</span></tt> with the values you&nbsp;want:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span class="cp">&lt;?xml version=&#39;1.0&#39; encoding=&#39;utf-8&#39;?&gt;</span>
+<span class="nt">&lt;tomcat-users&gt;</span>
+    <span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&quot;manager-script&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;role</span> <span class="na">rolename=</span><span class="s">&quot;admin&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;user</span> <span class="na">username=</span><span class="s">&quot;<span class="caps">USERNAME</span>&quot;</span> <span class="na">password=</span><span class="s">&quot;<span class="caps">PASSWORD</span>&quot;</span> <span class="na">roles=</span><span class="s">&quot;manager-script,admin&quot;</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/tomcat-users&gt;</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="some-fixes">
+<h2>3. Some&nbsp;&quot;fixes&quot;</h2>
+<p>Unfortunately it seams that Netbeans doesn&#8217;t correctly detect the the Tomcat installation directory so we need to make some temporary changes till we add the server otherwise will get an error saying <em>&quot;The specified Server Location (Catalina Home) folder is not&nbsp;valid.&quot;</em></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> <span class="nb">cd</span> /usr/share/tomcat7/lib
+<span class="gp">$</span> mv catalina.jar catalina.jar.bk
+<span class="gp">$</span> wget http://www.razius.com/files/catalina.jar
+</pre></div>
+</td></tr></table><p>We need to make sure that the configuration files can be read from the installation directory otherwise will get an error saying <em>&quot;The&nbsp;&lt;CATALINA_HOME&gt;/conf/server.xml&nbsp;can&#8217;t&nbsp;be&nbsp;read.&quot;</em></p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> sudo ln -s /etc/tomcat7/ /usr/share/tomcat7/conf
+</pre></div>
+</td></tr></table><p>We need to chown the Tomcat installation and configuration directory so we don&#8217;t have any permission problems. Replace <span class="caps">USERNAME</span> with your Ubuntu&nbsp;username:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> sudo chown -R <span class="caps">USERNAME</span>:<span class="caps">USERNAME</span> /etc/tomcat7/
+<span class="gp">$</span> sudo chown -R <span class="caps">USERNAME</span>:<span class="caps">USERNAME</span> /usr/share/tomcat7/
+</pre></div>
+</td></tr></table><p>Disable the upstart Tomcat service (Netbeans start&#8217;s it up for us&nbsp;automatically):</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> sudo update-rc.d tomcat7 disable 0123456
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="adding-the-server-in-netbeans">
+<h2>4. Adding the server in&nbsp;Netbeans</h2>
+<p>Now that you have Tomcat installed and configured we can open up Netbeans and under the Services tab right click on the Servers node and click on Add&nbsp;server.</p>
+<div class="figure align-center">
+<img alt="" src="http://razius.com/images/articles/netbeans-add-server.png" />
+</div>
+<p>In the current list select Apache Tomcat and click Next. Under Server Location enter your Tomcat installation directory , by default this should be <tt class="docutils literal">/usr/share/tomcat7</tt> and under Username and Password put in the username and password that we added in the <tt class="docutils literal"><span class="pre">tomcat-users.xml</span></tt> file.</p>
+<div class="figure align-center">
+<img alt="" src="http://razius.com/images/articles/netbeans-add-server-instance.png" />
+</div>
+<p>Click <em>Finish</em>. You should now be able to see Tomcat as an added server under the Servers&nbsp;Node.</p>
+</div>
+<div class="section" id="revert-changes">
+<h2>5. Revert&nbsp;changes</h2>
+<p>If we are installing from the repository we need to revert the changes done in step&nbsp;3:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> <span class="nb">cd</span> /usr/share/tomcat7/lib
+<span class="gp">$</span> rm catalina.jar
+<span class="gp">$</span> mv catalina.jar.bk catalina.jar
+</pre></div>
+</td></tr></table></div>
+
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_identifier = "articles/installing-and-adding-an-external-tomcat-server-in-netbeans/";
+                        (function() {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://razius.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+                </div>
+<footer class="footer">
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-29024708-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+    </script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
+
+        <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+
+        <title>Password protecting folders with nginx</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pure.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pygments/monokai.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://razius.com/theme/js/jquery.fitvids.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <a href="/"><img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72"></a>
+                    <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1>
+                    <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
+                    <div class="pages-menu">
+                        <p>
+                            <span class="links pages"><a href="http://razius.com/">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/about/">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/contact/">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/cv/">CV</a></span>
+                        </p>
+                    </div>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="http://razius.com/images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="http://razius.com/images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="http://razius.com/images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="http://razius.com/images/social/rss.png" title="RSS"></a>
+                    </p>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-3-4">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>Password protecting folders with&nbsp;nginx</h1>
+                        <p class="post-meta">
+                            meta = {'category': <a href="http://razius.com/category/tech/">tech</a>, 'date': 13-02-2012}
+                            <div class="meta-tags">
+                                tags = [<a class="post-category" href="http://razius.com/tag/nginx/">nginx</a><span class="comma">, </span>]
+                            </div>
+                        </p>
+                </header>
+            </section>
+            <p>If you need to password protect a folder using nginx here&#8217;s how. In this example we&#8217;re gonna password protect the /admin folder, trying to access the admin directory will prompt the user with a basic authentication dialog, and will be challenged against the created password&nbsp;file.</p>
+<p>Edit your site&#8217;s configuration file and add the following lines inside the server-block&nbsp;configuration:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span class="k">location</span> <span class="s">/admin</span> <span class="p">{</span>
+   <span class="kn">auth_basic</span>            <span class="s">&quot;Restricted&quot;</span><span class="p">;</span>
+   <span class="kn">auth_basic_user_file</span>  <span class="s">/etc/nginx/htpasswd</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Next we need to create a password file, the safest place to store a password file is outside of the web-accessible location so we&#8217;re gonna place it in&nbsp;/etc/nginx.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">#</span> <span class="nb">cd</span> /etc/nginx/
+<span class="gp">#</span> wget http://trac.edgewall.org/export/10975/trunk/contrib/htpasswd.py
+<span class="gp">#</span> chmod 755 htpasswd.py
+<span class="gp">#</span> ./htpasswd.py -c -b htpasswd <span class="caps">USERNAME</span> <span class="caps">PASSWORD</span>
+</pre></div>
+</td></tr></table><p>Don&#8217;t forget to reload nginx so that the configuration changes take&nbsp;effect:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre># /etc/init.d/nginx reload
+</pre></div>
+</td></tr></table>
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_identifier = "articles/password-protecting-folders-with-nginx/";
+                        (function() {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://razius.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+                </div>
+<footer class="footer">
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-29024708-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+    </script>
+</body>
+</html>

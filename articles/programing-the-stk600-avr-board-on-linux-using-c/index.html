@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
+
+        <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+
+        <title>Programing the STK600 AVR board on Linux using C</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pure.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pygments/monokai.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://razius.com/theme/js/jquery.fitvids.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <a href="/"><img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72"></a>
+                    <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1>
+                    <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
+                    <div class="pages-menu">
+                        <p>
+                            <span class="links pages"><a href="http://razius.com/">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/about/">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/contact/">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/cv/">CV</a></span>
+                        </p>
+                    </div>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="http://razius.com/images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="http://razius.com/images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="http://razius.com/images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="http://razius.com/images/social/rss.png" title="RSS"></a>
+                    </p>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-3-4">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>Programing the <span class="caps">STK600</span> <span class="caps">AVR</span> board on Linux using&nbsp;C</h1>
+                        <p class="post-meta">
+                            meta = {'category': <a href="http://razius.com/category/tech/">tech</a>, 'date': 27-09-2012}
+                            <div class="meta-tags">
+                                tags = [<a class="post-category" href="http://razius.com/tag/avr/">avr</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/debian/">debian</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/linux/">linux</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/ubuntu/">ubuntu</a><span class="comma">, </span>]
+                            </div>
+                        </p>
+                </header>
+            </section>
+            <div class="section" id="setting-up-the-developing-enviroment">
+<h2>Setting up the developing&nbsp;enviroment</h2>
+<p>Note: I&#8217;m assuming you have a .deb based distribution and a <span class="caps">AVR</span> <span class="caps">STK600</span> board with a ATmega2560 microcontroller that you are programming using an <span class="caps">USB</span>&nbsp;cable.</p>
+<div class="section" id="installing-the-software">
+<h3>Installing the&nbsp;software</h3>
+<p>We need to install the following programs and their&nbsp;dependencies:</p>
+<ul class="simple">
+<li>gcc-avr: The <span class="caps">GNU</span> C compiler (cross compiler for&nbsp;avr)</li>
+<li>gdb-avr: The <span class="caps">GNU</span> Debugger for&nbsp;avr</li>
+<li>avr-libc: Standard C library for Atmel <span class="caps">AVR</span>&nbsp;development</li>
+<li>avrdude: Tool to download the compiled code and data to the Atmel <span class="caps">AVR</span>&nbsp;microcontroller</li>
+</ul>
+<p>Install them by running the following&nbsp;command:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> sudo apt-get install avrdude avrdude-doc gcc-avr binutils-avr avr-libc simulavr gdb-avr
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="setting-up-the-permissions">
+<h3>Setting up the&nbsp;permissions</h3>
+<p>In order to download the firmware on the device as a regular user we need to setup some udev rules for device permissions otherwise we get the following&nbsp;errors:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre>avrdude: usb_open(): cannot read serial number...
+avrdude: usb_open(): cannot read product name...
+avrdude: usbdev_open(): error setting configuration 1...
+avrdude: usbdev_open(): did not find any USB device...
+</pre></div>
+</td></tr></table><p>Create a new file under <tt class="docutils literal">/etc/udev/rules.d/</tt> named <tt class="docutils literal"><span class="pre">41-atmega.rules</span></tt> with the following&nbsp;content:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="nv"><span class="caps">SUBSYSTEM</span></span><span class="o">==</span><span class="s2">&quot;usb&quot;</span>, <span class="caps">ATTR</span><span class="o">{</span>idVendor<span class="o">}==</span><span class="s2">&quot;03eb&quot;</span>, <span class="caps">ATTR</span><span class="o">{</span>idProduct<span class="o">}==</span><span class="s2">&quot;product_id&quot;</span>, <span class="nv"><span class="caps">OWNER</span></span><span class="o">=</span><span class="s2">&quot;my_username&quot;</span>, <span class="nv"><span class="caps">GROUP</span></span><span class="o">=</span><span class="s2">&quot;my_group&quot;</span>, <span class="nv"><span class="caps">MODE</span></span><span class="o">=</span><span class="s2">&quot;0666&quot;</span>
+</pre></div>
+</td></tr></table><p>Where you need to replace <tt class="docutils literal">product_id</tt>, <tt class="docutils literal">my_username</tt> and <tt class="docutils literal">my_group</tt> with your own&nbsp;values.</p>
+<p><tt class="docutils literal">my_username</tt> is the username that you login to the system, you can find it by running the following&nbsp;command:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> id -gn
+</pre></div>
+</td></tr></table><p><tt class="docutils literal">my_group</tt> is the primary group of your username, you can find it by running the following&nbsp;command:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> id -un
+</pre></div>
+</td></tr></table><p><tt class="docutils literal">product_id</tt> is the <span class="caps">USB</span> Product <span class="caps">ID</span> assigned by the manufacturer, you can find it by running the following&nbsp;command:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> lsusb |grep Atmel | awk <span class="s1">&#39;{ print $6 }&#39;</span> | awk <span class="s1">&#39;<span class="caps">BEGIN</span> { <span class="caps">FS</span> = &quot;:&quot; } ; { print $2 }&#39;</span>
+</pre></div>
+</td></tr></table><p>Reload udev to apply our&nbsp;rules:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> sudo /etc/init.d/udev reload
+</pre></div>
+</td></tr></table><p>Finally, be sure to disconnect and reconnect the <span class="caps">AVR</span> board for the new rule to be&nbsp;applied.</p>
+</div>
+</div>
+<div class="section" id="creating-a-new-project">
+<h2>Creating a new&nbsp;project</h2>
+<p>Create a new file named <tt class="docutils literal">test.c</tt> with the following&nbsp;content:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span class="cm">/* Sample C program to turn on all leds on the <span class="caps">AVR</span> */</span>
+
+<span class="cp">#include &lt;avr/io.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n"><span class="caps">DDRA</span></span> <span class="o">=</span> <span class="mh">0xFF</span><span class="p">;</span>
+    <span class="n"><span class="caps">PORTA</span></span> <span class="o">=</span> <span class="o">~</span><span class="mh">0xFF</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Create a new file named <a class="reference external" href="http://en.wikipedia.org/wiki/Make_(software)#Makefiles">Makefile</a> with the following&nbsp;content:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17</pre></div></td><td class="code"><div class="codehilite"><pre><span class="nv"><span class="caps">CC</span></span><span class="o">=</span><span class="sb">`</span>which avr-gcc<span class="sb">`</span>
+<span class="nv"><span class="caps">CFLAGS</span></span><span class="o">=</span>-g -Os -Wall -mcall-prologues -std<span class="o">=</span>c99 -mmcu<span class="o">=</span>atmega2560
+<span class="nv"><span class="caps">OBJ2HEX</span></span><span class="o">=</span><span class="sb">`</span>which avr-objcopy<span class="sb">`</span>
+<span class="nv"><span class="caps">AVRD</span></span><span class="o">=</span><span class="sb">`</span>which avrdude<span class="sb">`</span>
+<span class="c"># Modify <span class="caps">TARGET</span> to match your C filename without the .c extension (it&#39;s test.c in this case)</span>
+<span class="nv"><span class="caps">TARGET</span></span><span class="o">=</span><span class="nb">test</span>
+
+<span class="nf">program </span><span class="o">:</span> <span class="m">$(<span class="caps">TARGET</span>).hex</span>
+    <span class="k">$(</span><span class="caps">AVRD</span><span class="k">)</span> -p atmega2560 -c stk600 -P usb -v -v -U flash:w:<span class="k">$(</span><span class="caps">TARGET</span><span class="k">)</span>.hex
+<span class="nf">%.obj </span><span class="o">:</span> <span class="m">%.o</span>
+    <span class="k">$(</span><span class="caps">CC</span><span class="k">)</span> <span class="k">$(</span><span class="caps">CFLAGS</span><span class="k">)</span> <span class="nv">$&lt;</span> -o <span class="nv">$@</span>
+
+<span class="nf">%.hex </span><span class="o">:</span> <span class="m">%.obj</span>
+    <span class="k">$(</span><span class="caps">OBJ2HEX</span><span class="k">)</span> -R .eeprom -O ihex <span class="nv">$&lt;</span> <span class="nv">$@</span>
+
+<span class="nf">clean </span><span class="o">:</span>
+    rm -f *.hex *.obj *.o
+</pre></div>
+</td></tr></table><p>Now all you have to do is run <tt class="docutils literal">make</tt> in the project folder to build the binary and upload it to the <span class="caps">AVR</span>&nbsp;Board:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> make
+</pre></div>
+</td></tr></table></div>
+
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_identifier = "articles/programing-the-stk600-avr-board-on-linux-using-c/";
+                        (function() {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://razius.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+                </div>
+<footer class="footer">
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-29024708-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+    </script>
+</body>
+</html>
