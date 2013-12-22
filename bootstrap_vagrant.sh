@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo apt-get update
-sudo apt-get install -y software-properties-common python-dev python-pip python-docutils asciidoc
+sudo apt-get install -y software-properties-common python-dev python-pip ghp-import python-docutils asciidoc
 sudo pip install pelican pelican_youtube Markdown fabric typogrify
 
 if [ ! -f "/etc/init/pelican.conf" ];
