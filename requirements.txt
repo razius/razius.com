@@ -18,3 +18,4 @@ six==1.4.1
 smartypants==1.8.3
 typogrify==2.0.0
 wsgiref==0.1.2
+pelican-youtube==0.1.0
