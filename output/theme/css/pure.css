@@ -112,10 +112,10 @@ pre {
 }
 
 .header {
-    text-align: left;
+    text-align: center;
     width: 767px;
     max-width: 100%;
-    margin-left: 15px;
+    /*margin-left: 15px;*/
 }
 
 .site {
@@ -151,8 +151,9 @@ pre {
 }
 
 h1.brand-main {
-    display: inline;
-    padding-bottom: 5px;
+    /*display: inline;*/
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .brand-main a {
@@ -167,11 +168,11 @@ h1.brand-main {
 }
 
 .tagline {
-    margin-left: 15px;
     line-height: 0.8em;
     font-size: 80%;
     text-shadow: 0 1px 3px rgba(0,0,0,0.3);
     color: #fff;
+    margin-top: 0;
 }
 
 .links a {
@@ -221,7 +222,6 @@ h1.brand-main {
 }
 .post-meta {
     color: #999;
-    font-size: 90%;
     margin-top: 10px;
     font-family: monospace;
 }
