@@ -13,12 +13,9 @@ from pelicanconf import *
 SITEURL = 'http://razius.com'
 RELATIVE_URLS = False
 
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
-
-DELETE_OUTPUT_DIRECTORY = True
+ARTICLE_EXCLUDES = ('drafts',)
 
 # Following items are often useful when publishing
 
-#DISQUS_SITENAME = ""
-#GOOGLE_ANALYTICS = ""
+DISQUS_SITENAME = 'razius'
+GOOGLE_ANALYTICS = 'UA-29024708-1'

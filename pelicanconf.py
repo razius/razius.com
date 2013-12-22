@@ -20,10 +20,6 @@ DELETE_OUTPUT_DIRECTORY = True
 
 # Blogroll
 LINKS = (
-    ('Pelican', 'http://getpelican.com/'),
-    ('Python.org', 'http://python.org/'),
-    ('Jinja2', 'http://jinja.pocoo.org/'),
-    ('You can modify those links in your config file', '#'),
 )
 
 # Social widget.
@@ -43,7 +39,6 @@ PAGE_DIR = 'pages'
 ARTICLE_DIR = 'articles'
 STATIC_PATHS = ['images', 'files']
 EXTRA_PATH_METADATA = {
-    'files/sitemap.xml': {'path': 'sitemap.xml'},
     'files/robots.txt': {'path': 'robots.txt'},
     'images/favicon.ico': {'path': 'favicon.ico'},
 }
@@ -51,7 +46,7 @@ EXTRA_PATH_METADATA = {
 # URL settings
 PAGINATION_PATTERNS = (
     (1, '{base_name}/', '{base_name}/index.html'),
-    (2, '{base_name}/page/{number}/', '{base_name}/articles/page/{number}/index.html'),
+    (2, '{base_name}/page/{number}/', '{base_name}/page/{number}/index.html'),
 )
 ARTICLE_URL = ('articles/{slug}/')
 ARTICLE_SAVE_AS = ('articles/{slug}/index.html')
@@ -75,15 +70,28 @@ TRANSLATION_FEED_ATOM = None
 # Theme.
 THEME = 'theme'
 COVER_IMG_URL = '/images/cover.jpg'
-DISQUS_SITENAME = 'razius'
 TYPOGRIFY = True
-# GOOGLE_ANALYTICS
 DEFAULT_PAGINATION = 10
 
 # Plugin.
 PLUGIN_PATH = 'plugins'
 PLUGINS = ['sitemap', 'gravatar', 'pelican_youtube']
 PYGMENTS_RST_OPTIONS = {'cssclass': 'codehilite', 'linenos': 'table'}
+
+# Sitemap.
+SITEMAP = {
+    'format': 'xml',
+    'priorities': {
+        'indexes': 1,
+        'articles': 0.9,
+        'pages': 0.8
+    },
+    'changefreqs': {
+        'indexes': 'daily',
+        'articles': 'daily',
+        'pages': 'weekly'
+    }
+}
 
 # can be useful in development, but set to False when you're ready to publish
 RELATIVE_URLS = True
