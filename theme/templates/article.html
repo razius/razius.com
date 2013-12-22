@@ -19,13 +19,9 @@
                 <header class="post-header">
                     <h1>{{ article.title }}</h1>
                         <p class="post-meta">
-                            meta = { 'category': <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category  }}</a>, 'date': {{ article.locale_date }} }
+                            meta = {'category': <a href="{{ SITEURL }}/{{ article.category.url }}">{{ article.category  }}</a>, 'date': {{ article.locale_date }}}
                             <div class="meta-tags">
-                                tags = [
-                                    {% for tag in article.tags %}
-                                        <a class="post-category" href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a><span class="comma">,</span>
-                                    {% endfor %}
-                                ]
+                                tags = [{% for tag in article.tags %}<a class="post-category" href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a><span class="comma">, </span>{% endfor %}]
                             </div>
                         </p>
                 </header>
