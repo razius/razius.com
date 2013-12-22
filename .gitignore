@@ -2,6 +2,7 @@
 *.pid
 *.log
 *.sublime-workspace
-.vagrant/
+.virtualenv/
+plugins/
 content/drafts/
 output/
