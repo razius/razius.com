@@ -1,5 +1,6 @@
 *.pyc
 *.pid
 *.log
+*.sublime-workspace
 .vagrant/
 content/drafts/

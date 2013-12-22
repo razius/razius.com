@@ -10,11 +10,11 @@
         <title>Programing the STK600 AVR board on Linux using C</title>
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="../../theme/css/pure.css">
-    <link rel="stylesheet" href="../../theme/css/pygments/monokai.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pure.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pygments/monokai.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="../../theme/js/jquery.fitvids.js"></script>
+    <script src="http://razius.com/theme/js/jquery.fitvids.js"></script>
     <script>
         $(document).ready(function(){
             $(".content").fitVids();
@@ -34,17 +34,17 @@
                     <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
                     <div class="pages-menu">
                         <p>
-                            <span class="links pages"><a href="../../">Home</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../../pages/about/">About</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../../pages/contact/">Contact</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../../pages/cv/">CV</a></span>
+                            <span class="links pages"><a href="http://razius.com/">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/about/">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/contact/">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/cv/">CV</a></span>
                         </p>
                     </div>
                     <p class="social-links">
-                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="../../images/social/github.png" title="Github"></a>
-                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="../../images/social/last.fm.png" title="Last.fm"></a>
-                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="../../images/social/twitter.png" title="Twitter"></a>
-                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="../../images/social/rss.png" title="RSS"></a>
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="http://razius.com/images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="http://razius.com/images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="http://razius.com/images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="http://razius.com/images/social/rss.png" title="RSS"></a>
                     </p>
                 </hgroup>
             </header>
@@ -56,9 +56,9 @@
                 <header class="post-header">
                     <h1>Programing the <span class="caps">STK600</span> <span class="caps">AVR</span> board on Linux using&nbsp;C</h1>
                         <p class="post-meta">
-                            meta = {'category': <a href="../../category/tech/">tech</a>, 'date': 27-09-2012}
+                            meta = {'category': <a href="http://razius.com/category/tech/">tech</a>, 'date': 27-09-2012}
                             <div class="meta-tags">
-                                tags = [<a class="post-category" href="../../tag/avr/">avr</a><span class="comma">, </span><a class="post-category" href="../../tag/debian/">debian</a><span class="comma">, </span><a class="post-category" href="../../tag/linux/">linux</a><span class="comma">, </span><a class="post-category" href="../../tag/ubuntu/">ubuntu</a><span class="comma">, </span>]
+                                tags = [<a class="post-category" href="http://razius.com/tag/avr/">avr</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/debian/">debian</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/linux/">linux</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/ubuntu/">ubuntu</a><span class="comma">, </span>]
                             </div>
                         </p>
                 </header>
@@ -154,15 +154,15 @@ avrdude: usbdev_open(): did not find any USB device...
 <span class="c"># Modify <span class="caps">TARGET</span> to match your C filename without the .c extension (it&#39;s test.c in this case)</span>
 <span class="nv"><span class="caps">TARGET</span></span><span class="o">=</span><span class="nb">test</span>
 
-program : <span class="k">$(</span><span class="caps">TARGET</span><span class="k">)</span>.hex
+<span class="nf">program </span><span class="o">:</span> <span class="m">$(<span class="caps">TARGET</span>).hex</span>
     <span class="k">$(</span><span class="caps">AVRD</span><span class="k">)</span> -p atmega2560 -c stk600 -P usb -v -v -U flash:w:<span class="k">$(</span><span class="caps">TARGET</span><span class="k">)</span>.hex
-%.obj : %.o
+<span class="nf">%.obj </span><span class="o">:</span> <span class="m">%.o</span>
     <span class="k">$(</span><span class="caps">CC</span><span class="k">)</span> <span class="k">$(</span><span class="caps">CFLAGS</span><span class="k">)</span> <span class="nv">$&lt;</span> -o <span class="nv">$@</span>
 
-%.hex : %.obj
+<span class="nf">%.hex </span><span class="o">:</span> <span class="m">%.obj</span>
     <span class="k">$(</span><span class="caps">OBJ2HEX</span><span class="k">)</span> -R .eeprom -O ihex <span class="nv">$&lt;</span> <span class="nv">$@</span>
 
-clean :
+<span class="nf">clean </span><span class="o">:</span>
     rm -f *.hex *.obj *.o
 </pre></div>
 </td></tr></table><p>Now all you have to do is run <tt class="docutils literal">make</tt> in the project folder to build the binary and upload it to the <span class="caps">AVR</span>&nbsp;Board:</p>
@@ -214,6 +214,16 @@ clean :
         $('body').on('click', 'a[href="#"]', function(event) {
             event.preventDefault();
         });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-29024708-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
     </script>
 </body>
 </html>

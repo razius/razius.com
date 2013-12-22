@@ -10,11 +10,11 @@
         <title>Testing print stylesheets using Google Chrome</title>
 
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
-    <link rel="stylesheet" href="../../theme/css/pure.css">
-    <link rel="stylesheet" href="../../theme/css/pygments/monokai.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pure.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pygments/monokai.css">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="../../theme/js/jquery.fitvids.js"></script>
+    <script src="http://razius.com/theme/js/jquery.fitvids.js"></script>
     <script>
         $(document).ready(function(){
             $(".content").fitVids();
@@ -34,17 +34,17 @@
                     <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
                     <div class="pages-menu">
                         <p>
-                            <span class="links pages"><a href="../../">Home</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../../pages/about/">About</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../../pages/contact/">Contact</a></span>
-                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="../../pages/cv/">CV</a></span>
+                            <span class="links pages"><a href="http://razius.com/">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/about/">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/contact/">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/cv/">CV</a></span>
                         </p>
                     </div>
                     <p class="social-links">
-                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="../../images/social/github.png" title="Github"></a>
-                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="../../images/social/last.fm.png" title="Last.fm"></a>
-                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="../../images/social/twitter.png" title="Twitter"></a>
-                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="../../images/social/rss.png" title="RSS"></a>
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="http://razius.com/images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="http://razius.com/images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="http://razius.com/images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="http://razius.com/images/social/rss.png" title="RSS"></a>
                     </p>
                 </hgroup>
             </header>
@@ -56,7 +56,7 @@
                 <header class="post-header">
                     <h1>Testing print stylesheets using Google&nbsp;Chrome</h1>
                         <p class="post-meta">
-                            meta = {'category': <a href="../../category/tech/">tech</a>, 'date': 14-05-2013}
+                            meta = {'category': <a href="http://razius.com/category/tech/">tech</a>, 'date': 14-05-2013}
                             <div class="meta-tags">
                                 tags = []
                             </div>
@@ -69,13 +69,13 @@
 <li>Open up the Overrides menu in the Developer Tools by clicking the gear in the bottom right&nbsp;corner:</li>
 </ol>
 <div class="figure align-center">
-<img alt="" src="../../images/articles/dev-tools-settings.png" />
+<img alt="" src="http://razius.com/images/articles/dev-tools-settings.png" />
 </div>
 <ol class="arabic simple" start="3">
 <li>Enable &quot;Emulate <span class="caps">CSS</span> media&quot; and select the &quot;print&quot; media type option from the drop-down&nbsp;box:</li>
 </ol>
 <div class="figure align-center">
-<img alt="" src="../../images/articles/emulate-css-print.png" />
+<img alt="" src="http://razius.com/images/articles/emulate-css-print.png" />
 </div>
 <p>You can find more information and nifty tricks in the <a class="reference external" href="https://developers.google.com/chrome-developer-tools/docs/mobile-emulation">official documentation</a>.</p>
 
@@ -123,6 +123,16 @@
         $('body').on('click', 'a[href="#"]', function(event) {
             event.preventDefault();
         });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-29024708-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
     </script>
 </body>
 </html>
