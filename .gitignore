@@ -1,4 +1,5 @@
 *.pyc
 *.pid
 *.log
+.vagrant/
 content/drafts/
