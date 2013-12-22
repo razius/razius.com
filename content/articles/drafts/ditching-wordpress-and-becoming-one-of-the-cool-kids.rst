@@ -4,10 +4,6 @@ Ditching Wordpress and becoming one of the cool kids
 :tags: wordpress, static, pygments, python, restructured text
 :slug: ditching-wordpress-and-becoming-one-of-the-cool-kids
 
-
-
-sadadawe vweavdz
-
 http://docutils.sourceforge.net/docs/user/rst/quickref.html
 
 http://pygments.org/
