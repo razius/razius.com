@@ -5,21 +5,21 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://razius.com/index.html</loc>
-<lastmod>2013-12-23T13:35:21-00:00</lastmod>
+<lastmod>2013-12-23T17:11:22-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/archives.html</loc>
-<lastmod>2013-12-23T13:35:21-00:00</lastmod>
+<lastmod>2013-12-23T17:11:22-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/categories.html</loc>
-<lastmod>2013-12-23T13:35:21-00:00</lastmod>
+<lastmod>2013-12-23T17:11:22-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -43,6 +43,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <lastmod>2010-10-03T10:20:00-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.8</priority>
+</url>
+
+<url>
+<loc>http://razius.com/articles/ditching-wordpress-and-becoming-one-of-the-cool-kids/</loc>
+<lastmod>2013-12-21T10:58:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.9</priority>
 </url>
 
 <url>
@@ -173,7 +180,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://razius.com/category/tech/</loc>
-<lastmod>2013-11-17T20:58:00-00:00</lastmod>
+<lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -193,8 +200,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://razius.com/tag/redis/</loc>
-<lastmod>2013-11-17T20:58:00-00:00</lastmod>
+<loc>http://razius.com/tag/vagrant/</loc>
+<lastmod>2013-11-10T14:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -214,8 +221,15 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://razius.com/tag/puppet/</loc>
-<lastmod>2013-10-06T22:13:00-00:00</lastmod>
+<loc>http://razius.com/tag/pygments/</loc>
+<lastmod>2013-12-21T10:58:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://razius.com/tag/static/</loc>
+<lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -249,6 +263,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://razius.com/tag/restructured-text/</loc>
+<lastmod>2013-12-21T10:58:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
 <loc>http://razius.com/tag/java/</loc>
 <lastmod>2012-03-27T10:13:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -263,8 +284,8 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://razius.com/tag/vagrant/</loc>
-<lastmod>2013-11-10T14:40:00-00:00</lastmod>
+<loc>http://razius.com/tag/redis/</loc>
+<lastmod>2013-11-17T20:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>
@@ -277,6 +298,13 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
+<loc>http://razius.com/tag/internship/</loc>
+<lastmod>2013-10-14T19:14:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
 <loc>http://razius.com/tag/init/</loc>
 <lastmod>2013-11-10T14:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
@@ -284,8 +312,22 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 </url>
 
 <url>
-<loc>http://razius.com/tag/internship/</loc>
-<lastmod>2013-10-14T19:14:00-00:00</lastmod>
+<loc>http://razius.com/tag/wordpress/</loc>
+<lastmod>2013-12-21T10:58:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://razius.com/tag/puppet/</loc>
+<lastmod>2013-10-06T22:13:00-00:00</lastmod>
+<changefreq>daily</changefreq>
+<priority>1</priority>
+</url>
+
+<url>
+<loc>http://razius.com/tag/python/</loc>
+<lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
 <priority>1</priority>
 </url>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Silviu Tantos (razius), Toying with the idea of becoming a useful member of society.">
+
+        <link rel="alternate"  href="/feeds/all.atom.xml" type="application/atom+xml" title="Silviu Tantos (razius) Full Atom Feed"/>
+
+        <title>Ditching Wordpress and becoming one of the cool kids</title>
+
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pure.css">
+    <link rel="stylesheet" href="http://razius.com/theme/css/pygments/monokai.css">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://razius.com/theme/js/jquery.fitvids.js"></script>
+    <script>
+        $(document).ready(function(){
+            $(".content").fitVids();
+        });
+    </script>
+</head>
+
+<body>
+<div class="pure-g-r" id="layout">
+<div class="sidebar pure-u">
+    <div class="cover-img" style="background-image: url('/images/cover.jpg')">
+        <div class="cover-body">
+            <header class="header">
+                <hgroup>
+                    <a href="/"><img class="avatar" src="http://www.gravatar.com/avatar/716ec647b64d8fc708a8494d1caeb5f7" height="72" width="72"></a>
+                    <h1 class="brand-main"><a href="/">Silviu Tantos (razius)</a></h1>
+                    <p class="tagline">Toying with the idea of becoming a useful member of society.</p>
+                    <div class="pages-menu">
+                        <p>
+                            <span class="links pages"><a href="http://razius.com/">Home</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/about/">About</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/contact/">Contact</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages active"><a href="http://razius.com/pages/cv/">CV</a></span>
+                        </p>
+                    </div>
+                    <p class="social-links">
+                            <a target="_blank" class="social Github" href="http://github.com/razius"><img src="http://razius.com/images/social/github.png" title="Github"></a>
+                            <a target="_blank" class="social Last.fm" href="http://last.fm/user/razius"><img src="http://razius.com/images/social/last.fm.png" title="Last.fm"></a>
+                            <a target="_blank" class="social Twitter" href="http://twitter.com/razius"><img src="http://razius.com/images/social/twitter.png" title="Twitter"></a>
+                            <a target="_blank" class="social RSS" href="http://feeds.feedburner.com/razius"><img src="http://razius.com/images/social/rss.png" title="RSS"></a>
+                    </p>
+                </hgroup>
+            </header>
+        </div>
+    </div>
+</div>    <div class="pure-u-3-4">
+        <div class="content">
+            <section class="post">
+                <header class="post-header">
+                    <h1>Ditching Wordpress and becoming one of the cool&nbsp;kids</h1>
+                        <p class="post-meta">
+                            meta = {'category': <a href="http://razius.com/category/tech/">tech</a>, 'date': 21-12-2013}
+                            <div class="meta-tags">
+                                tags = [<a class="post-category" href="http://razius.com/tag/wordpress/">wordpress</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/static/">static</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/pygments/">pygments</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/python/">python</a><span class="comma">, </span><a class="post-category" href="http://razius.com/tag/restructured-text/">restructured text</a><span class="comma">, </span>]
+                            </div>
+                        </p>
+                </header>
+            </section>
+            <p>I&#8217;ve been a Wordpress user and developer for a long long time but lately this nagging idea kept crawling in the back of my head, why not switch my website to a statically generated one? Well, a 3 hour train journey and a lot of boredom finally pushed me to just make the switch and to write a short post about&nbsp;it.</p>
+<div class="section" id="what-is-a-statically-generated-website">
+<h2>What is a statically generated&nbsp;website?</h2>
+<p>Compared to dynamic web pages, where the web page is rendered by server-side logic and usually require a database, with statically generated websites you feed files written in a markup language like Markdown, reStructuredText, Textile, etc. to a static site generator which spits them out as a static website that is ready for&nbsp;deployment.</p>
+<p>They are useful when the content doesn&#8217;t vary based on parameters provided by a user, like in the case of a personal web page where the content is delivered to the user exactly as it was&nbsp;stored.</p>
+</div>
+<div class="section" id="why-bother-switching">
+<h2>Why bother&nbsp;switching?</h2>
+<p><strong>reStructuredText</strong></p>
+<p>I could write my articles as simple flat files using the <a class="reference external" href="http://docutils.sourceforge.net/docs/user/rst/quickref.html">reStructuredText</a> format, goodbye storing of articles in a database. Having the articles as simple text files would allow me to easily edit them using my editor of choice, sublime text, so no more editing of text in a form on a web page, copy/pasting code snippets in it and painfully adjusting the indentation. Just take a look at the source of this article and see how easy it is to embed different code snippets, it feels just like editing a source file. I would also have syntax highlighting powered by the excellent <a class="reference external" href="http://pygments.org/">pygments</a> syntax&nbsp;highlighter.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="k">print</span><span class="p">(</span><span class="s">&quot;Hello, World!&quot;</span><span class="p">)</span>
+</pre></div>
+</td></tr></table><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span class="cp">#include &lt;stdio.h&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloWorld</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</td></tr></table><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7</pre></div></td><td class="code"><div class="codehilite"><pre><span class="kn">package</span> <span class="nx">main</span>
+
+<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+
+<span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p>Plus, having the articles as flat files would allow me to keep the entire website in a git repository really&nbsp;easy.</p>
+<p><strong>Faster page&nbsp;loads</strong></p>
+<p>Because there is no need to build the web page each time upon serving it, page load would be faster. I made a test of a page load before and after the&nbsp;switch.</p>
+<div class="figure align-center">
+<img alt="Page load speed for Wordpress" src="http://razius.com/images/articles/wordpress-page-speed.png" />
+<p class="caption">Page load speed for&nbsp;Wordpress</p>
+</div>
+<div class="figure align-center">
+<img alt="Page load speed for static website" src="http://razius.com/images/articles/static-page-speed.png" />
+<p class="caption">Page load speed for static&nbsp;website</p>
+</div>
+<p>Not bad, a whole second. Yes, it&#8217;s not really a fair comparison, I also changed the theme to a much simpler one which is a big boost too, but&nbsp;still.</p>
+<p><strong>Github&nbsp;pages</strong></p>
+<p>I could host my page for free using <a class="reference external" href="http://pages.github.com/">Github pages</a>, which is a free hosting for static pages offered by Github, using git repositories for file storing. No, I&#8217;m not killing the little curious sysadmin in me, it&#8217;s just that for my humble page administration is starting to feel like a&nbsp;hassle.</p>
+<p><strong>The geek&nbsp;factor</strong></p>
+<p>In the end, why not? I keep this website to toy around with it and this would allow me to play around more with Python, Jinja2 and reStructuredText plus I could test a new flow for writing&nbsp;articles.</p>
+</div>
+<div class="section" id="making-the-switch">
+<h2>Making the&nbsp;switch</h2>
+<p>I picked <a class="reference external" href="http://blog.getpelican.com/">Pelican</a> over the two most popular static web site generators, <a class="reference external" href="http://jekyllrb.com/">Jekyll</a> and <a class="reference external" href="http://octopress.org/">Octopress</a> because being a python developer, and Pelican being python based, it would feel a bit more natural than Jekyll or Octopress which are Ruby&nbsp;based.</p>
+<p>If you think something else would suit you more, you can take a look at a complete list of static website generators at <a class="reference external" href="http://staticsitegenerators.net/">staticsitegenerators.net</a></p>
+<p>Installing Pelican, it&#8217;s as simple as&nbsp;running:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> pip install pelican
+</pre></div>
+</td></tr></table><p>Next, kickstart a new project. Do do this run <tt class="docutils literal"><span class="pre">pelican-quickstart</span></tt>, it will ask us a few questions about you site to generate a config file named <tt class="docutils literal">pelicanconf.py</tt> and create a project skeleton with some helper scripts&nbsp;inside.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> pelican-quickstart
+</pre></div>
+</td></tr></table><p>You can edit you <tt class="docutils literal">pelicanconf.py</tt> to further tune your configuration, take a look at the <a class="reference external" href="http://docs.getpelican.com/en/3.3.0/settings.html">manual</a> for the available options or you can check out <a class="reference external" href="https://github.com/razius/razius.com/blob/master/pelicanconf.py">my pelicanconf.py</a> for some&nbsp;inspiration.</p>
+<p>All the content goes into the <a class="reference external" href="https://github.com/razius/razius.com/blob/09dfd41f842d9b3b1a514816fa550423fc9b35e4/pelicanconf.py#L37">content</a> folder and I like to keep all my <a class="reference external" href="https://github.com/razius/razius.com/blob/09dfd41f842d9b3b1a514816fa550423fc9b35e4/pelicanconf.py#L39">articles</a> and <a class="reference external" href="https://github.com/razius/razius.com/blob/09dfd41f842d9b3b1a514816fa550423fc9b35e4/pelicanconf.py#L38">posts</a> in separate folders by setting the following in <tt class="docutils literal">pelicanconf.py</tt>:</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span class="n"><span class="caps">PATH</span></span> <span class="o">=</span> <span class="s">&#39;content&#39;</span>
+<span class="n">PAGE_DIR</span> <span class="o">=</span> <span class="s">&#39;pages&#39;</span>
+<span class="n">ARTICLE_DIR</span> <span class="o">=</span> <span class="s">&#39;articles&#39;</span>
+</pre></div>
+</td></tr></table><p>You can export your articles from Wordpress into an <span class="caps">XML</span> file by going to Tool -&gt; Export and then run <tt class="docutils literal"><span class="pre">pelican-import</span></tt> to generate the appropriate text files into the <tt class="docutils literal">content</tt> folder.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="gp">$</span> pelican-import --wpfile -o content/ wordpress-export.xml
+</pre></div>
+</td></tr></table><p>You can preview your files by running <tt class="docutils literal">make devserver</tt>, this will start a webserver that serves your build html files under <tt class="docutils literal"><span class="pre">http://localhost:8000/</span></tt> and a process that watches the <tt class="docutils literal">content</tt> folder for file changes and rebuilds the served html&nbsp;files.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="go">make devserver</span>
+</pre></div>
+</td></tr></table></div>
+<div class="section" id="hosting-on-github">
+<h2>Hosting on&nbsp;Github</h2>
+<p>Instead of using Github pages, where you are required to have your html pages under the project root and because pelican puts them under the output folder, I chose to use project pages. With project pages you keep the html files in a separate git branch called <tt class="docutils literal"><span class="pre">gh-pages</span></tt> and Github will publish those pages for you under <tt class="docutils literal">GITHUB_USERNAME.github.com/GITHUB_PROJECTNAME.</tt> from that branch. Ex. my web address would be <tt class="docutils literal"><span class="pre">http://razius.github.com/razius.com</span></tt>, don&#8217;t worry, you can use your custom domain&nbsp;too.</p>
+<p>Notice the difference between the <a class="reference external" href="https://github.com/razius/razius.com/tree/master">master</a> branch and the <a class="reference external" href="https://github.com/razius/razius.com/tree/gh-pages">gh-pages</a>&nbsp;branch.</p>
+<p>Luckily, you don&#8217;t have to maintain this branch manually, there&#8217;s a script called <tt class="docutils literal"><span class="pre">ghp-import</span></tt> which will manage it for you. It copies a directory to the <tt class="docutils literal"><span class="pre">gh-pages</span></tt> branch, that is the site&#8217;s document&nbsp;root.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="go">pip install ghp-import</span>
+</pre></div>
+</td></tr></table><p>Now with <tt class="docutils literal"><span class="pre">ghp-import</span></tt> installed you can publish your project pages by simply running <tt class="docutils literal">make github</tt> command which will build the html pages for publishing under the <tt class="docutils literal">output/</tt> folder, call <tt class="docutils literal"><span class="pre">ghp-import</span></tt> to copy the files under that folder to the <tt class="docutils literal"><span class="pre">gh-pages</span></tt> branch and do a <tt class="docutils literal">git push</tt> to push the new changes to&nbsp;Github.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span class="go">make github</span>
+</pre></div>
+</td></tr></table><p>You can also use your own <a class="reference external" href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages">custom domain</a>, I keep my <tt class="docutils literal"><span class="caps">CNAME</span></tt> file in a static folder called <tt class="docutils literal">files</tt> and I&#8217;ve added the file&#8217;s path to <a class="reference external" href="https://github.com/razius/razius.com/blob/master/pelicanconf.py#L43">EXTRA_PATH_METADATA</a> in <tt class="docutils literal">pelicanconf.py</tt> so that pelican copies it each time on&nbsp;build.</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4</pre></div></td><td class="code"><div class="codehilite"><pre><span class="n">STATIC_PATHS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;files&#39;</span><span class="p">]</span>
+<span class="n">EXTRA_PATH_METADATA</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">&#39;files/<span class="caps">CNAME</span>&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;path&#39;</span><span class="p">:</span> <span class="s">&#39;<span class="caps">CNAME</span>&#39;</span><span class="p">},</span>
+<span class="p">}</span>
+</pre></div>
+</td></tr></table><p><em><span class="caps">PS</span>: Yes, the title is a bit&nbsp;ironic.</em></p>
+</div>
+
+            <div class="hr"></div>
+            <a href="#" class="go-top">Go Top</a>
+                <div class="comments">
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_identifier = "articles/ditching-wordpress-and-becoming-one-of-the-cool-kids/";
+                        (function() {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://razius.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view <a href="http://disqus.com/?ref_noscript">comments</a>.</noscript>
+                </div>
+<footer class="footer">
+    <p>Powered by <a href="http://blog.getpelican.com/">Pelican</a> with a modified theme based on <a href="https://github.com/danclaudiupop/pure">Pure</a>.
+</footer>        </div>
+    </div>
+</div>
+    <script>
+        var $top = $('.go-top');
+
+        // Show or hide the sticky footer button
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 200) {
+                $top.fadeIn(200);
+            } else {
+                $top.fadeOut(200);
+            }
+        });
+
+        // Animate the scroll to top
+        $top.click(function(event) {
+            event.preventDefault();
+            $('html, body').animate({scrollTop: 0}, 300);
+        })
+
+        // Makes sure that the href="#" attached to the <a> elements
+        // don't scroll you back up the page.
+        $('body').on('click', 'a[href="#"]', function(event) {
+            event.preventDefault();
+        });
+    </script>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-29024708-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+    </script>
+</body>
+</html>

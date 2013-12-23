@@ -1,5 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Silviu Tantos (razius)</title><link href="http://razius.com/" rel="alternate"></link><link href="/feeds/tech.atom.xml" rel="self"></link><id>http://razius.com/</id><updated>2013-11-17T20:58:00+01:00</updated><entry><title>Building a messaging framework for Django</title><link href="http://razius.com/articles/building-a-messaging-framework-for-django/" rel="alternate"></link><updated>2013-11-17T20:58:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:razius.com,2013-11-17:articles/building-a-messaging-framework-for-django/</id><summary type="html">&lt;p&gt;As you might have noticed, one of the key usability features that we were missing on Iconfinder was the ability to display so called &amp;quot;flash messages.&amp;quot; Flash messages are one-time notification messages shown to the user after processing a form or handling other types of user input, so the user knows if things went as expected. Changing your password without being told &lt;em&gt;Your password was updated.&lt;/em&gt; can be a little confusing, so it was long overdue that we did something about something that&amp;nbsp;obvious.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Silviu Tantos (razius)</title><link href="http://razius.com/" rel="alternate"></link><link href="/feeds/tech.atom.xml" rel="self"></link><id>http://razius.com/</id><updated>2013-12-21T10:58:00+01:00</updated><entry><title>Ditching Wordpress and becoming one of the cool kids</title><link href="http://razius.com/articles/ditching-wordpress-and-becoming-one-of-the-cool-kids/" rel="alternate"></link><updated>2013-12-21T10:58:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:razius.com,2013-12-21:articles/ditching-wordpress-and-becoming-one-of-the-cool-kids/</id><summary type="html">&lt;p&gt;I&amp;#8217;ve been a Wordpress user and developer for a long long time but lately this nagging idea kept crawling in the back of my head, why not switch my website to a statically generated one? Well, a 3 hour train journey and a lot of boredom finally pushed me to just make the switch and to write a short post about&amp;nbsp;it.&lt;/p&gt;
+&lt;div class="section" id="what-is-a-statically-generated-website"&gt;
+&lt;h2&gt;What is a statically generated&amp;nbsp;website?&lt;/h2&gt;
+&lt;p&gt;Compared to dynamic web pages, where the web page is rendered by server-side logic and usually require a database, with statically generated websites you feed files written in a markup language like Markdown, reStructuredText, Textile, etc. to a static site generator which spits them out as a static website that is ready for&amp;nbsp;deployment.&lt;/p&gt;
+&lt;p&gt;They are useful when the content doesn&amp;#8217;t vary based on parameters provided by a user, like in the case of a personal web page where the content is delivered to the user exactly as it was&amp;nbsp;stored.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="why-bother-switching"&gt;
+&lt;h2&gt;Why bother&amp;nbsp;switching?&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;reStructuredText&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I could write my articles as simple flat files using the &lt;a class="reference external" href="http://docutils.sourceforge.net/docs/user/rst/quickref.html"&gt;reStructuredText&lt;/a&gt; format, goodbye storing of articles in a database. Having the articles as simple text files would allow me to easily edit them using my editor of choice, sublime text, so no more editing of text in a form on a web page, copy/pasting code snippets in it and painfully adjusting the indentation. Just take a look at the source of this article and see how easy it is to embed different code snippets, it feels just like editing a source file. I would also have syntax highlighting powered by the excellent &lt;a class="reference external" href="http://pygments.org/"&gt;pygments&lt;/a&gt; syntax&amp;nbsp;highlighter.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="k"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, World!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="cp"&gt;#include &amp;lt;stdio.h&amp;gt;&lt;/span&gt;
+
+&lt;span class="kt"&gt;int&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kt"&gt;void&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="n"&gt;printf&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;HelloWorld&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    &lt;span class="kd"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;static&lt;/span&gt; &lt;span class="kt"&gt;void&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="n"&gt;String&lt;/span&gt;&lt;span class="o"&gt;[]&lt;/span&gt; &lt;span class="n"&gt;args&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+        &lt;span class="n"&gt;System&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;out&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="na"&gt;println&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="o"&gt;);&lt;/span&gt;
+    &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="kn"&gt;package&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;fmt&amp;quot;&lt;/span&gt;
+
+&lt;span class="kd"&gt;func&lt;/span&gt; &lt;span class="nx"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nx"&gt;fmt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Hello, world!&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Plus, having the articles as flat files would allow me to keep the entire website in a git repository really&amp;nbsp;easy.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Faster page&amp;nbsp;loads&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Because there is no need to build the web page each time upon serving it, page load would be faster. I made a test of a page load before and after the&amp;nbsp;switch.&lt;/p&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Page load speed for Wordpress" src="http://razius.com/images/articles/wordpress-page-speed.png" /&gt;
+&lt;p class="caption"&gt;Page load speed for&amp;nbsp;Wordpress&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="figure align-center"&gt;
+&lt;img alt="Page load speed for static website" src="http://razius.com/images/articles/static-page-speed.png" /&gt;
+&lt;p class="caption"&gt;Page load speed for static&amp;nbsp;website&lt;/p&gt;
+&lt;/div&gt;
+&lt;p&gt;Not bad, a whole second. Yes, it&amp;#8217;s not really a fair comparison, I also changed the theme to a much simpler one which is a big boost too, but&amp;nbsp;still.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Github&amp;nbsp;pages&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;I could host my page for free using &lt;a class="reference external" href="http://pages.github.com/"&gt;Github pages&lt;/a&gt;, which is a free hosting for static pages offered by Github, using git repositories for file storing. No, I&amp;#8217;m not killing the little curious sysadmin in me, it&amp;#8217;s just that for my humble page administration is starting to feel like a&amp;nbsp;hassle.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;The geek&amp;nbsp;factor&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;In the end, why not? I keep this website to toy around with it and this would allow me to play around more with Python, Jinja2 and reStructuredText plus I could test a new flow for writing&amp;nbsp;articles.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="making-the-switch"&gt;
+&lt;h2&gt;Making the&amp;nbsp;switch&lt;/h2&gt;
+&lt;p&gt;I picked &lt;a class="reference external" href="http://blog.getpelican.com/"&gt;Pelican&lt;/a&gt; over the two most popular static web site generators, &lt;a class="reference external" href="http://jekyllrb.com/"&gt;Jekyll&lt;/a&gt; and &lt;a class="reference external" href="http://octopress.org/"&gt;Octopress&lt;/a&gt; because being a python developer, and Pelican being python based, it would feel a bit more natural than Jekyll or Octopress which are Ruby&amp;nbsp;based.&lt;/p&gt;
+&lt;p&gt;If you think something else would suit you more, you can take a look at a complete list of static website generators at &lt;a class="reference external" href="http://staticsitegenerators.net/"&gt;staticsitegenerators.net&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Installing Pelican, it&amp;#8217;s as simple as&amp;nbsp;running:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; pip install pelican
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Next, kickstart a new project. Do do this run &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pelican-quickstart&lt;/span&gt;&lt;/tt&gt;, it will ask us a few questions about you site to generate a config file named &lt;tt class="docutils literal"&gt;pelicanconf.py&lt;/tt&gt; and create a project skeleton with some helper scripts&amp;nbsp;inside.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; pelican-quickstart
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;You can edit you &lt;tt class="docutils literal"&gt;pelicanconf.py&lt;/tt&gt; to further tune your configuration, take a look at the &lt;a class="reference external" href="http://docs.getpelican.com/en/3.3.0/settings.html"&gt;manual&lt;/a&gt; for the available options or you can check out &lt;a class="reference external" href="https://github.com/razius/razius.com/blob/master/pelicanconf.py"&gt;my pelicanconf.py&lt;/a&gt; for some&amp;nbsp;inspiration.&lt;/p&gt;
+&lt;p&gt;All the content goes into the &lt;a class="reference external" href="https://github.com/razius/razius.com/blob/09dfd41f842d9b3b1a514816fa550423fc9b35e4/pelicanconf.py#L37"&gt;content&lt;/a&gt; folder and I like to keep all my &lt;a class="reference external" href="https://github.com/razius/razius.com/blob/09dfd41f842d9b3b1a514816fa550423fc9b35e4/pelicanconf.py#L39"&gt;articles&lt;/a&gt; and &lt;a class="reference external" href="https://github.com/razius/razius.com/blob/09dfd41f842d9b3b1a514816fa550423fc9b35e4/pelicanconf.py#L38"&gt;posts&lt;/a&gt; in separate folders by setting the following in &lt;tt class="docutils literal"&gt;pelicanconf.py&lt;/tt&gt;:&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;&lt;span class="caps"&gt;PATH&lt;/span&gt;&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;content&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;PAGE_DIR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;pages&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;ARTICLE_DIR&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;articles&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;You can export your articles from Wordpress into an &lt;span class="caps"&gt;XML&lt;/span&gt; file by going to Tool -&amp;gt; Export and then run &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;pelican-import&lt;/span&gt;&lt;/tt&gt; to generate the appropriate text files into the &lt;tt class="docutils literal"&gt;content&lt;/tt&gt; folder.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="gp"&gt;$&lt;/span&gt; pelican-import --wpfile -o content/ wordpress-export.xml
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;You can preview your files by running &lt;tt class="docutils literal"&gt;make devserver&lt;/tt&gt;, this will start a webserver that serves your build html files under &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;http://localhost:8000/&lt;/span&gt;&lt;/tt&gt; and a process that watches the &lt;tt class="docutils literal"&gt;content&lt;/tt&gt; folder for file changes and rebuilds the served html&amp;nbsp;files.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;make devserver&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;div class="section" id="hosting-on-github"&gt;
+&lt;h2&gt;Hosting on&amp;nbsp;Github&lt;/h2&gt;
+&lt;p&gt;Instead of using Github pages, where you are required to have your html pages under the project root and because pelican puts them under the output folder, I chose to use project pages. With project pages you keep the html files in a separate git branch called &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;gh-pages&lt;/span&gt;&lt;/tt&gt; and Github will publish those pages for you under &lt;tt class="docutils literal"&gt;GITHUB_USERNAME.github.com/GITHUB_PROJECTNAME.&lt;/tt&gt; from that branch. Ex. my web address would be &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;http://razius.github.com/razius.com&lt;/span&gt;&lt;/tt&gt;, don&amp;#8217;t worry, you can use your custom domain&amp;nbsp;too.&lt;/p&gt;
+&lt;p&gt;Notice the difference between the &lt;a class="reference external" href="https://github.com/razius/razius.com/tree/master"&gt;master&lt;/a&gt; branch and the &lt;a class="reference external" href="https://github.com/razius/razius.com/tree/gh-pages"&gt;gh-pages&lt;/a&gt;&amp;nbsp;branch.&lt;/p&gt;
+&lt;p&gt;Luckily, you don&amp;#8217;t have to maintain this branch manually, there&amp;#8217;s a script called &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ghp-import&lt;/span&gt;&lt;/tt&gt; which will manage it for you. It copies a directory to the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;gh-pages&lt;/span&gt;&lt;/tt&gt; branch, that is the site&amp;#8217;s document&amp;nbsp;root.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;pip install ghp-import&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;Now with &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ghp-import&lt;/span&gt;&lt;/tt&gt; installed you can publish your project pages by simply running &lt;tt class="docutils literal"&gt;make github&lt;/tt&gt; command which will build the html pages for publishing under the &lt;tt class="docutils literal"&gt;output/&lt;/tt&gt; folder, call &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;ghp-import&lt;/span&gt;&lt;/tt&gt; to copy the files under that folder to the &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;gh-pages&lt;/span&gt;&lt;/tt&gt; branch and do a &lt;tt class="docutils literal"&gt;git push&lt;/tt&gt; to push the new changes to&amp;nbsp;Github.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="go"&gt;make github&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;You can also use your own &lt;a class="reference external" href="https://help.github.com/articles/setting-up-a-custom-domain-with-pages"&gt;custom domain&lt;/a&gt;, I keep my &lt;tt class="docutils literal"&gt;&lt;span class="caps"&gt;CNAME&lt;/span&gt;&lt;/tt&gt; file in a static folder called &lt;tt class="docutils literal"&gt;files&lt;/tt&gt; and I&amp;#8217;ve added the file&amp;#8217;s path to &lt;a class="reference external" href="https://github.com/razius/razius.com/blob/master/pelicanconf.py#L43"&gt;EXTRA_PATH_METADATA&lt;/a&gt; in &lt;tt class="docutils literal"&gt;pelicanconf.py&lt;/tt&gt; so that pelican copies it each time on&amp;nbsp;build.&lt;/p&gt;
+&lt;table class="codehilitetable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="codehilite"&gt;&lt;pre&gt;&lt;span class="n"&gt;STATIC_PATHS&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;files&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;span class="n"&gt;EXTRA_PATH_METADATA&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s"&gt;&amp;#39;files/&lt;span class="caps"&gt;CNAME&lt;/span&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s"&gt;&amp;#39;path&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;&lt;span class="caps"&gt;CNAME&lt;/span&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;},&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;p&gt;&lt;em&gt;&lt;span class="caps"&gt;PS&lt;/span&gt;: Yes, the title is a bit&amp;nbsp;ironic.&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+</summary><category term="wordpress"></category><category term="static"></category><category term="pygments"></category><category term="python"></category><category term="restructured text"></category></entry><entry><title>Building a messaging framework for Django</title><link href="http://razius.com/articles/building-a-messaging-framework-for-django/" rel="alternate"></link><updated>2013-11-17T20:58:00+01:00</updated><author><name>Silviu Tantos</name></author><id>tag:razius.com,2013-11-17:articles/building-a-messaging-framework-for-django/</id><summary type="html">&lt;p&gt;As you might have noticed, one of the key usability features that we were missing on Iconfinder was the ability to display so called &amp;quot;flash messages.&amp;quot; Flash messages are one-time notification messages shown to the user after processing a form or handling other types of user input, so the user knows if things went as expected. Changing your password without being told &lt;em&gt;Your password was updated.&lt;/em&gt; can be a little confusing, so it was long overdue that we did something about something that&amp;nbsp;obvious.&lt;/p&gt;
 &lt;div class="figure align-center"&gt;
 &lt;img alt="messages" src="http://razius.com/images/articles/flash-messages.png" /&gt;
 &lt;p class="caption"&gt;Example of flash&amp;nbsp;messages.&lt;/p&gt;
