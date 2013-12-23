@@ -18,7 +18,7 @@ Why bother switching?
 
 **reStructuredText**
 
-I could write my articles as simple flat files using the `reStructuredText`_ format, goodbye storing of articles in a database. Having the articles as simple text files would allow me to easily edit them using my editor of choice, sublime text, so no more editing of text in a form on a web page, copy/pasting code snippets in it and painfully adjusting the indentation. Just take a look at the source of this article and see how easy it is to embed different code snippets, it feels just like editing a source file. I would also have syntax highlighting powered by the excellent `pygments`_ syntax highlighter.
+I could write my articles as simple flat files using the `reStructuredText`_ format, goodbye storing of articles in a database. Having the articles as simple text files would allow me to easily edit them using my editor of choice, sublime text, so no more editing of text in a form on a web page, copy/pasting code snippets in it and painfully adjusting the indentation. Just take a look at `the source <https://raw.github.com/razius/razius.com/71c85959d5b0cd1bb9ef14109cfa25446aa829f2/content/articles/tech/ditching-wordpress-and-becoming-one-of-the-cool-kids.rst>`_ of this article and see how easy it is to embed different code snippets, it feels just like editing a source file. I would also have syntax highlighting powered by the excellent `pygments`_ syntax highlighter.
 
 .. code-block:: python
 
