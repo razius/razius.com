@@ -7,7 +7,7 @@ AUTHOR = u'Silviu Tantos'
 AUTHOR_EMAIL = u'me@razius.com'
 SITENAME = u'Silviu Tantos (razius)'
 TAGLINE = 'Toying with the idea of becoming a useful member of society.'
-SITEURL = ''
+SITEURL = 'http://localhost:8000'
 DEFAULT_DATE_FORMAT = ('%d-%m-%Y')
 
 TIMEZONE = 'Europe/Copenhagen'
@@ -98,4 +98,4 @@ SITEMAP = {
 }
 
 # can be useful in development, but set to False when you're ready to publish
-RELATIVE_URLS = True
+RELATIVE_URLS = False

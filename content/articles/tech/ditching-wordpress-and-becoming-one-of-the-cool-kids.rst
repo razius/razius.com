@@ -164,4 +164,3 @@ You can also use your own `custom domain`_, I keep my ``CNAME`` file in a static
 .. _posts: https://github.com/razius/razius.com/blob/09dfd41f842d9b3b1a514816fa550423fc9b35e4/pelicanconf.py#L38
 .. _custom domain: https://help.github.com/articles/setting-up-a-custom-domain-with-pages
 .. _EXTRA_PATH_METADATA: https://github.com/razius/razius.com/blob/master/pelicanconf.py#L43
-
