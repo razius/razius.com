@@ -41,6 +41,7 @@ STATIC_PATHS = ['images', 'files']
 EXTRA_PATH_METADATA = {
     'files/github/.nojekyll': {'path': '.nojekyll'},
     'files/github/CNAME': {'path': 'CNAME'},
+    'files/github/404.html': {'path': '404.html'},
     'files/github/README.md': {'path': 'README.md'},
     'files/robots.txt': {'path': 'robots.txt'},
     'images/favicon.ico': {'path': 'favicon.ico'},
