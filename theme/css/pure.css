@@ -25,6 +25,10 @@ a:focus {
     width: 100%;
 }
 
+.codehilitetable {
+    margin: 1em 0;
+}
+
 pre {
     padding: 15px 15px 15px 15px;
     font-size: 90%;
@@ -159,7 +163,7 @@ h1.brand-main {
 .brand-main a {
     /*text-transform: uppercase;*/
     text-decoration: none;
-    margin-left: 15px;
+    /*margin-left: 15px;*/
     font-size: 25px;
     color: #fff;
     border-bottom: 1px solid rgba(255,255,255,0.3);
