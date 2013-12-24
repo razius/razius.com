@@ -86,9 +86,9 @@ PYGMENTS_RST_OPTIONS = {'cssclass': 'codehilite', 'linenos': 'table'}
 SITEMAP = {
     'format': 'xml',
     'priorities': {
-        'indexes': 1,
-        'articles': 0.9,
-        'pages': 0.8
+        'articles': 1,
+        'pages': 0.9,
+        'indexes': 0.8,
     },
     'changefreqs': {
         'indexes': 'daily',
