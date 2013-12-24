@@ -12,10 +12,10 @@ FTP_HOST=localhost
 FTP_USER=anonymous
 FTP_TARGET_DIR=/
 
-SSH_HOST=localhost
-SSH_PORT=22
-SSH_USER=root
-SSH_TARGET_DIR=/var/www
+SSH_HOST=dakara
+SSH_PORT=6601
+SSH_USER=razius
+SSH_TARGET_DIR=/home/razius/public_html/
 
 S3_BUCKET=my_s3_bucket
 
