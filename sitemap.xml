@@ -5,429 +5,429 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>http://razius.com/index.html</loc>
-<lastmod>2013-12-24T15:10:46-00:00</lastmod>
+<lastmod>2013-12-24T18:34:42-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/archives.html</loc>
-<lastmod>2013-12-24T15:10:46-00:00</lastmod>
+<lastmod>2013-12-24T18:34:42-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/categories.html</loc>
-<lastmod>2013-12-24T15:10:46-00:00</lastmod>
+<lastmod>2013-12-24T18:34:42-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/pages/about/</loc>
 <lastmod>2010-10-03T10:20:00-00:00</lastmod>
 <changefreq>weekly</changefreq>
-<priority>0.8</priority>
+<priority>0.9</priority>
 </url>
 
 <url>
 <loc>http://razius.com/pages/contact/</loc>
 <lastmod>2010-10-03T10:20:00-00:00</lastmod>
 <changefreq>weekly</changefreq>
-<priority>0.8</priority>
+<priority>0.9</priority>
 </url>
 
 <url>
 <loc>http://razius.com/pages/cv/</loc>
 <lastmod>2010-10-03T10:20:00-00:00</lastmod>
 <changefreq>weekly</changefreq>
-<priority>0.8</priority>
+<priority>0.9</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/ditching-wordpress-and-becoming-one-of-the-cool-kids/</loc>
 <lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/building-a-messaging-framework-for-django/</loc>
 <lastmod>2013-11-17T20:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/launching-services-after-vagrant-mount/</loc>
 <lastmod>2013-11-10T14:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/move-fast-and-break-things/</loc>
 <lastmod>2013-10-14T19:14:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/getting-the-ip-address-of-a-specific-interface-in-puppet-using-facter/</loc>
 <lastmod>2013-10-06T22:13:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/vagrant-and-ssh-agent-forwarding/</loc>
 <lastmod>2013-09-13T08:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/copenhagen-and-my-rbad_luck/</loc>
 <lastmod>2013-09-08T11:46:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/about-stuff/</loc>
 <lastmod>2013-07-31T19:53:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/generating-password-hashes-for-puppet/</loc>
 <lastmod>2013-07-08T10:25:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/testing-print-stylesheets-using-google-chome/</loc>
 <lastmod>2013-05-14T21:46:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/programing-the-stk600-avr-board-on-linux-using-c/</loc>
 <lastmod>2012-09-27T10:51:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/usefull-linux-commandstricks/</loc>
 <lastmod>2012-05-14T23:00:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/how-to-fix-gc-overhead-limit-exceeded-in-eclipse/</loc>
 <lastmod>2012-03-27T10:13:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/backup-and-restore-installed-packages-on-debian-ubuntu/</loc>
 <lastmod>2012-03-05T10:24:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/lock-screen-when-closing-laptop-lid-in-ubuntu-11-10/</loc>
 <lastmod>2012-02-13T13:03:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/password-protecting-folders-with-nginx/</loc>
 <lastmod>2012-02-13T12:20:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/installing-and-adding-an-external-tomcat-server-in-netbeans/</loc>
 <lastmod>2012-01-28T05:18:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/wordpress-reset-password-without-email/</loc>
 <lastmod>2011-09-13T14:45:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/articles/hello-world/</loc>
 <lastmod>2011-08-15T09:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>0.9</priority>
+<priority>1</priority>
 </url>
 
 <url>
 <loc>http://razius.com/category/tech/</loc>
 <lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/category/toughts/</loc>
 <lastmod>2013-10-14T19:14:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/netbeans/</loc>
 <lastmod>2012-01-28T05:18:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/vagrant/</loc>
 <lastmod>2013-11-10T14:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/random/</loc>
 <lastmod>2011-08-15T09:52:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/avr/</loc>
 <lastmod>2012-09-27T10:51:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/pygments/</loc>
 <lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/static/</loc>
 <lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/facter/</loc>
 <lastmod>2013-10-06T22:13:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/linux/</loc>
 <lastmod>2012-09-27T10:51:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/copenhagen/</loc>
 <lastmod>2013-09-08T11:46:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/virtualbox/</loc>
 <lastmod>2013-11-10T14:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/restructured-text/</loc>
 <lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/java/</loc>
 <lastmod>2012-03-27T10:13:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/personal/</loc>
 <lastmod>2013-10-14T19:14:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/redis/</loc>
 <lastmod>2013-11-17T20:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/provisioning/</loc>
 <lastmod>2013-09-13T08:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/internship/</loc>
 <lastmod>2013-10-14T19:14:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/init/</loc>
 <lastmod>2013-11-10T14:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/wordpress/</loc>
 <lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/puppet/</loc>
 <lastmod>2013-10-06T22:13:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/python/</loc>
 <lastmod>2013-12-21T10:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/upstart/</loc>
 <lastmod>2013-11-10T14:40:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/nginx/</loc>
 <lastmod>2012-02-13T12:20:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/ssh/</loc>
 <lastmod>2013-09-13T08:29:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/ubuntu/</loc>
 <lastmod>2012-09-27T10:51:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/iconfinder/</loc>
 <lastmod>2013-11-17T20:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/shadow/</loc>
 <lastmod>2013-07-08T10:25:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/password/</loc>
 <lastmod>2013-07-08T10:25:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/debian/</loc>
 <lastmod>2012-09-27T10:51:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/dpkg/</loc>
 <lastmod>2012-03-05T10:24:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/tomcat/</loc>
 <lastmod>2012-01-28T05:18:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/eclipse/</loc>
 <lastmod>2012-03-27T10:13:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/django/</loc>
 <lastmod>2013-11-17T20:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/stuff/</loc>
 <lastmod>2013-07-31T19:53:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 <url>
 <loc>http://razius.com/tag/messaging/</loc>
 <lastmod>2013-11-17T20:58:00-00:00</lastmod>
 <changefreq>daily</changefreq>
-<priority>1</priority>
+<priority>0.8</priority>
 </url>
 
 </urlset>
