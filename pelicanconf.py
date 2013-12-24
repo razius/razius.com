@@ -80,7 +80,7 @@ DEFAULT_PAGINATION = 10
 
 # Plugin.
 PLUGIN_PATH = 'plugins'
-PLUGINS = ['assets', 'sitemap', 'gravatar', 'pelican_youtube']
+PLUGINS = ['gzip_cache', 'assets', 'optimize_images', 'sitemap', 'gravatar', 'pelican_youtube']
 PYGMENTS_RST_OPTIONS = {'cssclass': 'codehilite', 'linenos': 'table'}
 
 # Sitemap.
