@@ -73,13 +73,14 @@ TRANSLATION_FEED_ATOM = None
 
 # Theme.
 THEME = 'theme'
-COVER_IMG_URL = '/images/cover.jpg'
+# COVER_IMG_URL = '/images/cover.jpg'
+COVER_BG_COLOR = '#375152'
 TYPOGRIFY = True
 DEFAULT_PAGINATION = 10
 
 # Plugin.
 PLUGIN_PATH = 'plugins'
-PLUGINS = ['sitemap', 'gravatar', 'pelican_youtube']
+PLUGINS = ['assets', 'sitemap', 'gravatar', 'pelican_youtube']
 PYGMENTS_RST_OPTIONS = {'cssclass': 'codehilite', 'linenos': 'table'}
 
 # Sitemap.
