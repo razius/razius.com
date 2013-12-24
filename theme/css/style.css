@@ -54,12 +54,6 @@ pre {
     height: 100%;
     top: 0;
     left: 0;
-    /*background-position: center;*/
-    /*background-repeat: no-repeat;*/
-    /*-webkit-background-size: cover;*/
-    /*-moz-background-size: cover;*/
-    /*-o-background-size: cover;*/
-    /*background-size: cover;*/
     -webkit-box-shadow: inset -1px 0 0 rgba(0,0,0,0.3);
     -moz-box-shadow: inset -1px 0 0 rgba(0,0,0,0.3);
     box-shadow: inset -1px 0 0 rgba(0,0,0,0.3);
@@ -336,11 +330,6 @@ h1.brand-main {
         height: 425px;
     }
 
-    .cover-img {
-        background-position: 0 -80px;
-        background-size: cover;
-    }
-
     .post-avatar {
         margin-top: 15px;
         float: none;
@@ -385,13 +374,6 @@ h1.brand-main {
         -webkit-transition: width .5s ease;
     }
 }
-
-@media (max-width: 480px) {
-    .cover-img {
-        background-position: 0;
-    }
-}
-
 
 /* Text related mixins. */
 .align-center {
