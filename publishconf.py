@@ -11,6 +11,7 @@ sys.path.append(os.curdir)
 from pelicanconf import *
 
 SITEURL = 'http://razius.com'
+FEED_DOMAIN = SITEURL
 RELATIVE_URLS = False
 
 ARTICLE_EXCLUDES = ('drafts',)
