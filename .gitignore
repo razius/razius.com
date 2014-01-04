@@ -4,5 +4,5 @@
 *.sublime-workspace
 .virtualenv/
 plugins/
-content/drafts/
+content/articles/drafts
 output/

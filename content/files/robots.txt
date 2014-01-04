@@ -15,6 +15,3 @@ Disallow: /
 
 # global
 User-agent: *
-Disallow: /tag/
-Disallow: /tags/
-Disallow: /category/
