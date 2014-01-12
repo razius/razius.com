@@ -429,3 +429,10 @@ h1.brand-main {
     text-align: right;
 }
 
+#cv #projects dt {
+    font-weight: bold;
+}
+
+#cv #projects dd {
+    margin-bottom: 10px;
+}
