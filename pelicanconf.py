@@ -20,6 +20,7 @@ DELETE_OUTPUT_DIRECTORY = True
 
 # Blogroll
 LINKS = (
+    ('asda', 'http://razius.com'),
 )
 
 # Social widget.
@@ -27,6 +28,7 @@ SOCIAL = (
     ('Github', 'http://github.com/razius'),
     ('Last.fm', 'http://last.fm/user/razius'),
     ('Twitter', 'http://twitter.com/razius'),
+    ('PLUS', 'https://plus.google.com/+SilviuTantos?rel=author'),
     ('RSS', 'http://feeds.feedburner.com/razius'),
 )
 
