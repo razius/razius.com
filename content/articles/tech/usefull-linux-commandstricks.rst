@@ -55,3 +55,6 @@ Force a shutdown:
     # echo 1 > /proc/sys/kernel/sysrq
     # echo o > /proc/sysrq-trigger
 
+.. code-block:: console
+    find . -maxdepth 1 -type d -exec basename {} \;|xargs -L 1 -I '{}' chown {}:{} {}
+
