@@ -403,5 +403,29 @@ h1.brand-main {
     color: #999;
 }
 
+#cv #work-experience {
+    overflow: auto;
+    clear: both;
+}
 
+#cv #work-experience > .section {
+    width: 48%;
+    float: left;
+}
+
+#cv #work-experience > .section table {
+    width: 100%;
+}
+
+#cv #work-experience > .section:nth-child(2n+1) {
+    margin-left: 2%;
+}
+
+#cv #work-experience table th {
+    text-align: left;
+}
+
+#cv #work-experience table td {
+    text-align: right;
+}
 

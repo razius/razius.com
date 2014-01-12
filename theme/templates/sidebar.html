@@ -10,7 +10,7 @@
                         <p>
                             <span class="links pages"><a href="{{ SITEURL }}/">Home</a></span>
                             {% for page in PAGES %}
-                                <span class="separator">&#x2022; </span><span class="links pages{% if page == page %} active{% endif %}"><a href="{{ SITEURL }}/{{ page.url }}">{{ page.title }}</a></span>
+                                <span class="separator">&#x2022; </span><span class="links pages{% if page == page %} active{% endif %}"><a href="{{ SITEURL }}/{{ page.url }}">{% if page.menu_title %}{{ page.menu_title }}{% else %}{{ page.title }}{% endif %}</a></span>
                             {% endfor %}
                         </p>
                     </div>

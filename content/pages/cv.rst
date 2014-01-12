@@ -3,6 +3,7 @@ Silviu Tantos
 
 :date: 2010-10-03 10:20
 :slug: cv
+:menu_title: CV
 
 ..
 
@@ -26,64 +27,65 @@ Work Experience
 
 Elnicron
 ~~~~~~~~
-:Description: Local IT&C company
+:About: Local IT&C company
 :Position: IT Support
-:Website: elnicron.ro
-:Start Date: 2006-10-01
-:End Date: 2008-02-24
+:Website: `elnicron.ro <http://elnicron.ro>`_
+:Period: 2006-10-01 - 2008-02-24
 
 Sistec-SBsol
 ~~~~~~~~~~~~
-:Description: IT division of one of the largest Romanian group (RTC)
+:About: IT division of one of the largest Romanian group (RTC)
 :Position: IT Support
-:Website: sistec.ro
-:Start Date: 2008-03-02
-:End Date: 2009-06-08
+:Website: `sistec.ro <http://sistec.ro>`_
+:Period: 2008-03-02 - 2009-06-08
 
 TTM Television Station
 ~~~~~~~~~~~~~~~~~~~~~~
-:Description: Largest regional television station
+:About: Largest regional television station
 :Position: Sysadmin / Webmaster
-:Website: tvmures.ro
-:Start Date: 2009-04-12
-:End Date: 2011-09-01
-:Responsabilities: Reorganized, configured and maintained all IT&C infrastructure, created custom bash scripts to automate the inhouse work, provided IT support and training for the staff.
+:Website: `tvmures.ro <http://tvmures.ro>`_
+:Period: 2009-04-12 - 2011-09-01
+:Work: Reorganized, configured and maintained all IT&C infrastructure,
+    created custom bash scripts to automate the inhouse work, provided IT support and training for the staff.
 
 Corso Magazine
 ~~~~~~~~~~~~~~
-:Description: National urban culture magazine
+:About: National urban culture magazine
 :Position: Sysadmin / Webmaster
-:Website: ofcorso.ro
-:Start Date: 2010-03-12
-:End Date: 2011-08-01
-:Responsabilities: Responsible for maintaining the magazine's website, some of the duties included ensuring that the web servers operated correctly, customising the website and updating the content.
+:Website: `ofcorso.ro <http://ofcorso.ro>`_
+:Period: 2010-03-12 - 2011-08-01
+:Work: Responsible for maintaining the magazine's website, some of the duties included ensuring that the web servers operated correctly, customising the website and updating the content.
 
 Astor-Valpet
 ~~~~~~~~~~~~
-:Description: Holding of road work and construction companies
+:About: Holding of road work and construction companies
 :Position: System Administrator
-:Website: valpet.ro
-:Start Date: 2010-10-01
-:End Date: 2011-08-01
-:Responsabilities: Configured and maintained all IT&C infrastructure, connected the company's offices to the main headquarter, provided IT support and training for the staff.
+:Website: `valpet.ro <http://valpet.ro>`_
+:Period: 2010-10-01 - 2011-08-01
+:Work: Configured and maintained all IT&C infrastructure, connected the company's offices to the main headquarter, provided IT support and training for the staff.
 
 Freelancer
 ~~~~~~~~~~
-:Description: Holding of road work and construction companies
 :Position: Developer / System Administrator
 :Website: `razius.com <http://razius.com>`_
-:Start Date: 2010-10-02
-:End Date: -
-:Responsabilities: Worked as a freelancer on numerous interesting projects including: massive deployment of disk images using PXE, scalable web site architectures with nginx+varnish+memcached, custom writen bash scripts to automate inhouse work and backing-up data, Android applications, Web applications.
+:Period: 2010-10-02 - Present
+:Work: Worked as a freelancer on numerous interesting projects including: massive deployment of disk images using PXE, scalable web site architectures with nginx+varnish+memcached, custom writen bash scripts to automate inhouse work and backing-up data, Android applications, Web applications.
 
 VIA University
 ~~~~~~~~~~~~~~
-:Description: Holding of road work and construction companies
+:About: The largest university college in Denmark
 :Position: System Administrator
-:Website: viauc.dk
-:Start Date: 2012-10-01
-:End Date: -
-:Responsabilities: Working as a system administrator on Multilab, a student driven network situated at VIA University's campus in Horsens. It offers DNS and Web (PHP, Python, Ruby on Rails) hosting, git/svn repositories and technical support for students.
+:Website: `viauc.dk <http://viauc.dk>`_
+:Period: 2012-10-01 - Present
+:Work: Working as a system administrator on Multilab, a student driven network situated at VIA University's campus in Horsens. It offers DNS and Web (PHP, Python, Ruby on Rails) hosting, git/svn repositories and technical support for students.
+
+
+Iconfinder
+~~~~~~~~~~
+:About: Largest icon search engine.
+:Position: Developer
+:Website: `iconfinder.com <http://iconfinder.com>`_
+:Period: 2013-09-01 - Present
 
 
 Projects
