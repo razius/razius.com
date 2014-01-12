@@ -5,11 +5,11 @@
 <div class="pure-g-r" id="layout">
     {% include 'sidebar.html' %}
     <div class="pure-u-3-4">
-        <div class="content">
+        <div id="{{ page.slug }}" class="content">
             <h1 class="content-subhead">{{ page.title }}</h1>
             <p>{{ page.content }}</p>
+            {% include 'footer.html' %}
         </div>
     </div>
 </div>
-{% include 'footer.html' %}
 {% endblock %}
