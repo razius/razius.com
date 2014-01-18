@@ -3,6 +3,5 @@
 *.log
 *.sublime-workspace
 .virtualenv/
-plugins/
 content/articles/drafts
 output/
