@@ -67,6 +67,8 @@ Now for the bash script.
 
 It waits for an event, when detected it will search for the current Google Chrome window or tab and send the refresh key shortcut (CTRL+r) to it then loop again in the listening state.
 
+I've also made a `gist <https://gist.github.com/razius/8503625>`_ for easy reference. I'll probably update that more when I'll want to add new features.
+
 **Note**: Yes, I know about LiveReload but I find it way to complicated for my needs and it's also not available on Linux (my OS of choice). Plus, in the process I learned something new and I will definitely be using that knowledge in the future.
 
 
