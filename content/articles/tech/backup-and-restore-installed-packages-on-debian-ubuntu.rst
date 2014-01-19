@@ -3,6 +3,7 @@ Backup and restore installed packages on Debian/Ubuntu
 :date: 2012-03-05 10:24
 :tags: debian, dpkg, linux
 :slug: backup-and-restore-installed-packages-on-debian-ubuntu
+:description: Backup your list of installed packages on Debian/Ubuntu for easy restoration after an OS reinstall.
 
 If you want to reinstall a server or a desktop and want to install the same packages after reinstalling the operating system you can easily do that with dpkg.
 

@@ -3,6 +3,7 @@ Vagrant and SSH agent forwarding
 :date: 2013-09-13 08:29
 :tags: provisioning, ssh, vagrant
 :slug: vagrant-and-ssh-agent-forwarding
+:description: How to use your ssh key inside your Vagrant machine.
 
 I haven't even started yet and I can already hear you muttering over there, "What the hell is this Vagrant thing and why should I care?". Well, `Vagrant`_ is a wrapper around `VirtualBox`_, the virtualization
 software, that can create homogeneous development environments automatically without any effort from the developer. This means that we have a consistent development environment across out team with the same OS version, same package versions, same database, same settings. No more *But it worked on MY machine* excuses.

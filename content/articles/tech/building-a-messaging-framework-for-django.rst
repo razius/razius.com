@@ -3,6 +3,7 @@ Building a messaging framework for Django
 :date: 2013-11-17 20:58
 :tags: django, iconfinder, messaging, redis
 :slug: building-a-messaging-framework-for-django
+:description: Building a simple flash notification messaging framework for Django.
 
 As you might have noticed, one of the key usability features that we were missing on Iconfinder was the ability to display so called "flash messages." Flash messages are one-time notification messages shown to the user after processing a form or handling other types of user input, so the user knows if things went as expected. Changing your password without being told *Your password was updated.* can be a little confusing, so it was long overdue that we did something about something that obvious.
 

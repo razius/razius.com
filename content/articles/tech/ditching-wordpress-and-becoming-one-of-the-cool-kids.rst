@@ -3,6 +3,7 @@ Ditching Wordpress and becoming one of the cool kids
 :date: 2013-12-21 10:58
 :tags: wordpress, static, pygments, python, restructured text
 :slug: ditching-wordpress-and-becoming-one-of-the-cool-kids
+:description: Migrating from Wordpress to Pelican (a Python powered statically generated website).
 
 I've been a Wordpress user and developer for a long long time but lately this nagging idea kept crawling in the back of my head, why not switch my website to a statically generated one? Well, a 3 hour train journey and a lot of boredom finally pushed me to just make the switch and to write a short post about it.
 

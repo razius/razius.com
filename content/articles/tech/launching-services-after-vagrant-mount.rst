@@ -3,6 +3,7 @@ Launching services after Vagrant mount
 :date: 2013-11-10 14:40
 :tags: init, upstart, vagrant, virtualbox
 :slug: launching-services-after-vagrant-mount
+:description: If your service depends on files from the Vagrant shared folder it will fail to start on boot.
 
 I recently had to set up a Vagrant project where all the configuration files for services like nginx, supervisor, mysql where symlinks pointing to files residing on the `Vagrant synced folder`_. This turned out to be
 a bit of a problem, when the Vagrant box boots, one of the last things it does is mount the synced folder, so those services would fail to start because of missing configuration files.
