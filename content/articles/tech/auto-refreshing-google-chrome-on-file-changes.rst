@@ -1,6 +1,6 @@
 Auto-refreshing Google Chrome on file changes
 #############################################
-:date: 2014-01-13 10:58
+:date: 2014-01-19 10:58
 :tags: automation, chrome, bash
 :slug: auto-refreshing-google-chrome-on-file-changes
 :description: Automatically refreshing Google Chrome when a file changes with a simple bash script (or poor man's LiveReload).
