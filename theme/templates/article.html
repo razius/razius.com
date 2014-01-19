@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}{{ article.title|striptags }}{% endblock title %}
+{% if article.description %}{% block meta_description %}{{ article.description }}{% endblock %}{% endif %}
 
 {% block content %}
 <div class="pure-g-r" id="layout">
